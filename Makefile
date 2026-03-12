@@ -1,23 +1,40 @@
 NAME = IRC
+DIR_OBJS = .objs
+DIR_DEPS = .deps
 SRC = \
 	src/main.cpp \
 	\
 	src/class/cpp/server.cpp
 
-DEPS = \
-	src/class/hpp/server.hpp
-CXX = c++ -Wall -Wextra -Werror -std=c++98
+INCS = \
+	-Isrc/class/hpp/
+
+OBJS=$(SRC:%.cpp=$(DIR_OBJS)/%.o)
+DEPS=$(SRC:%.cpp=$(DIR_DEPS)/%.d)
+
+CXX = c++
+CXXFLAGS = -Wall -Wextra -Werror -g3 -std=c++98
 
 .PHONY: all clean fclean re
 
 all: $(NAME)
 
-$(NAME): Makefile $(DEPS) $(SRC)
-	$(CXX) $(SRC) -o $(NAME)
+$(NAME): $(OBJS)
+	$(CXX) $(CXXFLAGS) $(OBJS) $(INCS) -o $@
+
+$(DIR_OBJS)/%.o: %.cpp Makefile
+	mkdir -p $(dir $@) $(DIR_DEPS)/$(dir $*)
+	$(CXX) $(CXXFLAGS) $(INCS) -MMD -MP -MF $(DIR_DEPS)/$*.d -c -o $@ $<
 
 clean:
-	rm -rf $(NAME)
+	rm -rf $(DIR_OBJS)
+	rm -rf $(DIR_DEPS)
 
 fclean: clean
+	rm -rf $(NAME)
 
 re: fclean all
+
+.PHONY: all clean fclean re
+
+-include $(DEPS)

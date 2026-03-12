@@ -1,1 +1,5 @@
 IRC
+.objs/
+*.o
+.deps/
+*.d
