@@ -2,6 +2,7 @@
 #define SERVER_HPP
 
 #include <string>
+#include <netinet/in.h>
 
 class Server
 {
@@ -21,10 +22,17 @@ class Server
 		//set/get server_fd
 		void setServerFd(int fd);
 		int getServerFd();
+
+		bool isRuning();
+
+		void startServer();
+		void stopServer();
 	private:
 		int server_fd;
 		unsigned short port;
 		std::string password;
+		bool run;
+		sockaddr_in address; // TODO set/get for this
 };
 
 #endif //SERVER_HPP
