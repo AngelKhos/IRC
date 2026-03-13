@@ -1,5 +1,6 @@
 #include "server.hpp"
 #include <stdlib.h>
+#include <unistd.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <iostream>
@@ -55,5 +56,6 @@ void Server::startServer()
 }
 void Server::stopServer()
 {
+	close(server_fd);
 	run = false;
 }
