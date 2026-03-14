@@ -4,7 +4,8 @@ DIR_DEPS = .deps
 SRC = \
 	src/main.cpp \
 	\
-	src/class/cpp/server.cpp
+	src/class/cpp/server.cpp \
+	src/class/cpp/client.cpp
 
 INCS = \
 	-Isrc/class/hpp/

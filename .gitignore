@@ -3,3 +3,4 @@ IRC
 *.o
 .deps/
 *.d
+WIZARD_TODO.txt

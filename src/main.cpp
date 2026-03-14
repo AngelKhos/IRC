@@ -10,10 +10,24 @@ int main(int argc, char **argv)
 		return (1);
 	Server ircServer((unsigned short)atoi(argv[1]), argv[2]);
 
-	ircServer.startServer();
-
-	while (ircServer.isRuning())
+	try
 	{
+		ircServer.startServer();
 	}
+	catch(const std::exception& e)
+	{
+		std::cerr << "Server starting error : " << e.what() << '\n';
+	}
+	
+
+	try
+	{
+		ircServer.loop();
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << "Server loop error : " << e.what() << '\n';
+	}
+	
 	return (0);
 }
