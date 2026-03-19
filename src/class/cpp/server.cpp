@@ -44,17 +44,18 @@ bool Server::isRunning() { return (run); }
 void Server::startServer()
 {
 	std::cout << "server starting..." << std::endl;
-	this->setServerFd(socket(AF_INET, SOCK_STREAM, 0));
+	this->setServerFd(socket(AF_INET, SOCK_STREAM, 0)); //crée le fd pour communiquer avec qqn de distant
+	// AF_INET --> address family connection reseau | SOCK_STREAM --> connexion TCP
 	if (server_fd == -1)
 		throw socketErrorException();
 	address.sin_family = AF_INET;
-	address.sin_port = htons(this->getPort());
+	address.sin_port = htons(this->getPort()); // normalise le port (bon endian)
 	address.sin_addr.s_addr = INADDR_ANY;
 	
-	if (bind(this->getServerFd(), (sockaddr*)&address, sizeof(address)) == -1)
+	if (bind(this->getServerFd(), (sockaddr*)&address, sizeof(address)) == -1) //ce socket ecoute ce port la
 		throw bindErrorException();
 
-	if (listen(this->getServerFd(), 10) == -1)
+	if (listen(this->getServerFd(), 10) == -1) //crée une pool d'utilisateur (10 c'est le nombrre d'utilisateur en attente)
 		throw listenErrorException();
 	run = true;
 	std::cout << "the server is on" << std::endl;
@@ -74,7 +75,10 @@ void Server::loop()
 {
 	while (this->isRunning())
 	{
-		int client_fd = accept(this->getServerFd(), NULL, NULL);
+		//epoll_fd = epoll_create()
+		//throw error if fd = -1 
+		//
+		int client_fd = accept(this->getServerFd(), NULL, NULL); // accepte les clients dans la pool de listen
 		if (client_fd != -1)
 		{
 			Client c(client_fd);
