@@ -4,3 +4,4 @@ IRC
 .deps/
 *.d
 WIZARD_TODO.txt
+.vscode
