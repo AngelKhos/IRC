@@ -1,26 +1,18 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   epoll.hpp                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/19 17:06:21 by authomas          #+#    #+#             */
-/*   Updated: 2026/03/19 17:10:39 by authomas         ###   ########lyon.fr   */
-/*                                                                            */
-/* ************************************************************************** */
+#ifndef EPOLL_HPP
+#define EPOLL_HPP
 
 class Epoll
 {
-    public:
+	public:
+		Epoll();
+		void wait();
 
-        Epoll();
-        void wait();
-        void set_write();
-        void set_read();
+		//set/get fd
+		int getFd();
+		void setFd(int Pfd);
 
-        // to do
-
-    private:
-        int fd;
+	private:
+		int fd;
 };
+
+#endif //EPOLL_HPP
