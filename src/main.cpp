@@ -18,8 +18,6 @@ int main(int argc, char **argv)
 	{
 		std::cerr << "Server starting error : " << e.what() << '\n';
 	}
-	
-
 	try
 	{
 		ircServer.loop();
