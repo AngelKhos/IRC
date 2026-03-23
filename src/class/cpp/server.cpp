@@ -4,6 +4,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <iostream>
+#include <sys/epoll.h>
 
 //===============================================
 //constructor/destructor
@@ -75,9 +76,8 @@ void Server::loop()
 {
 	while (this->isRunning())
 	{
-		//epoll_fd = epoll_create()
-		//throw error if fd = -1 
-		//
+		epoll.setFd(epoll_create(1024));
+		//i dont no what to do now -_-
 		int client_fd = accept(this->getServerFd(), NULL, NULL); // accepte les clients dans la pool de listen
 		if (client_fd != -1)
 		{

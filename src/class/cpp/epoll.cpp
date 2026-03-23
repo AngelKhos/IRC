@@ -1,5 +1,6 @@
 #include "epoll.hpp"
 #include <unistd.h>
+#include <sys/epoll.h>
 
 Epoll::Epoll() : fd(-1) {}
 
