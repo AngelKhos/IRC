@@ -56,7 +56,7 @@ void Server::startServer()
 	if (bind(this->getServerFd(), (sockaddr*)&address, sizeof(address)) == -1) //ce socket ecoute ce port la
 		throw bindErrorException();
 
-	if (listen(this->getServerFd(), 10) == -1) //crée une pool d'utilisateur (10 c'est le nombrre d'utilisateur en attente)
+	if (listen(this->getServerFd(), 1024) == -1) //crée une pool d'utilisateur (10 c'est le nombrre d'utilisateur en attente)
 		throw listenErrorException();
 	run = true;
 	std::cout << "the server is on" << std::endl;
@@ -68,25 +68,34 @@ void Server::stopServer()
 		Client &c = clients[i];
 		close(c.getClientFd());
 	}
+	if (epoll.getFd() != -1)
+		close(epoll.getFd());
 	close(server_fd);
 	run = false;
 }
 
 void Server::loop()
 {
+	epoll_event ep_event;
+
+	epoll.setFd(epoll_create(1024));
 	while (this->isRunning())
 	{
-		epoll.setFd(epoll_create(1024));
-		//i dont no what to do now -_-
+		//i dont know what to do now -_-
 		int client_fd = accept(this->getServerFd(), NULL, NULL); // accepte les clients dans la pool de listen
 		if (client_fd != -1)
 		{
 			Client c(client_fd);
 			clients.push_back(c);
+			if (epoll_ctl(epoll.getFd(), EPOLL_CTL_ADD, client_fd, &ep_event) == -1)
+				throw epollAddErrorException();
 			std::cout << "client connected" << std::endl;
 		}
 	}
 }
+
+//===============================================
+//exception
 
 const char *Server::socketErrorException::what() const throw()
 {
@@ -99,4 +108,9 @@ const char *Server::bindErrorException::what() const throw()
 const char *Server::listenErrorException::what() const throw()
 {
 	return ("listen fail");
+}
+
+const char *Server::epollAddErrorException::what() const throw()
+{
+	return ("epoll add fail");
 }

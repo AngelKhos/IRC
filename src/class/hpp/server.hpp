@@ -23,6 +23,9 @@ class Server
 		class listenErrorException : public std::exception {
 			public:
 				virtual const char *what() const throw(); };
+		class epollAddErrorException : public std::exception {
+			public:
+				virtual const char *what() const throw(); };
 
 		//set/get port
 		void setPort(unsigned short Pport);
