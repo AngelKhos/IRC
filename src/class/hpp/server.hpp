@@ -24,12 +24,6 @@ class Server
 		class listenErrorException : public std::exception {
 			public:
 				virtual const char *what() const throw(); };
-		class epollAddErrorException : public std::exception {
-			public:
-				virtual const char *what() const throw(); };
-		class epollWaitErrorException : public std::exception {
-			public:
-				virtual const char *what() const throw(); };
 
 		//set/get port
 		void setPort(unsigned short Pport);
@@ -47,8 +41,13 @@ class Server
 
 		void startServer();
 		void stopServer();
+		
 		void loop();
 	private:
+
+		void connectClient();
+		void disconnectClient(int n);
+
 		int server_fd;
 		unsigned short port;
 		std::string password;

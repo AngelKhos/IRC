@@ -2,6 +2,7 @@
 #define EPOLL_HPP
 
 #include <sys/epoll.h>
+#include <exception>
 
 class Epoll
 {
@@ -19,6 +20,13 @@ class Epoll
 		epoll_event *getEventList();
 		int getEventFd(int n);
 		int getEvent(int n);
+
+		class epollWaitErrorException : public std::exception {
+			public:
+				virtual const char *what() const throw(); };
+		class epollAddErrorException : public std::exception {
+			public:
+				virtual const char *what() const throw(); };
 
 	private:
 		int fd;

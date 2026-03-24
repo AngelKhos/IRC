@@ -22,7 +22,7 @@ int Epoll::ctl_add(int _fd, int opt)
 	event.events = opt;
 	event.data.fd = _fd;
 	if (epoll_ctl(fd, EPOLL_CTL_ADD, _fd, &event) == -1)
-		return (-1);
+		throw epollAddErrorException();
 	return (true);
 }
 
@@ -40,7 +40,18 @@ void Epoll::ctl_del(int _fd)
 
 int Epoll::wait()
 {
-	return (epoll_wait(fd, event_list, 10, 5000));
+	int ret = epoll_wait(fd, event_list, 10, 10000);
+	if (ret == -1)
+		throw epollWaitErrorException();
+	return (ret);
 }
 
+const char *Epoll::epollWaitErrorException::what() const throw()
+{
+	return ("epoll wait fail");
+}
 
+const char *Epoll::epollAddErrorException::what() const throw()
+{
+	return ("epoll add fail");
+}

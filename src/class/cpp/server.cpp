@@ -60,11 +60,8 @@ void Server::startServer()
 		throw listenErrorException();
 	run = true;
 
-
 	epoll.setEpollFd(1024); //epoll create
-	if (epoll.ctl_add(server_fd, EPOLLIN) == -1) //ajoute le server_fd a la liste de fd que epoll doit surveiller
-		throw epollAddErrorException();
-
+	epoll.ctl_add(server_fd, EPOLLIN);
 	std::cout << "the server is on" << std::endl;
 }
 void Server::stopServer()
@@ -82,27 +79,36 @@ void Server::stopServer()
 	run = false;
 }
 
+void Server::connectClient()
+{
+	int client_fd = accept(this->getServerFd(), NULL, NULL); // accepte les clients qui attendent dans la pool de listen
+	if (client_fd != -1)
+	{
+		Client  *c = new Client(client_fd);
+		clients[client_fd] = c; //init client très sommaire (TODO)
+		epoll.ctl_add(client_fd, EPOLLIN | EPOLLOUT); //ajoute le client_fd a la liste de fd que epoll doit surveiller
+		std::cout << "client connected" << std::endl;
+	}
+}
+
+void Server::disconnectClient(int n)
+{
+	epoll.ctl_del(epoll.getEventFd(n));
+	clients[epoll.getEventFd(n)]->Disconnect();
+	delete clients[epoll.getEventFd(n)];
+	clients.erase(epoll.getEventFd(n));
+}
+
 void Server::loop()
 {
 	while (this->isRunning())
 	{
 		const int nb_event = epoll.wait(); // attends qu'un fd bouge son cul
-		if (nb_event == -1)
-			throw epollWaitErrorException();
+		
 		for (int n = 0; n < nb_event; n++)
 		{
 			if (epoll.getEventFd(n) == server_fd) //si c'est le server qui essaye de communiquer ca veut dire que ya un nouveau client dans listen
-			{
-				int client_fd = accept(this->getServerFd(), NULL, NULL); // accepte les clients qui attendent dans la pool de listen
-				if (client_fd != -1)
-				{
-					Client  *c = new Client(client_fd);
-					clients[client_fd] = c; //init client très sommaire (TODO)
-					if (epoll.ctl_add(client_fd, EPOLLIN | EPOLLOUT) == -1) //ajoute le client_fd a la liste de fd que epoll doit surveiller
-						throw epollAddErrorException();
-					std::cout << "client connected" << std::endl;
-				}
-			}
+				connectClient();
 			else // si c'est pas serv, ca veut dire client et la c'est full roue libre
 			{
 				char buff[4096];
@@ -113,12 +119,7 @@ void Server::loop()
 					read_size = recv(epoll.getEventFd(n), buff, 4096, 0); //meme que read mais pour les sockets (rtfm)
 					//si -1 ca a pété
 					if (read_size == 0) // client a disconnect
-					{
-						epoll.ctl_del(epoll.getEventFd(n));
-						clients[epoll.getEventFd(n)]->Disconnect();
-						delete clients[epoll.getEventFd(n)];
-						clients.erase(epoll.getEventFd(n));
-					}
+						disconnectClient(n);
 					else // traitement du msg
 						std::cout << buff << std::endl;
 				}
@@ -147,14 +148,4 @@ const char *Server::bindErrorException::what() const throw()
 const char *Server::listenErrorException::what() const throw()
 {
 	return ("listen fail");
-}
-
-const char *Server::epollAddErrorException::what() const throw()
-{
-	return ("epoll add fail");
-}
-
-const char *Server::epollWaitErrorException::what() const throw()
-{
-	return ("epoll wait fail");
 }
