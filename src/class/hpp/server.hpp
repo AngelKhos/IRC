@@ -27,6 +27,9 @@ class Server
 		class epollAddErrorException : public std::exception {
 			public:
 				virtual const char *what() const throw(); };
+		class epollWaitErrorException : public std::exception {
+			public:
+				virtual const char *what() const throw(); };
 
 		//set/get port
 		void setPort(unsigned short Pport);
@@ -51,7 +54,7 @@ class Server
 		std::string password;
 		bool run;
 		sockaddr_in address; // TODO set/get for this
-		 std::map<int, Client*> clients; // --> int = client fd, Client = Class client
+		std::map<int, Client*> clients; // --> int = client fd, Client = Class client
 		Epoll epoll;
 };
 
