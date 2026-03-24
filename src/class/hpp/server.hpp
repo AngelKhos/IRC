@@ -5,6 +5,7 @@
 #include <netinet/in.h>
 #include "client.hpp"
 #include <vector>
+#include <map>
 #include "epoll.hpp"
 
 class Server
@@ -50,7 +51,7 @@ class Server
 		std::string password;
 		bool run;
 		sockaddr_in address; // TODO set/get for this
-		std::vector<Client> clients;
+		 std::map<int, Client*> clients; // --> int = client fd, Client = Class client
 		Epoll epoll;
 };
 
