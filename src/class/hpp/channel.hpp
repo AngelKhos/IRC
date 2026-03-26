@@ -4,7 +4,8 @@
 #include <string>
 #include <vector>
 #include <map>
-#include "user.hpp"
+#include <set>
+#include "client.hpp"
 
 class Channel
 {
@@ -13,11 +14,14 @@ class Channel
 		Channel(std::string Pname);
 		~Channel();
 
-		void addUser(User &u);
-		void delUser(int fd);
+		void addUser(Client &u);
+		void delUser(Client &u);
+		void opUser(Client &u);
+		void unopUser(Client &u);
 	private:
 		std::string name;
-		std::vector<int> clientFds;
+		std::set<Client *> op;
+		std::set<Client *> users;
 };
 
 #endif //CHANNEL_HPP

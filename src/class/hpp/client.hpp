@@ -14,9 +14,16 @@ class Client
 		int getClientFd() const;
 		void setClientFd(int fd);
 
+		std::string getNickName();
+		std::string getName();
+		void setNickName(std::string PnickName);
+		void setName(std::string Pname);
+
 		void Disconnect();
 	private:
 		int client_fd;
+		std::string nickName;
+		std::string userName;
 };
 
 #endif //CLIENT_HPP
