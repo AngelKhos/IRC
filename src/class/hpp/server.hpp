@@ -4,9 +4,10 @@
 #include <string>
 #include <netinet/in.h>
 #include "client.hpp"
-#include <vector>
+#include <set>
 #include <map>
 #include "epoll.hpp"
+#include "channel.hpp"
 
 class Server
 {
@@ -55,6 +56,7 @@ class Server
 		sockaddr_in address; // TODO set/get for this
 		std::map<int, Client*> clients; // --> int = client fd, Client = Class client
 		Epoll epoll;
+		//std::set<Channel> channels;
 };
 
 #endif //SERVER_HPP
