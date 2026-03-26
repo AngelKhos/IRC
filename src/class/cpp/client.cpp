@@ -6,17 +6,23 @@
 //constructor/destructor
 
 Client::Client() :
-	client_fd(-1)
+	client_fd(-1),
+	nickName("user"),
+	userName("user")
 {
 }
 
 Client::Client(const Client &src)
 {
 	client_fd = src.getClientFd();
+	userName = src.getName();
+	nickName = src.getNickName();
 }
 
 Client::Client(int fd) :
-	client_fd(fd)
+	client_fd(fd),
+	nickName("user"),
+	userName("user")
 {
 }
 
@@ -31,10 +37,10 @@ Client::~Client()
 int Client::getClientFd() const { return (client_fd); }
 void Client::setClientFd(int fd) { client_fd = fd; }
 
-std::string Client::getNickName() {return (nickName);}
+std::string Client::getNickName() const {return (nickName);}
 void Client::setNickName(std::string PnickName) {nickName = PnickName;}
 
-std::string Client::getName() {return (userName);}
+std::string Client::getName() const {return (userName);}
 void Client::setName(std::string Pname) {userName = Pname;}
 
 //=============================================
@@ -42,6 +48,6 @@ void Client::setName(std::string Pname) {userName = Pname;}
 
 void Client::Disconnect()
 {
-	std::cout << "client disconnected" << std::endl;
+	std::cout << "client " << client_fd << " disconnected" << std::endl;
 	close(client_fd);
 }

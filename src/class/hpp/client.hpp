@@ -1,6 +1,8 @@
 #ifndef CLIENT_HPP
 #define CLIENT_HPP
 
+#include <string>
+
 class Client
 {
 	public:
@@ -14,9 +16,10 @@ class Client
 		int getClientFd() const;
 		void setClientFd(int fd);
 
-		std::string getNickName();
-		std::string getName();
+		std::string getNickName() const;
 		void setNickName(std::string PnickName);
+
+		std::string getName() const;
 		void setName(std::string Pname);
 
 		void Disconnect();
