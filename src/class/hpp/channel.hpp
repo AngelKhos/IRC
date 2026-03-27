@@ -16,6 +16,9 @@ class Channel
 		Channel(std::string Pname);
 		~Channel();
 
+		std::string getTopic() const;
+		void setTopic(std::string Ptopic);
+
 		void addUser(Client &u);
 		void delUser(Client &u);
 		void opUser(Client &u);
@@ -24,6 +27,7 @@ class Channel
 
 		bool checkName(std::string Pname);
 
+		std::string topic;
 		std::string name;
 		std::set<Client *> op;
 		std::set<Client *> users;
