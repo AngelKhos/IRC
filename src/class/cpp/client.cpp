@@ -14,9 +14,9 @@ Client::Client() :
 
 Client::Client(const Client &src)
 {
-	client_fd = src.getClientFd();
-	userName = src.getName();
-	nickName = src.getNickName();
+	client_fd = src.client_fd;
+	userName = src.userName;
+	nickName = src.nickName;
 }
 
 Client::Client(int fd) :
@@ -29,19 +29,6 @@ Client::Client(int fd) :
 Client::~Client()
 {
 }
-
-//=============================================
-//seter/geter
-
-//client_fd
-int Client::getClientFd() const { return (client_fd); }
-void Client::setClientFd(int fd) { client_fd = fd; }
-
-std::string Client::getNickName() const {return (nickName);}
-void Client::setNickName(std::string PnickName) {nickName = PnickName;}
-
-std::string Client::getName() const {return (userName);}
-void Client::setName(std::string Pname) {userName = Pname;}
 
 //=============================================
 //method

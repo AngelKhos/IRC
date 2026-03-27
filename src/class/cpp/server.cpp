@@ -115,6 +115,15 @@ void Server::disconnectClient(int n)
 	clients.erase(epoll.getEventFd(n));
 }
 
+void Server::recvMsg(int fd)
+{
+	
+}
+void Server::sendMsg(int fd)
+{
+	
+}
+
 void Server::loop()
 {
 	while (this->isRunning())
@@ -137,8 +146,8 @@ void Server::loop()
 					std::string sbuff(buff);
 					if (sbuff.find("USER") != std::string::npos)
 					{
-						clients[epoll.getEventFd(n)]->setName(sbuff.substr(5, 13));
-						std::cout << "username set --> " << clients[epoll.getEventFd(n)]->getName() << std::endl;
+						clients[epoll.getEventFd(n)]->userName = sbuff.substr(5, 13);
+						std::cout << "username set --> " << clients[epoll.getEventFd(n)]->userName << std::endl;
 					}
 					//si -1 ca a pété
 					if (read_size == 0) // client a disconnect
