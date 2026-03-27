@@ -7,6 +7,8 @@
 #include <set>
 #include "client.hpp"
 
+#define CH_MAX_MANE_LENGHT 200
+
 class Channel
 {
 	public:
@@ -19,6 +21,9 @@ class Channel
 		void opUser(Client &u);
 		void unopUser(Client &u);
 	private:
+
+		bool checkName(std::string Pname);
+
 		std::string name;
 		std::set<Client *> op;
 		std::set<Client *> users;

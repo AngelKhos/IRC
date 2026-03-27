@@ -42,6 +42,9 @@ class Server
 
 		void startServer();
 		void stopServer();
+
+		void addChannel(Client &Pclient, std::string Pname);
+		void addChannel(std::string Pname);
 		
 		void loop();
 	private:
@@ -56,7 +59,7 @@ class Server
 		sockaddr_in address; // TODO set/get for this
 		std::map<int, Client*> clients; // --> int = client fd, Client = Class client
 		Epoll epoll;
-		//std::set<Channel> channels;
+		std::set<Channel *> channels;
 };
 
 #endif //SERVER_HPP

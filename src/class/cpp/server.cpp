@@ -43,6 +43,20 @@ bool Server::isRunning() { return (run); }
 //===============================================
 //method
 
+void Server::addChannel(Client &Pclient, std::string Pname)
+{
+	Channel *c = new Channel(Pname);
+	c->addUser(Pclient);
+	c->opUser(Pclient);
+	channels.insert(c);
+}
+
+void Server::addChannel(std::string Pname)
+{
+	Channel *c = new Channel(Pname);
+	channels.insert(c);
+}
+
 void Server::startServer()
 {
 	std::cout << "server starting..." << std::endl;
@@ -74,6 +88,7 @@ void Server::stopServer()
 	// }
 	clients.clear();
 	//faudra boucler sur la map pour delete les clients
+	//et sur le set des channels pour les del aussi
 	if (epoll.getEpollFd() != -1)
 		close(epoll.getEpollFd());
 	close(server_fd);
