@@ -3,6 +3,15 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <iostream>
+#include <signal.h>
+
+void handleSignal(Server serv)
+{
+	sigset_t Sigset;
+
+	sigemptyset(&Sigset);
+	sigaddset(&Sigset, SIGINT);
+}
 
 int main(int argc, char **argv)
 {
