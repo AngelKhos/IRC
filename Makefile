@@ -1,4 +1,4 @@
-NAME = IRC
+NAME = ircserv
 DIR_OBJS = .objs
 DIR_DEPS = .deps
 SRC = \

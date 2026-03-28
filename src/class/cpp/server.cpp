@@ -123,11 +123,11 @@ int Server::recvMsg(int fd)
 	int read_size;
 
 	bzero(buff, 512);
-	while (clients[fd]->recv_buff.find("\r\n") == std::string::npos)
-	{
+	//while (clients[fd]->recv_buff.find("\r\n") == std::string::npos)
+	//{
 		read_size = recv(fd, buff, 512, 0);
-		clients[fd]->recv_buff += buff;
-	}
+		clients[fd]->recv_buff = buff;
+	//}
 	bzero(buff, 512);
 	return read_size;
 }
@@ -162,19 +162,19 @@ void Server::loop()
 						disconnectClient(epoll.getEventFd(n));
 					else
 					{ 
-						std::cout << clients[epoll.getEventFd(n)]->recv_buff << std::endl;
+						std::cout << clients[epoll.getEventFd(n)]->recv_buff;
 						clients[epoll.getEventFd(n)]->recv_buff = "";
 					}
 
 				}
-				if (clients[epoll.getEventFd(n)]->send_buff.find("USER", 0) == 0)
-				{
+				// if (clients[epoll.getEventFd(n)]->send_buff.find("USER", 0) == 0)
+				// {
 				
-				}
-				else if (clients[epoll.getEventFd(n)]->send_buff.find("PRIVMSG", 0) == 0)
-				{
+				// }
+				// else if (clients[epoll.getEventFd(n)]->send_buff.find("PRIVMSG", 0) == 0)
+				// {
 
-				}
+				// }
 				// if (epoll.getEvent(n) & EPOLLOUT)
 				// {
 				// 	std::cout << "client " << epoll.getEventFd(n) << " is waiting for reply" << std::endl;
