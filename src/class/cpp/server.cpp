@@ -107,22 +107,38 @@ void Server::connectClient()
 	}
 }
 
-void Server::disconnectClient(int n)
+void Server::disconnectClient(int fd)
 {
-	epoll.ctl_del(epoll.getEventFd(n));
-	clients[epoll.getEventFd(n)]->Disconnect();
-	delete clients[epoll.getEventFd(n)];
-	clients.erase(epoll.getEventFd(n));
+	epoll.ctl_del(fd);
+	clients[fd]->Disconnect();
+	delete clients[fd];
+	clients.erase(fd);
 }
 
-void Server::recvMsg(int fd)
+int Server::recvMsg(int fd)
 {
-	
+	char buff[512];
+	int read_size;
+
+	bzero(buff, 512);
+	while (clients[fd]->recv_buff.find("\r\n") == std::string::npos)
+	{
+		read_size = recv(fd, buff, 512, 0);
+		clients[fd]->recv_buff += buff;
+	}
+	bzero(buff, 512);
+	return read_size;
 }
-void Server::sendMsg(int fd)
-{
+
+// int Server::tokenizeMsg(int fd)
+// {
+// 	clients[fd]->recv_buff
+// }
+
+// void Server::sendMsg(int fd)
+// {
 	
-}
+// }
 
 void Server::loop()
 {
@@ -136,30 +152,32 @@ void Server::loop()
 				connectClient();
 			else // si c'est pas serv, ca veut dire client et la c'est full roue libre
 			{
-				char buff[4096];
-				bzero(buff, 4096);
-				int read_size = 0;
+				int oread;
 				if (epoll.getEvent(n) & EPOLLIN) //si serveur a recu mesage de client[id = fd]
 				{
-					std::cout << "client " << epoll.getEventFd(n) << " tried to communicate" << std::endl;
-					read_size = recv(epoll.getEventFd(n), buff, 4096, 0); //meme que read mais pour les sockets (rtfm)
-					std::string sbuff(buff);
-					if (sbuff.find("USER") != std::string::npos)
-					{
-						clients[epoll.getEventFd(n)]->userName = sbuff.substr(5, 13);
-						std::cout << "username set --> " << clients[epoll.getEventFd(n)]->userName << std::endl;
+					oread = recvMsg(epoll.getEventFd(n));
+					if (oread == 0)
+						disconnectClient(epoll.getEventFd(n));
+					else
+					{ 
+						std::cout << clients[epoll.getEventFd(n)]->recv_buff << std::endl;
+						clients[epoll.getEventFd(n)]->recv_buff = "";
 					}
-					//si -1 ca a pété
-					if (read_size == 0) // client a disconnect
-						disconnectClient(n);
-					else // traitement du msg
-						std::cout << buff << std::endl;
+
 				}
-				if (epoll.getEvent(n) & EPOLLOUT && read_size != 0)
+				if (clients[epoll.getEventFd(n)]->send_buff.find("USER", 0) == 0)
 				{
-					std::cout << "client " << epoll.getEventFd(n) << " is waiting for reply" << std::endl;
-					//send(epoll.getEventFd(n), buff, read_size, 0);
+				
 				}
+				else if (clients[epoll.getEventFd(n)]->send_buff.find("PRIVMSG", 0) == 0)
+				{
+
+				}
+				// if (epoll.getEvent(n) & EPOLLOUT)
+				// {
+				// 	std::cout << "client " << epoll.getEventFd(n) << " is waiting for reply" << std::endl;
+				// 	//send(epoll.getEventFd(n), buff, read_size, 0);
+				// }
 				//io test for epoll event reception
 
 				//TODO irc routine for clients (JOIN general, broadcast msg)

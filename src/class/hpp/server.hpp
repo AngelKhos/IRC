@@ -46,14 +46,15 @@ class Server
 		void addChannel(Client &Pclient, std::string Pname);
 		void addChannel(std::string Pname);
 
-		void recvMsg(int fd);
-		void sendMsg(int fd);
+		int recvMsg(int fd);
+		int tokenizeMsg(int fd);
+		//void sendMsg(int fd);
 		
 		void loop();
 	private:
 
 		void connectClient();
-		void disconnectClient(int n);
+		void disconnectClient(int fd);
 
 		int server_fd;
 		unsigned short port;
