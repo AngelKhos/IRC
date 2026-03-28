@@ -19,7 +19,7 @@ Server::Server(unsigned short Pport, std::string Ppass) :
 
 Server::~Server()
 {
-	this->stopServer();
+	this->stopServer(0);
 }
 
 //===============================================
@@ -79,8 +79,10 @@ void Server::startServer()
 	epoll.ctl_add(server_fd, EPOLLIN);
 	std::cout << "the server is on" << std::endl;
 }
-void Server::stopServer()
+void Server::stopServer(int x)
 {
+	std::cout << "server off :(((((" << std::endl;
+	(void)x;
 	// for (unsigned long int i = 0; i < clients.size(); i++)
 	// {
 	// 	Client &c = clients[i];
@@ -117,11 +119,11 @@ void Server::disconnectClient(int n)
 
 void Server::recvMsg(int fd)
 {
-	
+	(void)fd;
 }
 void Server::sendMsg(int fd)
 {
-	
+	(void)fd;
 }
 
 void Server::loop()

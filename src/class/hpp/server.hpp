@@ -41,7 +41,7 @@ class Server
 		bool isRunning();
 
 		void startServer();
-		void stopServer();
+		void stopServer(int x);
 
 		void addChannel(Client &Pclient, std::string Pname);
 		void addChannel(std::string Pname);

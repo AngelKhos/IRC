@@ -4,7 +4,8 @@
 
 void NumRpl::rpl001(int fd, str servName, str nick)
 {
-    str rpl = str("welcome to the ") +
+    str rpl = str("001 ") + 
+        str("welcome to the ") +
         servName +  str(" Internet Relay Chat Network ") +
         str(" ") + nick;
     send(fd, rpl.c_str(), rpl.size(), 0);
@@ -12,6 +13,8 @@ void NumRpl::rpl001(int fd, str servName, str nick)
 
 void NumRpl::err421(int fd, str com)
 {
-    str rpl = com + str(" :Unknow command");
+    str rpl = str("421 ") + 
+        com + str(" :Unknow command");
     send(fd, rpl.c_str(), rpl.size(), 0);
 }
+
