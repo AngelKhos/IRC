@@ -23,9 +23,10 @@ class Channel
 		void delUser(Client &u);
 		void opUser(Client &u);
 		void unopUser(Client &u);
+
+		static bool checkName(std::string Pname);
 	private:
 		
-		bool checkName(std::string Pname);
 	
 		std::string topic;
 		std::string name;

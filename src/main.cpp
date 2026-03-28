@@ -5,16 +5,11 @@
 #include <iostream>
 #include <signal.h>
 
-void handleSignal(Server serv)
-{
-	sigset_t Sigset;
-
-	sigemptyset(&Sigset);
-	sigaddset(&Sigset, SIGINT);
-}
+void sigHandler(int) {}
 
 int main(int argc, char **argv)
 {
+	signal(SIGINT, sigHandler);
 	if (argc != 3)
 		return (1);
 	Server ircServer((unsigned short)atoi(argv[1]), argv[2]);
