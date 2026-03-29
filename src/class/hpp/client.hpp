@@ -9,6 +9,8 @@ typedef struct Client
 		Client(const Client &src);
 		Client(int fd);
 		~Client();
+		int Recv();
+		int Send();
 		void Disconnect();
 		int client_fd;
 		std::string nickName;

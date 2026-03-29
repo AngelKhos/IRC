@@ -55,13 +55,14 @@ class Server
 
 		void connectClient();
 		void disconnectClient(int fd);
+		void updateClient(int fd, std::string message);
 
 		int server_fd;
 		unsigned short port;
 		std::string password;
 		bool run;
 		sockaddr_in address; // TODO set/get for this
-		std::map<int, Client*> clients; // --> int = client fd, Client = Class client
+		std::map<int ,Client *> clients; // --> int = client fd, Client = Class client
 		Epoll epoll;
 		std::set<Channel *> channels;
 };

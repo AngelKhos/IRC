@@ -104,7 +104,7 @@ void Server::connectClient()
 	{
 		Client  *c = new Client(client_fd);
 		clients[client_fd] = c; //init client très sommaire (TODO)
-		epoll.ctl_add(client_fd, EPOLLIN | EPOLLOUT); //ajoute le client_fd a la liste de fd que epoll doit surveiller
+		epoll.ctl_add(client_fd, EPOLLIN); //ajoute le client_fd a la liste de fd que epoll doit surveiller
 		std::cout << "client connected" << std::endl;
 	}
 }
@@ -117,19 +117,11 @@ void Server::disconnectClient(int fd)
 	clients.erase(fd);
 }
 
-int Server::recvMsg(int fd)
+void Server::updateClient(int fd, std::string message)
 {
-	char buff[512];
-	int read_size;
-
-	bzero(buff, 512);
-	//while (clients[fd]->recv_buff.find("\r\n") == std::string::npos)
-	//{
-		read_size = recv(fd, buff, 512, 0);
-		clients[fd]->recv_buff = buff;
-	//}
-	bzero(buff, 512);
-	return read_size;
+	if (clients[fd]->send_buff == "")
+		epoll.ctl_mod(fd, EPOLLIN | EPOLLOUT);
+	clients[fd]->send_buff += message;
 }
 
 // int Server::tokenizeMsg(int fd)
@@ -154,19 +146,43 @@ void Server::loop()
 				connectClient();
 			else // si c'est pas serv, ca veut dire client et la c'est full roue libre
 			{
-				int oread;
+				int bytes_read;
 				if (epoll.getEvent(n) & EPOLLIN) //si serveur a recu mesage de client[id = fd]
 				{
-					oread = recvMsg(epoll.getEventFd(n));
-					if (oread == 0)
+					bytes_read = clients[epoll.getEventFd(n)]->Recv();
+					if (bytes_read == 0)
+					{
 						disconnectClient(epoll.getEventFd(n));
+						continue ;
+					}
 					else
 					{ 
 						std::cout << clients[epoll.getEventFd(n)]->recv_buff;
+						for (std::map<int, Client *>::iterator it = clients.begin(); it != clients.end(); it++) //test broadcast
+						{
+							updateClient(it->second->client_fd, clients[epoll.getEventFd(n)]->recv_buff);
+						}
+						// PROCESS DES MESSAGES
 						clients[epoll.getEventFd(n)]->recv_buff = "";
 					}
-
 				}
+
+
+				
+
+
+				if (epoll.getEvent(n) & EPOLLOUT) // send message to client that can receive it
+				{
+					int byte_sent;
+					
+					byte_sent = clients[epoll.getEventFd(n)]->Send();
+					if (byte_sent <= 0)
+						std::cout << "ah, dommage" << std::endl;
+					epoll.ctl_mod(epoll.getEventFd(n), EPOLLIN);
+				}
+
+
+
 				// if (clients[epoll.getEventFd(n)]->send_buff.find("USER", 0) == 0)
 				// {
 				
@@ -175,11 +191,7 @@ void Server::loop()
 				// {
 
 				// }
-				// if (epoll.getEvent(n) & EPOLLOUT)
-				// {
-				// 	std::cout << "client " << epoll.getEventFd(n) << " is waiting for reply" << std::endl;
-				// 	//send(epoll.getEventFd(n), buff, read_size, 0);
-				// }
+				
 				//io test for epoll event reception
 
 				//TODO irc routine for clients (JOIN general, broadcast msg)
