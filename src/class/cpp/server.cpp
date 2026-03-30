@@ -117,21 +117,20 @@ void Server::disconnectClient(int fd)
 	clients.erase(fd);
 }
 
-void Server::updateClient(int fd, std::string message)
+void Server::updateClient(int fd, std::string message) //fait en sorte que si on a qqch a envoyer, ca set EPOLLOUT
 {
-	if (clients[fd]->send_buff == "")
+	if (clients[fd]->send_buff == "") //si le buffer est vide ca veux dire que yavais rien a envoyer avant
 		epoll.ctl_mod(fd, EPOLLIN | EPOLLOUT);
 	clients[fd]->send_buff += message;
 }
 
-// int Server::tokenizeMsg(int fd)
+// int Server::parseMsg(int fd)
 // {
-// 	clients[fd]->recv_buff
-// }
+// 	if (!clients[fd]->recv_buff.empty())
+// 	{
 
-// void Server::sendMsg(int fd)
-// {
-	
+// 	}
+// 	return 1;
 // }
 
 void Server::loop()
@@ -162,14 +161,10 @@ void Server::loop()
 						{
 							updateClient(it->second->client_fd, clients[epoll.getEventFd(n)]->recv_buff);
 						}
-						// PROCESS DES MESSAGES
+						// REMPLACER LE ELSE PAR LE PROCESS DES MESSAGES
 						clients[epoll.getEventFd(n)]->recv_buff = "";
 					}
 				}
-
-
-				
-
 
 				if (epoll.getEvent(n) & EPOLLOUT) // send message to client that can receive it
 				{
@@ -177,24 +172,11 @@ void Server::loop()
 					
 					byte_sent = clients[epoll.getEventFd(n)]->Send();
 					if (byte_sent <= 0)
-						std::cout << "ah, dommage" << std::endl;
+						std::cout << "ah, dommage" << std::endl; //flemme de faire le check
 					epoll.ctl_mod(epoll.getEventFd(n), EPOLLIN);
 				}
 
-
-
-				// if (clients[epoll.getEventFd(n)]->send_buff.find("USER", 0) == 0)
-				// {
-				
-				// }
-				// else if (clients[epoll.getEventFd(n)]->send_buff.find("PRIVMSG", 0) == 0)
-				// {
-
-				// }
-				
-				//io test for epoll event reception
-
-				//TODO irc routine for clients (JOIN general, broadcast msg)
+				//TODO irc routine for clients ()
 			}
 		}
 	}

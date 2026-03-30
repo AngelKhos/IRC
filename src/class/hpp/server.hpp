@@ -47,11 +47,13 @@ class Server
 		void addChannel(std::string Pname);
 
 		int recvMsg(int fd);
-		int tokenizeMsg(int fd);
+		int parseMsg(int fd);
 		//void sendMsg(int fd);
 		
 		void loop();
 	private:
+
+		void pass(std::string args, int client_fd);
 
 		void connectClient();
 		void disconnectClient(int fd);
