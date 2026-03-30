@@ -52,6 +52,9 @@ class Server
 		//void sendMsg(int fd);
 		
 		void loop();
+		typedef void (Server::*command)(std::string, int);
+		std::map<std::string, command> commands;
+		void initCommand();
 
 	private:
 		

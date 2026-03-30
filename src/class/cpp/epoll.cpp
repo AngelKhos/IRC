@@ -1,5 +1,6 @@
 #include "epoll.hpp"
 #include <unistd.h>
+ #include <errno.h>
 
 Epoll::Epoll() : fd(-1) {
 }
@@ -41,6 +42,8 @@ void Epoll::ctl_del(int _fd)
 int Epoll::wait()
 {
 	int ret = epoll_wait(fd, event_list, 10, 10000);
+	if (errno == EINTR)
+		throw epollWaitInterruptException();
 	if (ret == -1)
 		throw epollWaitErrorException();
 	return (ret);
@@ -49,6 +52,11 @@ int Epoll::wait()
 const char *Epoll::epollWaitErrorException::what() const throw()
 {
 	return ("epoll wait fail");
+}
+
+const char *Epoll::epollWaitInterruptException::what() const throw()
+{
+	return ("epoll wait interrupt");
 }
 
 const char *Epoll::epollAddErrorException::what() const throw()

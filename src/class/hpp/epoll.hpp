@@ -24,6 +24,9 @@ class Epoll
 		class epollWaitErrorException : public std::exception {
 			public:
 				virtual const char *what() const throw(); };
+		class epollWaitInterruptException : public std::exception {
+			public:
+				virtual const char *what() const throw(); };
 		class epollAddErrorException : public std::exception {
 			public:
 				virtual const char *what() const throw(); };

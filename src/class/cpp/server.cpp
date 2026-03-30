@@ -10,12 +10,22 @@
 //===============================================
 //constructor/destructor
 
+void Server::initCommand()
+{
+	commands["PASS"] = &Server::pass;
+	commands["NICK"] = &Server::nick;
+	commands["USER"] = &Server::user;
+	commands["JOIN"] = &Server::join;
+}
+
 Server::Server(unsigned short Pport, std::string Ppass) :
 	server_fd(-1),
 	port(Pport),
 	password(Ppass),
 	run(false)
-{}
+{
+	initCommand();
+}
 
 Server::~Server()
 {
@@ -88,9 +98,11 @@ void Server::stopServer(int x)
 	// 	Client &c = clients[i];
 	// 	close(c.getClientFd());
 	// }
-	clients.clear();
-	//faudra boucler sur la map pour delete les clients
-	//et sur le set des channels pour les del aussi
+	for (std::map<int, Client *>::iterator it = clients.begin(); it != clients.end(); it++) //test broadcast
+	{
+		disconnectClient(it->second->client_fd);
+	}
+	//faudra boucler sur le set des channels pour les del aussi
 	if (epoll.getEpollFd() != -1)
 		close(epoll.getEpollFd());
 	close(server_fd);
@@ -137,8 +149,16 @@ void Server::loop()
 {
 	while (this->isRunning())
 	{
-		const int nb_event = epoll.wait(); // attends qu'un fd bouge son cul
-		
+		int nb_event = 0;
+		try
+		{
+			nb_event = epoll.wait(); // attends qu'un fd bouge son cul
+		}
+		catch(const std::exception& e)
+		{
+			std::cout << "Server internal error: " << e.what() << '\n';
+			return ;
+		}
 		for (int n = 0; n < nb_event; n++)
 		{
 			if (epoll.getEventFd(n) == server_fd) //si c'est le server qui essaye de communiquer ca veut dire que ya un nouveau client dans listen
