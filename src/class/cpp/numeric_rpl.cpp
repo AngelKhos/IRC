@@ -5,16 +5,16 @@
 //===============================================================
 //reply
 
-void NumRpl::rpl001(int fd, str servName, str nick)
+void NumRpl::rpl001(str buff, str servName, str nick)
 {
 	str rpl = str("001 ") + nick +
 		str("Welcome to the ") +
 		servName +  str(" Internet Relay Chat Network ") +
 		str(" ") + nick;
-	send(fd, rpl.c_str(), rpl.size(), 0);
+	buff += rpl + str("\r\n"); 
 }
 
-void NumRpl::rpl353(int fd,Channel ch, str nick)
+void NumRpl::rpl353(str buff,Channel ch, str nick)
 {
 	str rpl = str("353 ") + nick +
 	ch.getName() + str(" :");
@@ -24,22 +24,22 @@ void NumRpl::rpl353(int fd,Channel ch, str nick)
 		rpl += "@";
 		rpl += (*it)->nickName;
 	}
-	send(fd, rpl.c_str(), rpl.size(), 0);
+	buff += rpl + str("\r\n"); 
 }
 
-void NumRpl::rpl332(int fd, Channel ch, str nick)
+void NumRpl::rpl332(str buff, Channel ch, str nick)
 {
 	str rpl = str("332 ") + nick + 
 	ch.getName() + str(" :") + ch.getTopic();
-	send(fd, rpl.c_str(), rpl.size(), 0);
+	buff += rpl + str("\r\n"); 
 }
 
 //===============================================================
 //error
 
-void NumRpl::err421(int fd, str com, str nick)
+void NumRpl::err421(str buff, str com, str nick)
 {
 	str rpl = str("421 ") + nick + 
 		com + str(" :Unknown command");
-	send(fd, rpl.c_str(), rpl.size(), 0);
+	buff += rpl + str("\r\n"); 
 }

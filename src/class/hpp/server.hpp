@@ -51,6 +51,11 @@ class Server
 		//void sendMsg(int fd);
 		
 		void loop();
+
+		//commands
+		void cmd_join(Client c, std::string ChName);
+		void cmd_nick(Client c, std::string nick);
+		void cmd_user(Client c, std::string name);
 	private:
 
 		void pass(std::string args, int client_fd);
