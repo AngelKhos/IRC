@@ -1,7 +1,9 @@
-#ifndef NUMERCI_RPL_HPP
+#ifndef NUMERIC_RPL_HPP
 #define NUMERIC_RPL_HPP
 
 #include <string>
+#include "channel.hpp"
+#include "client.hpp"
 
 typedef std::string str;
 

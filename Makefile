@@ -7,7 +7,8 @@ SRC = \
 	src/class/cpp/server.cpp \
 	src/class/cpp/client.cpp \
 	src/class/cpp/epoll.cpp \
-	src/class/cpp/channel.cpp
+	src/class/cpp/channel.cpp \
+	src/class/cpp/numeric_rpl.cpp
 
 INCS = \
 	-Isrc/class/hpp/

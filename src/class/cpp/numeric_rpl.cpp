@@ -22,11 +22,11 @@ void NumRpl::rpl353(int fd,Channel ch, str nick)
 {
 	str rpl = str("353 ") + nick +
 		ch.getName() + str(" :");
-	for (Client *c : ch.getUsers())
+	for (std::set<Client *>::iterator it = ch.getUsers().begin(); it != ch.getUsers().end(); it++)
 	{
-		if (ch.getOpUsers().count(c) > 0)
+		if (ch.getOpUsers().count(*it) > 0)
 			rpl += "@";
-		rpl += c->nickName;
+		rpl += (*it)->nickName;
 	}
 	send(fd, rpl.c_str(), rpl.size(), 0);
 }
