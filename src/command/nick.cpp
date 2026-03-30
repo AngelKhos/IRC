@@ -1,6 +1,7 @@
 #include "server.hpp"
 
-void Server::cmd_nick(Client c, std::string nick)
+void Server::nick(std::string args, int client_fd)
 {
-	c.nickName = nick;
+	(void)args;
+	(void)client_fd;
 }

@@ -1,9 +1,7 @@
 #include "server.hpp"
 
-void Server::cmd_user(Client c, std::string name, std::string hostname, std::string serverName, std::string realName)
+void Server::user(std::string args, int client_fd)
 {
-	c.userName = name;
-	(void)hostname;
-	(void)serverName;
-	(void)realName;
+	(void)args;
+	(void)client_fd;
 }

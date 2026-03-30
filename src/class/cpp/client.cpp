@@ -9,8 +9,8 @@
 
 Client::Client() :
 	client_fd(-1),
-	nickName("user"),
-	userName("user"),
+	nickName("*"),
+	userName("*"),
 	has_pass(false),
 	has_nick(false),
 	has_user(false)
@@ -28,8 +28,8 @@ Client::Client(const Client &src)
 
 Client::Client(int fd) :
 	client_fd(fd),
-	nickName("user"),
-	userName("user"),
+	nickName("*"),
+	userName("*"),
 	has_pass(false),
 	has_nick(false),
 	has_user(false)

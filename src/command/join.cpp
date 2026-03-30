@@ -1,7 +1,7 @@
 #include "server.hpp"
 
-void Server::cmd_join(Client c, std::string ChName)
+void Server::join(std::string args, int client_fd)
 {
-	(void)c;
-	(void)ChName;
+	(void)args;
+	(void)client_fd;
 }

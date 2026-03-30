@@ -8,6 +8,7 @@
 #include <map>
 #include "epoll.hpp"
 #include "channel.hpp"
+#include "numeric_rpl.hpp"
 
 class Server
 {
@@ -55,9 +56,9 @@ class Server
 	private:
 		
 		//commands
-		void cmd_join(Client c, std::string ChName);
-		void cmd_nick(Client c, std::string nick);
-		void cmd_user(Client c, std::string name, std::string hostname, std::string serverName, std::string realName);
+		void join(std::string args, int client_fd);
+		void nick(std::string args, int client_fd);
+		void user(std::string args, int client_fd);
 		void pass(std::string args, int client_fd);
 
 		void connectClient();
@@ -71,6 +72,7 @@ class Server
 		sockaddr_in address; // TODO set/get for this
 		std::map<int ,Client *> clients; // --> int = client fd, Client = Class client
 		Epoll epoll;
+		NumRpl Rep;
 		std::set<Channel *> channels;
 };
 
