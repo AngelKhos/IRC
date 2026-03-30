@@ -11,7 +11,7 @@ class NumRpl
 {
 	public:
 		static void rpl001(int fd,str servName, str nick); //rpl_welcome
-		static void rpl353(int fd,Channel ch, str nick); //rpl_namreply
+		static void rpl353(int fd,Channel ch, str nick); //rpl_namereply
 		static void rpl332(int fd, Channel ch, str nick); //rpl_topic
 
 		static void err421(int fd, str com, str nick); //err_unkown_command
