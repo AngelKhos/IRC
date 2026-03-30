@@ -8,7 +8,12 @@ SRC = \
 	src/class/cpp/client.cpp \
 	src/class/cpp/epoll.cpp \
 	src/class/cpp/channel.cpp \
-	src/class/cpp/numeric_rpl.cpp
+	src/class/cpp/numeric_rpl.cpp \
+	\
+	src/command/pass.cpp \
+	src/command/join.cpp \
+	src/command/nick.cpp \
+	src/command/user.cpp
 
 INCS = \
 	-Isrc/class/hpp/

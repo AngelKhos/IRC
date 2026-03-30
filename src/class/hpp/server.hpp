@@ -55,7 +55,7 @@ class Server
 		//commands
 		void cmd_join(Client c, std::string ChName);
 		void cmd_nick(Client c, std::string nick);
-		void cmd_user(Client c, std::string name);
+		void cmd_user(Client c, std::string name, std::string hostname, std::string serverName, std::string realName);
 	private:
 
 		void pass(std::string args, int client_fd);

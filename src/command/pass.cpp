@@ -11,18 +11,3 @@ void Server::pass(std::string args, int client_fd)
 
     //si le password est invalide, c'est ignoré
 }
-
-void Server::cmd_join(Client c, std::string ChName)
-{
-	
-}
-
-void Server::cmd_nick(Client c, std::string nick)
-{
-	c.nickName = nick;
-}
-
-void Server::cmd_user(Client c, std::string name)
-{
-	c.userName = name;
-}
