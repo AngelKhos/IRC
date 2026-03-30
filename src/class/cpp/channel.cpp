@@ -16,6 +16,11 @@ Channel::~Channel() {}
 std::string Channel::getTopic() const { return (topic); }
 void Channel::setTopic(std::string Ptopic) { topic = Ptopic; }
 
+std::string Channel::getName() { return (name); }
+
+std::set<Client *> &Channel::getUsers() { return (users); }
+std::set<Client *> &Channel::getOpUsers() { return (op); }
+
 //============================================
 //methode
 

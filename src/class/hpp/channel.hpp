@@ -24,6 +24,10 @@ class Channel
 		void opUser(Client &u);
 		void unopUser(Client &u);
 
+		std::string getName();
+		std::set<Client *> &getUsers();
+		std::set<Client *> &getOpUsers();
+
 		static bool checkName(std::string Pname);
 	private:
 		
