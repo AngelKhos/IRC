@@ -10,6 +10,11 @@
 #include "channel.hpp"
 #include "numeric_rpl.hpp"
 
+typedef struct s_config
+{
+	unsigned int max_channel_users;
+} t_config;
+
 class Server
 {
 	public:
@@ -69,6 +74,7 @@ class Server
 		void updateClient(int fd, std::string message);
 
 		int server_fd;
+		t_config servConfig;
 		unsigned short port;
 		std::string password;
 		bool run;

@@ -7,6 +7,10 @@
 
 typedef std::string str;
 
+//TODO
+//op
+//RPL_YOUREOPER
+
 class NumRpl // les numRpl retournent tous une string qui sera utilisé comme "message" dans updateClient()
 {				// dans les methodes des commandes (server::<command>)
 	public:

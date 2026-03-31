@@ -12,13 +12,7 @@ int main(int argc, char **argv)
 	signal(SIGINT, sigHandler);
 	if (argc != 3)
 		return (1);
-	Server ircServer((unsigned short)atoi(argv[1]), argv[2]);
-
-	std::vector<std::string> vec_test = cmd_split("bonjour ruojnob :hello world");
-	for (std::vector<std::string>::iterator it = vec_test.begin(); it < vec_test.end(); it++)
-	{
-		std::cout << "\"" << *it << "\"" << std::endl;
-	}
+	Server ircServer((unsigned short)atoi(argv[1]), argv[2]);	
 
 	try
 	{
