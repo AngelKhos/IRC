@@ -52,17 +52,17 @@ class Server
 		//void sendMsg(int fd);
 		
 		void loop();
-		typedef void (Server::*command)(std::string, int);
+		typedef void (Server::*command)(std::vector<std::string>, int);
 		std::map<std::string, command> commands;
 		void initCommand();
 
 	private:
 		
 		//commands
-		void join(std::string args, int client_fd);
-		void nick(std::string args, int client_fd);
-		void user(std::string args, int client_fd);
-		void pass(std::string args, int client_fd);
+		void join(std::vector<std::string> args, int client_fd);
+		void nick(std::vector<std::string> args, int client_fd);
+		void user(std::vector<std::string> args, int client_fd);
+		void pass(std::vector<std::string> args, int client_fd);
 
 		void connectClient();
 		void disconnectClient(int fd);
