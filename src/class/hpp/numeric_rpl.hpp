@@ -7,27 +7,12 @@
 
 typedef std::string str;
 
-//TODO
-//for join cmd
-//ERR_NEEDMOREPARAMS -->fait
-//ERR_INVITEONLYCHAN -->fait
-//ERR_NOSUCHCHANNEL -->fait
-
-//for nick cmd
-//ERR_NONICKNAMEGIVEN -->fait
-//ERR_ERRONEUSNICKNAME -->fait
-//ERR_NICKCOLLISION  -->fait
-
-//for user cmd
-//ERR_NEEDMOREPARAMS -->fait
-//ERR_ALREADYREGISTRED -->fait
-
 class NumRpl // les numRpl retournent tous une string qui sera utilisé comme "message" dans updateClient()
 {				// dans les methodes des commandes (server::<command>)
 	public:
 		static const str rpl001(str servName, str nick); //rpl_welcome
-		static const str rpl353(Channel ch, str nick); //rpl_namereply
 		static const str rpl332(Channel ch, str nick); //rpl_topic
+		static const str rpl353(Channel ch, str nick); //rpl_namereply
 
 		static const str err403(str chName, str nick); //err_nosuchchannel
 		static const str err421(str com, str nick); //err_unknown_command
