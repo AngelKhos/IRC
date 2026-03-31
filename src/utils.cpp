@@ -7,7 +7,6 @@ std::vector<std::string> cmd_split(std::string args)
 	std::vector<std::string> vec;
 	for (size_t i = 0; i < args.size(); ++i)
 	{
-		std::cout << "byte :" << args[i] << std::endl;
 		if (args[i] == ':')
 		{
 			args.erase(0, 2);
