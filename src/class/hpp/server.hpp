@@ -79,4 +79,7 @@ class Server
 		std::set<Channel *> channels;
 };
 
+
+std::vector<std::string> cmd_split(std::string args);
+
 #endif //SERVER_HPP

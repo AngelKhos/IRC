@@ -13,7 +13,9 @@ SRC = \
 	src/command/pass.cpp \
 	src/command/join.cpp \
 	src/command/nick.cpp \
-	src/command/user.cpp
+	src/command/user.cpp \
+	\
+	src/utils.cpp
 
 INCS = \
 	-Isrc/class/hpp/
