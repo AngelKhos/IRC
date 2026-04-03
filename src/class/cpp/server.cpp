@@ -174,16 +174,26 @@ void Server::loop()
 						disconnectClient(epoll.getEventFd(n));
 						continue ;
 					}
-					else
-					{ 
+					else if (clients[epoll.getEventFd(n)]->recv_buff.find("\r\n") != std::string::npos)
+					{
+						std::string message = clients[epoll.getEventFd(n)]->recv_buff.substr(0, clients[epoll.getEventFd(n)]->recv_buff.find("\r\n") + 1);
 						std::cout << clients[epoll.getEventFd(n)]->recv_buff;
-						for (std::map<int, Client *>::iterator it = clients.begin(); it != clients.end(); it++) //test broadcast
+						std::vector<std::string> args = cmd_split(message);
+						if (!args.empty() && commands.find(args[0]) != commands.end())
 						{
-							updateClient(it->second->client_fd, clients[epoll.getEventFd(n)]->recv_buff);
+							std::string command = args[0];
+							args.erase(args.begin());
+							(this->*commands[args[0]])(args, epoll.getEventFd(n));
 						}
+						// for (std::map<int, Client *>::iterator it = clients.begin(); it != clients.end(); it++) //test broadcast
+						// {
+						// 	updateClient(it->second->client_fd, clients[epoll.getEventFd(n)]->recv_buff);
+						// }
 						// REMPLACER LE ELSE PAR LE PROCESS DES MESSAGES
-						clients[epoll.getEventFd(n)]->recv_buff = "";
+						clients[epoll.getEventFd(n)]->recv_buff.erase(0, clients[epoll.getEventFd(n)]->recv_buff.find("\r\n") + 2);
 					}
+					else
+						continue ;
 				}
 
 				if (epoll.getEvent(n) & EPOLLOUT) // send message to client that can receive it
