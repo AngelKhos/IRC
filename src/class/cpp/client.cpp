@@ -14,7 +14,7 @@ Client::Client() :
 	has_pass(false),
 	has_nick(false),
 	has_user(false),
-	is_regitered(false)
+	is_registered(false)
 {}
 
 Client::Client(const Client &src)
@@ -25,7 +25,7 @@ Client::Client(const Client &src)
 	has_pass = src.has_pass;
 	has_nick = src.has_nick;
 	has_user = src.has_user;
-	is_regitered = src.is_regitered;
+	is_registered = src.is_registered;
 }
 
 Client::Client(int fd) :
@@ -35,7 +35,7 @@ Client::Client(int fd) :
 	has_pass(false),
 	has_nick(false),
 	has_user(false),
-	is_regitered(false)
+	is_registered(false)
 {}
 
 Client::~Client()

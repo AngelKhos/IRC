@@ -47,9 +47,6 @@ std::string Server::getPassword() { return (password); }
 void Server::setServerFd(int fd) { server_fd = fd; }
 int Server::getServerFd() { return (server_fd); }
 
-//running
-bool Server::isRunning() { return (run); }
-
 //===============================================
 //method
 
@@ -136,14 +133,11 @@ void Server::updateClient(int fd, std::string message) //fait en sorte que si on
 	clients[fd]->send_buff += message;
 }
 
-// int Server::parseMsg(int fd)
-// {
-// 	if (!clients[fd]->recv_buff.empty())
-// 	{
-
-// 	}
-// 	return 1;
-// }
+void Server::registerClient(int fd)
+{
+	clients[fd]->is_registered = true;
+	updateClient(fd, Rep.rpl001(SERVER_NAME, clients[fd]->nickName));
+}
 
 void Server::processCommand(int fd)
 {
@@ -160,7 +154,7 @@ void Server::processCommand(int fd)
 		}
 		else
 		{
-			if (clients[fd]->is_regitered)
+			if (clients[fd]->is_registered)
 				updateClient(fd, Rep.err421(args[0], clients[fd]->nickName));
 		}
 		// for (std::map<int, Client *>::iterator it = clients.begin(); it != clients.end(); it++) //test broadcast
@@ -170,11 +164,13 @@ void Server::processCommand(int fd)
 		// REMPLACER LE ELSE PAR LE PROCESS DES MESSAGES
 		clients[fd]->recv_buff.erase(0, clients[fd]->recv_buff.find("\r\n") + 2);
 	}
+	if (clients[fd]->has_nick && clients[fd]->has_pass && clients[fd]->has_user && !clients[fd]->is_registered)
+		registerClient(fd);
 }
 
 void Server::loop()
 {
-	while (this->isRunning())
+	while (this->run)
 	{
 		int nb_event = 0;
 		try

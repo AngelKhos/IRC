@@ -46,16 +46,13 @@ class Server
 		void setServerFd(int fd);
 		int getServerFd();
 
-		bool isRunning();
-
 		void startServer();
 		void stopServer(int x);
 
 		void addChannel(Client &Pclient, std::string Pname);
 		void addChannel(std::string Pname);
 
-		void processCommand(int fd);
-		//void sendMsg(int fd);
+		
 		
 		void loop();
 		typedef void (Server::*command)(std::vector<std::string>, int);
@@ -73,6 +70,9 @@ class Server
 		void connectClient();
 		void disconnectClient(int fd);
 		void updateClient(int fd, std::string message);
+		void registerClient(int fd);
+
+		void processCommand(int fd);
 
 		int server_fd;
 		t_config servConfig;

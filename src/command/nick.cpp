@@ -38,7 +38,8 @@ void Server::nick(std::vector<std::string> args, int client_fd)
 		updateClient(client_fd, Rep.err436(args[0], clients[client_fd]->nickName));
 	}
 	else
+	{
+		clients[client_fd]->has_nick = true;
 		clients[client_fd]->nickName = args[0];
-	// (void)args;
-	// (void)client_fd;
+	}
 }
