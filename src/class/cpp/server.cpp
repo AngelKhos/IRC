@@ -183,7 +183,7 @@ void Server::loop()
 						{
 							std::string command = args[0];
 							args.erase(args.begin());
-							(this->*commands[args[0]])(args, epoll.getEventFd(n));
+							(this->*commands[command])(args, epoll.getEventFd(n));
 						}
 						// for (std::map<int, Client *>::iterator it = clients.begin(); it != clients.end(); it++) //test broadcast
 						// {
