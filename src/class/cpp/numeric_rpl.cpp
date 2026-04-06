@@ -7,7 +7,7 @@
 
 const str NumRpl::rpl001(str servName, str nick)
 {
-	str rpl = str("001 ") + nick +
+	str rpl = SERVER_NAME + str("001 ") + nick +
 		str(" Welcome to the ") +
 		servName +  str(" Internet Relay Chat Network ") +
 		str(" ") + nick;
@@ -16,7 +16,7 @@ return rpl + str("\r\n");
 
 const str NumRpl::rpl353(Channel ch, str nick)
 {
-	str rpl = str("353 ") + nick + str(" ") +
+	str rpl = SERVER_NAME + str("353 ") + nick + str(" ") +
 	ch.getName() + str(" :");
 	for (std::set<Client *>::iterator it = ch.getUsers().begin(); it != ch.getUsers().end(); it++)
 	{
@@ -29,7 +29,7 @@ const str NumRpl::rpl353(Channel ch, str nick)
 
 const str NumRpl::rpl332(Channel ch, str nick)
 {
-	str rpl = str("332 ") + nick + str(" ") +
+	str rpl = SERVER_NAME + str("332 ") + nick + str(" ") +
 	    ch.getName() + str(" :") + ch.getTopic();
 	return rpl + str("\r\n"); 
 }
@@ -39,54 +39,54 @@ const str NumRpl::rpl332(Channel ch, str nick)
 
 const str NumRpl::err403(str chName, str nick)
 {
-    str rpl = str("403 ") + nick + str(" ") +
+    str rpl = SERVER_NAME + str("403 ") + nick + str(" ") +
         chName + str(" :No such channel");
     return rpl + str("\r\n"); 
 }
 
 const str NumRpl::err421(str com, str nick)
 {
-	str rpl = str("421 ") + nick + str(" ") +
+	str rpl = SERVER_NAME + str("421 ") + nick + str(" ") +
 		com + str(" :Unknown command");
 	return rpl + str("\r\n"); 
 }
 
 const str NumRpl::err431(str nick)
 {
-    str rpl = str("431 ") + nick + str(" :No nickname given");
+    str rpl = SERVER_NAME + str("431 ") + nick + str(" :No nickname given");
     return rpl + str("\r\n");
 }
 
 const str NumRpl::err432(str s, str nick)
 {
-    str rpl = str("432 ") + nick + str(" ") + 
+    str rpl = SERVER_NAME + str("432 ") + nick + str(" ") + 
         s + str(" :Erroneus nickname");
     return rpl + str("\r\n");
 }
 
 const str NumRpl::err436(str s, str nick)
 {
-    str rpl = str("436 ") + nick + str(" ") + 
+    str rpl = SERVER_NAME + str("436 ") + nick + str(" ") + 
         s + str(" :Nickname collision KILL");
     return rpl + str("\r\n");
 }
 
 const str NumRpl::err461(str com, str nick)
 {
-    str rpl = str("461 ") + nick + str(" ") +
+    str rpl = SERVER_NAME + str("461 ") + nick + str(" ") +
         com + str(" :Not enough parameters");
     return rpl + str("\r\n");
 }
 
 const str NumRpl::err462(str nick)
 {
-    str rpl = str("462 ") + nick + str(" :You may not reregister");
+    str rpl = SERVER_NAME + str("462 ") + nick + str(" :You may not reregister");
     return rpl + str("\r\n");
 }
 
 const str NumRpl::err473(Channel ch, str nick)
 {
-    str rpl = str("473 ") + nick + str(" ") +
+    str rpl = SERVER_NAME + str("473 ") + nick + str(" ") +
         ch.getName() + str(" :Cannot join channel (+i)");
     return rpl + str("\r\n");
 }
