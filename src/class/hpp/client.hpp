@@ -23,6 +23,7 @@ typedef struct Client
 		bool has_pass;
 		bool has_nick;
 		bool has_user;
+		bool is_regitered;
 } Client;
 
 #endif //CLIENT_HPP

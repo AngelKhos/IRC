@@ -52,8 +52,7 @@ class Server
 		void addChannel(Client &Pclient, std::string Pname);
 		void addChannel(std::string Pname);
 
-		int recvMsg(int fd);
-		int parseMsg(int fd);
+		void processCommand(int fd);
 		//void sendMsg(int fd);
 		
 		void loop();

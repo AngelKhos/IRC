@@ -145,6 +145,33 @@ void Server::updateClient(int fd, std::string message) //fait en sorte que si on
 // 	return 1;
 // }
 
+void Server::processCommand(int fd)
+{
+	while (clients[fd]->recv_buff.find("\r\n") != std::string::npos)
+	{
+		std::string message = clients[fd]->recv_buff.substr(0, clients[fd]->recv_buff.find("\r\n") + 1);
+		std::cout << clients[fd]->recv_buff;
+		std::vector<std::string> args = cmd_split(message);
+		if (!args.empty() && commands.find(args[0]) != commands.end())
+		{
+			std::string command = args[0];
+			args.erase(args.begin());
+			(this->*commands[command])(args, fd);
+		}
+		else
+		{
+			if (clients[fd]->is_regitered)
+				updateClient(fd, Rep.err421(args[0], clients[fd]->nickName));
+		}
+		// for (std::map<int, Client *>::iterator it = clients.begin(); it != clients.end(); it++) //test broadcast
+		// {
+		// 	updateClient(it->second->client_fd, clients[epoll.getEventFd(n)]->recv_buff);
+		// }
+		// REMPLACER LE ELSE PAR LE PROCESS DES MESSAGES
+		clients[fd]->recv_buff.erase(0, clients[fd]->recv_buff.find("\r\n") + 2);
+	}
+}
+
 void Server::loop()
 {
 	while (this->isRunning())
@@ -175,23 +202,7 @@ void Server::loop()
 						continue ;
 					}
 					else if (clients[epoll.getEventFd(n)]->recv_buff.find("\r\n") != std::string::npos)
-					{
-						std::string message = clients[epoll.getEventFd(n)]->recv_buff.substr(0, clients[epoll.getEventFd(n)]->recv_buff.find("\r\n") + 1);
-						std::cout << clients[epoll.getEventFd(n)]->recv_buff;
-						std::vector<std::string> args = cmd_split(message);
-						if (!args.empty() && commands.find(args[0]) != commands.end())
-						{
-							std::string command = args[0];
-							args.erase(args.begin());
-							(this->*commands[command])(args, epoll.getEventFd(n));
-						}
-						// for (std::map<int, Client *>::iterator it = clients.begin(); it != clients.end(); it++) //test broadcast
-						// {
-						// 	updateClient(it->second->client_fd, clients[epoll.getEventFd(n)]->recv_buff);
-						// }
-						// REMPLACER LE ELSE PAR LE PROCESS DES MESSAGES
-						clients[epoll.getEventFd(n)]->recv_buff.erase(0, clients[epoll.getEventFd(n)]->recv_buff.find("\r\n") + 2);
-					}
+						processCommand(epoll.getEventFd(n));
 					else
 						continue ;
 				}
