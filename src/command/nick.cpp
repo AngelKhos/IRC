@@ -4,12 +4,8 @@ bool CheckValidName(std::string name)
 {
 	std::string spchar = "[]{}-_\\|'^";
 	for (size_t i = 0; i < name.size(); i++)
-	{
-		if (isalnum(name[i]) == 0)
+		if (isalnum(name[i]) == 0 && spchar.find(name[i]) == std::string::npos)
 			return (false);
-		if (spchar.find(name[i]) == std::string::npos)
-			return (false);
-	}
 	return (true);
 }
 
