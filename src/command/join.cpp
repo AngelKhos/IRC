@@ -47,6 +47,11 @@ Channel *getChannelByName(std::string ch, std::set<Channel *>channels)
 
 void Server::join(std::vector<std::string> args, int client_fd)
 {
+	if (!clients[client_fd]->is_registered)
+	{
+		updateClient(client_fd, Rep.err451(clients[client_fd]->nickName));
+		return ;
+	}
 	if (args.empty())
 	{
 		updateClient(client_fd, Rep.err461("JOIN", clients[client_fd]->nickName));
