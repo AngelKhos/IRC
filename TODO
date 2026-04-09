@@ -1,12 +1,9 @@
 finir Channel
     -modes
-    -ban list
 
 commandes
     fix join
     privmsg
-    op
-    ban
     kick
     invite
     topic
