@@ -48,9 +48,16 @@ Channel *getChannelByName(std::string ch, std::set<Channel *>channels)
 	return (NULL);
 }
 
-//TODO chack if the user is in the channel, and if yes replay nothing
-//	   replay notopic if no topic is regiter
-//	   add end names replay
+bool checkUserInChannel(std::string user, std::set<Client *>Clients)
+{
+	for (std::set<Client *>::iterator it = Clients.begin(); it != Clients.end(); it++)
+	{
+		if (user == (*it)->userName)
+			return (true);
+	}
+	return (false);
+}
+
 void Server::join(std::vector<std::string> args, int client_fd)
 {
 	if (!clients[client_fd]->is_registered)
@@ -71,13 +78,19 @@ void Server::join(std::vector<std::string> args, int client_fd)
 	{
 		if (Channel::checkName(*it))
 		{
-			//if (isChannelExist(*it, channels))
 			Channel *ch = getChannelByName(*it, channels);
 			if (ch != NULL)
 			{
-				ch->addUser(*clients[client_fd]);
-				updateClient(client_fd, Rep.rpl353(*ch, clients[client_fd]->nickName));
-				updateClient(client_fd, Rep.rpl332(*ch, clients[client_fd]->nickName));
+				if (!checkUserInChannel(clients[client_fd]->userName, ch->getUsers()))
+				{
+					ch->addUser(*clients[client_fd]);
+					updateClient(client_fd, Rep.rpl353(*ch, clients[client_fd]->nickName));
+					updateClient(client_fd, Rep.rpl366(*ch, clients[client_fd]->nickName));
+					if (ch->getTopic() == "")
+						updateClient(client_fd, Rep.rpl331(*ch, clients[client_fd]->nickName));
+					else
+						updateClient(client_fd, Rep.rpl332(*ch, clients[client_fd]->nickName));
+				}
 			}
 			else
 			{
@@ -86,8 +99,11 @@ void Server::join(std::vector<std::string> args, int client_fd)
 				ch->addUser(*clients[client_fd]);
 				ch->opUser(*clients[client_fd]);
 				updateClient(client_fd, Rep.rpl353(*ch, clients[client_fd]->nickName));
-				updateClient(client_fd, Rep.rpl332(*ch, clients[client_fd]->nickName));
-				//TODO RPL_YOUREOPER
+				updateClient(client_fd, Rep.rpl366(*ch, clients[client_fd]->nickName));
+				if (ch->getTopic() == "")
+					updateClient(client_fd, Rep.rpl331(*ch, clients[client_fd]->nickName));
+				else
+					updateClient(client_fd, Rep.rpl332(*ch, clients[client_fd]->nickName));
 			}
 		}
 		else
