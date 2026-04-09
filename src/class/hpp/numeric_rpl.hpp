@@ -12,8 +12,11 @@ class NumRpl // les numRpl retournent tous une string qui sera utilisé comme "m
 {				// dans les methodes des commandes (server::<command>)
 	public:
 		static const str rpl001(str servName, str nick); //rpl_welcome
+		static const str rpl331(Channel ch, str nick); //rpl_notopic
 		static const str rpl332(Channel ch, str nick); //rpl_topic
+		static const str rpl341(Channel ch, str invNick, str nick); //rpl_inviting
 		static const str rpl353(Channel ch, str nick); //rpl_namereply
+		static const str rpl366(Channel ch, str nick); //rpl_endofnames
 
 		static const str err403(str chName, str nick); //err_nosuchchannel
 		static const str err421(str com, str nick); //err_unknown_command
