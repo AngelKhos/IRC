@@ -1,16 +1,13 @@
-finir Channel
-    -modes
-
 commandes
-    fix join
     privmsg
     kick
     invite
     topic
     mode
+    pars
+    quit
 
 rpl/err
-op
 RPL_YOUREOPER
 
 331     RPL_NOTOPIC

@@ -4,7 +4,7 @@
 //============================================
 //constructor//destructor
 
-Channel::Channel() : name(""), mode(modes_i) {}
+Channel::Channel() : name("") {}
 
 Channel::Channel(std::string Pname) : name(Pname) {}
 
@@ -21,8 +21,6 @@ std::string Channel::getName() { return (name); }
 std::set<Client *> &Channel::getUsers() { return (users); }
 std::set<Client *> &Channel::getOpUsers() { return (op); }
 
-t_chModes Channel::getMode() const { return (mode); }
-
 //============================================
 //methode
 
@@ -31,9 +29,9 @@ bool Channel::checkName(std::string Pname)
 {
 	if (Pname.length() > CH_MAX_MANE_LENGHT)
 		return (false);
-	if (Pname.find(" ") != std::string::npos || Pname.find(",") != std::string::npos)
+	if (Pname.find(" ") != std::string::npos && Pname.find(",") != std::string::npos)
 		return (false);
-	if (Pname[0] != '#' || Pname[0] != '&')
+	if (Pname[0] != '#' && Pname[0] != '&')
 		return (false);
 	return (true);
 }

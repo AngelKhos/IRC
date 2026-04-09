@@ -58,7 +58,8 @@ void Server::join(std::vector<std::string> args, int client_fd)
 		return ;
 	}
 	std::vector<std::string> vec_ch = lil_split(args[0]);
-	std::vector<std::string> vec_pw = lil_split(args[1]);
+	if (args.size() > 1)
+		std::vector<std::string> vec_pw = lil_split(args[1]);
 
 	for (std::vector<std::string>::iterator it = vec_ch.begin(); it < vec_ch.end(); it++)
 	{
