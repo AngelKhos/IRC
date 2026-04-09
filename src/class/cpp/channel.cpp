@@ -4,7 +4,7 @@
 //============================================
 //constructor//destructor
 
-Channel::Channel() : name("") {}
+Channel::Channel() : name(""), mode(modes_i) {}
 
 Channel::Channel(std::string Pname) : name(Pname) {}
 
@@ -20,6 +20,8 @@ std::string Channel::getName() { return (name); }
 
 std::set<Client *> &Channel::getUsers() { return (users); }
 std::set<Client *> &Channel::getOpUsers() { return (op); }
+
+t_chModes Channel::getMode() const { return (mode); }
 
 //============================================
 //methode

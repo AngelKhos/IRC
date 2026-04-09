@@ -14,6 +14,7 @@ SRC = \
 	src/command/join.cpp \
 	src/command/nick.cpp \
 	src/command/user.cpp \
+	src/command/oper.cpp \
 	\
 	src/utils.cpp
 
