@@ -71,6 +71,12 @@ const str NumRpl::err436(str s, str nick)
     return rpl + str("\r\n");
 }
 
+const str NumRpl::err451(str nick)
+{
+    str rpl = SERVER_NAME + str(" 451 ") + nick + str(" : You have not registered");
+    return rpl + str("\r\n");
+}
+
 const str NumRpl::err461(str com, str nick)
 {
     str rpl = SERVER_NAME + str(" 461 ") + nick + str(" ") +

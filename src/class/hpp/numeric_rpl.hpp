@@ -23,6 +23,8 @@ typedef std::string str;
 // 				":- <text>"
 // 376     RPL_ENDOFMOTD
 // 				":End of /MOTD command"
+//451     ERR_NOTREGISTERED
+//                        ":You have not registered"
 
 
 class NumRpl // les numRpl retournent tous une string qui sera utilisé comme "message" dans updateClient()
@@ -37,6 +39,7 @@ class NumRpl // les numRpl retournent tous une string qui sera utilisé comme "m
 		static const str err431(str nick); //err_nonicknamegiven
 		static const str err432(str s, str nick); //err_erroneusnickname
 		static const str err436(str s, str nick); //err_nickcollision
+		static const str err451(str nick); //err_notregistered
 		static const str err461(str com, str nick); //err_needmoreparams
 		static const str err462(str nick); //err_alreadyregistered
 		static const str err473(Channel ch, str nick); //err_inviteonlychannel
