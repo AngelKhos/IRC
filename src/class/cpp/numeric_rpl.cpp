@@ -14,6 +14,27 @@ const str NumRpl::rpl001(str servName, str nick)
 return rpl + str("\r\n"); 
 }
 
+const str NumRpl::rpl331(Channel ch, str nick)
+{
+    str rpl = SERVER_NAME + str(" 331 ") + nick + str(" ") +
+	    ch.getName() + str(" :No topic is set");
+	return rpl + str("\r\n"); 
+}
+
+const str NumRpl::rpl332(Channel ch, str nick)
+{
+	str rpl = SERVER_NAME + str(" 332 ") + nick + str(" ") +
+	    ch.getName() + str(" :") + ch.getTopic();
+	return rpl + str("\r\n"); 
+}
+
+const str NumRpl::rpl341(Channel ch, str invNick, str nick)
+{
+    str rpl = SERVER_NAME + str(" 332 ") + nick + str(" ") +
+	    ch.getName() + str(" ") + invNick;
+	return rpl + str("\r\n"); 
+}
+
 const str NumRpl::rpl353(Channel ch, str nick)
 {
 	str rpl = SERVER_NAME + str(" 353 ") + nick + str(" ") +
@@ -27,12 +48,14 @@ const str NumRpl::rpl353(Channel ch, str nick)
 	return rpl + str("\r\n"); 
 }
 
-const str NumRpl::rpl332(Channel ch, str nick)
+const str NumRpl::rpl366(Channel ch, str nick)
 {
-	str rpl = SERVER_NAME + str(" 332 ") + nick + str(" ") +
-	    ch.getName() + str(" :") + ch.getTopic();
-	return rpl + str("\r\n"); 
+    str rpl = SERVER_NAME + str(" 366 ") + nick + str(" ") +
+	ch.getName() + str(" :End of NAMES list");
+    return rpl + str("\r\n");
 }
+
+
 
 //===============================================================
 //error
