@@ -9,15 +9,6 @@
 
 #define CH_MAX_MANE_LENGHT 200
 
-typedef enum e_chModes
-{
-	modes_i = 0,
-	modes_t,
-	modes_k,
-	modes_o,
-	modes_l
-} t_chModes;
-
 class Channel
 {
 	public:
@@ -37,11 +28,8 @@ class Channel
 		std::set<Client *> &getUsers();
 		std::set<Client *> &getOpUsers();
 
-		t_chModes getMode() const;
-
 		static bool checkName(std::string Pname);
 	private:
-		t_chModes mode;
 		std::string topic;
 		std::string name;
 		std::set<Client *> op;
