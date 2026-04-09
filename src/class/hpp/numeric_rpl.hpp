@@ -11,6 +11,20 @@ typedef std::string str;
 //op
 //RPL_YOUREOPER
 
+//331     RPL_NOTOPIC
+//                        "<channel> :No topic is set"
+
+//341     RPL_INVITING
+//                        "<channel> <nick>"
+
+// 375     RPL_MOTDSTART
+// 				":- <server> Message of the day - "
+// 372     RPL_MOTD
+// 				":- <text>"
+// 376     RPL_ENDOFMOTD
+// 				":End of /MOTD command"
+
+
 class NumRpl // les numRpl retournent tous une string qui sera utilisé comme "message" dans updateClient()
 {				// dans les methodes des commandes (server::<command>)
 	public:
