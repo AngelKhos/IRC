@@ -4,5 +4,4 @@ ircserv
 .deps/
 *.d
 WIZARD_TODO.txt
-TODO
 .vscode
