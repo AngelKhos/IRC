@@ -4,7 +4,7 @@
 //============================================
 //constructor//destructor
 
-Channel::Channel() : name("") {}
+Channel::Channel() : password(""), name("") {}
 
 Channel::Channel(std::string Pname) : name(Pname) {}
 

@@ -30,6 +30,7 @@ class Channel
 
 		static bool checkName(std::string Pname);
 	private:
+		std::string password;
 		std::string topic;
 		std::string name;
 		std::set<Client *> op;

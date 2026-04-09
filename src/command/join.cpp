@@ -7,16 +7,20 @@
 std::vector<std::string> lil_split(std::string args)
 {
 	std::vector<std::string> vec;
-	for (size_t i = 0; i < args.size(); ++i)
+	for (size_t i = 0; i < args.size(); i++)
 	{
 		if (args[i] != ',' && i != args.size() - 1)
 			continue ;
 		else
 		{
-			size_t j = 0;
+			size_t j = 1;
+			size_t j2 = 0;
 			if (args[0] == ',')
-				j++;
-			vec.push_back(args.substr(j, i - j));
+			{
+				j--;
+				j2++;
+			}
+			vec.push_back(args.substr(j2, i + j));
 			args.erase(0, i);
 			i = 0;
 		}
@@ -44,7 +48,9 @@ Channel *getChannelByName(std::string ch, std::set<Channel *>channels)
 	return (NULL);
 }
 
-
+//TODO chack if the user is in the channel, and if yes replay nothing
+//	   replay notopic if no topic is regiter
+//	   add end names replay
 void Server::join(std::vector<std::string> args, int client_fd)
 {
 	if (!clients[client_fd]->is_registered)
