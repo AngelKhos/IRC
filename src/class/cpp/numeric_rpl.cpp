@@ -55,6 +55,36 @@ const str NumRpl::rpl366(Channel ch, str nick)
     return rpl + str("\r\n");
 }
 
+const str NumRpl::rpl372(str nick)
+{
+    str rpl = SERVER_NAME + str(" 375 ") + nick + str(" :- ") + str("      .```.   _.''..\n")
+    + SERVER_NAME + str(" 375 ") + nick + str(" :- ") + str("     ;     ```      ``'.\n")
+    + SERVER_NAME + str(" 375 ") + nick + str(" :- ") + str("     :  d               `.\n")
+    + SERVER_NAME + str(" 375 ") + nick + str(" :- ") + str("     / >,:                \\\n")
+    + SERVER_NAME + str(" 375 ") + nick + str(" :- ") + str("    /.'   `'.,             :\n")
+    + SERVER_NAME + str(" 375 ") + nick + str(" :- ") + str("   /'         ;.   .       ;\n")
+    + SERVER_NAME + str(" 375 ") + nick + str(" :- ") + str("  /          ;  \\ ;     ; /\n")
+    + SERVER_NAME + str(" 375 ") + nick + str(" :- ") + str("             `..;\\:     :'\n")
+    + SERVER_NAME + str(" 375 ") + nick + str(" :- ") + str("            __||   `...,'\n")
+    + SERVER_NAME + str(" 375 ") + nick + str(" :- ") + str("           `-,  )   ||\n")
+    + SERVER_NAME + str(" 375 ") + nick + str(" :- ") + str("            /.^/ ___||\n")
+    + SERVER_NAME + str(" 375 ") + nick + str(" :- ") + str("                '---,_\\\n")
+    + SERVER_NAME + str(" 375 ") + nick + str(" :- ") + str("                   (/ `\\");
+
+    return rpl + str("\r\n");
+}
+const str NumRpl::rpl375(str nick)
+{
+    str rpl = SERVER_NAME + str(" 375 ") + nick + str(" :- ") 
+    + SERVER_NAME + str(" Message of the day - ");
+    return rpl + str("\r\n");
+}
+const str NumRpl::rpl376(str nick)
+{
+    str rpl = SERVER_NAME + str(" 376 ") + nick + str(" :End of MOTD command");
+    return rpl + str("\r\n");
+}
+
 
 
 //===============================================================

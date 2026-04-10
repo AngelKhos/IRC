@@ -17,6 +17,9 @@ class NumRpl // les numRpl retournent tous une string qui sera utilisé comme "m
 		static const str rpl341(Channel ch, str invNick, str nick); //rpl_inviting
 		static const str rpl353(Channel ch, str nick); //rpl_namereply
 		static const str rpl366(Channel ch, str nick); //rpl_endofnames
+		static const str rpl372(str nick); //rpl_motd
+		static const str rpl375(str nick); //rpl_motdstart
+		static const str rpl376(str nick); //rpl_endofmotd
 
 		static const str err403(str chName, str nick); //err_nosuchchannel
 		static const str err421(str com, str nick); //err_unknown_command

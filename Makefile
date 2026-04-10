@@ -15,6 +15,7 @@ SRC = \
 	src/command/nick.cpp \
 	src/command/user.cpp \
 	src/command/mode.cpp \
+	src/command/motd.cpp \
 	\
 	src/utils.cpp
 

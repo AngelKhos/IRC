@@ -137,8 +137,11 @@ void Server::updateClient(int fd, std::string message) //fait en sorte que si on
 
 void Server::registerClient(int fd)
 {
+	std::vector<std::string> null;
+
 	clients[fd]->is_registered = true;
 	updateClient(fd, Rep.rpl001(SERVER_NAME, clients[fd]->nickName));
+	motd(null, fd);
 }
 
 void Server::processCommand(int fd)

@@ -11,12 +11,6 @@ commandes
 
 rpl/err
 
- 375     RPL_MOTDSTART
- 				":- <server> Message of the day - "
- 372     RPL_MOTD
- 				":- <text>"
- 376     RPL_ENDOFMOTD
- 				":End of /MOTD command"
 
 
 
