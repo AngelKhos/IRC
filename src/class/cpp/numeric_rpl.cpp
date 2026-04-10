@@ -150,3 +150,10 @@ const str NumRpl::err473(Channel ch, str nick)
         ch.getName() + str(" :Cannot join channel (+i)");
     return rpl + str("\r\n");
 }
+
+const str NumRpl::err482(Channel ch, str nick)
+{
+    str rpl = SERVER_NAME + str(" 482 ") + nick + str(" ") +
+        ch.getName() + str(" :You're not channel operator");
+    return rpl + str("\r\n");
+}

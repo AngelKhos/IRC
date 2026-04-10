@@ -30,6 +30,7 @@ class NumRpl // les numRpl retournent tous une string qui sera utilisé comme "m
 		static const str err461(str com, str nick); //err_needmoreparams
 		static const str err462(str nick); //err_alreadyregistered
 		static const str err473(Channel ch, str nick); //err_inviteonlychannel
+		static const str err482(Channel ch, str nick);
 		
 };
 
