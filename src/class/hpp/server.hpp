@@ -62,11 +62,11 @@ class Server
 	private:
 		
 		//commands
-		void oper(std::vector<std::string> args, int client_fd);
 		void join(std::vector<std::string> args, int client_fd);
 		void nick(std::vector<std::string> args, int client_fd);
 		void user(std::vector<std::string> args, int client_fd);
 		void pass(std::vector<std::string> args, int client_fd);
+		void mode(std::vector<std::string> args, int client_fd);
 
 		void connectClient();
 		void disconnectClient(int fd);
