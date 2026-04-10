@@ -16,6 +16,8 @@ void Server::initCommand()
 	commands["NICK"] = &Server::nick;
 	commands["USER"] = &Server::user;
 	commands["JOIN"] = &Server::join;
+	commands["MOTD"] = &Server::motd;
+	commands["MODE"] = &Server::mode;
 }
 
 Server::Server(unsigned short Pport, std::string Ppass) :
