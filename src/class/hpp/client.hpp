@@ -24,6 +24,7 @@ typedef struct Client
 		bool has_nick;
 		bool has_user;
 		bool is_registered;
+		bool quit;
 } Client;
 
 #endif //CLIENT_HPP

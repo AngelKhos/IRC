@@ -57,7 +57,8 @@ const str NumRpl::rpl366(Channel ch, str nick)
 
 const str NumRpl::rpl372(str nick)
 {
-    str rpl = SERVER_NAME + str(" 375 ") + nick + str(" :- ") + str("      .```.   _.''..\n")
+    str rpl
+    = SERVER_NAME + str(" 375 ") + nick + str(" :- ") + str("      .```.   _.''..\n")
     + SERVER_NAME + str(" 375 ") + nick + str(" :- ") + str("     ;     ```      ``'.\n")
     + SERVER_NAME + str(" 375 ") + nick + str(" :- ") + str("     :  d               `.\n")
     + SERVER_NAME + str(" 375 ") + nick + str(" :- ") + str("     / >,:                \\\n")

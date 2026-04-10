@@ -16,6 +16,7 @@ SRC = \
 	src/command/user.cpp \
 	src/command/mode.cpp \
 	src/command/motd.cpp \
+	src/command/quit.cpp \
 	\
 	src/utils.cpp
 

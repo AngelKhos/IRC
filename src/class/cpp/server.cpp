@@ -18,6 +18,7 @@ void Server::initCommand()
 	commands["JOIN"] = &Server::join;
 	commands["MOTD"] = &Server::motd;
 	commands["MODE"] = &Server::mode;
+	commands["QUIT"] = &Server::quit;
 }
 
 Server::Server(unsigned short Pport, std::string Ppass) :
@@ -217,8 +218,8 @@ void Server::loop()
 						std::cout << "ah, dommage" << std::endl; //flemme de faire le check
 					epoll.ctl_mod(epoll.getEventFd(n), EPOLLIN);
 				}
-
-				//TODO irc routine for clients ()
+				if (clients[epoll.getEventFd(n)]->quit)
+					disconnectClient(epoll.getEventFd(n));
 			}
 		}
 	}

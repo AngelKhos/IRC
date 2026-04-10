@@ -7,7 +7,7 @@ commandes
     topic
     mode
     pars
-    quit
+    fix quit
 
 rpl/err
 
