@@ -28,6 +28,11 @@ class Channel
 		std::set<Client *> &getUsers();
 		std::set<Client *> &getOpUsers();
 
+		void setInvOnly(bool inv);
+		bool isInvOnly();
+
+		bool isOp(int client_fd);
+
 		static bool checkName(std::string Pname);
 	private:
 		std::string password;
@@ -35,6 +40,11 @@ class Channel
 		std::string name;
 		std::set<Client *> op;
 		std::set<Client *> users;
+
+		bool invOnly;
 };
+
+//random utils
+Channel *getChannelByName(std::string ch, std::set<Channel *>channels);
 
 #endif //CHANNEL_PP

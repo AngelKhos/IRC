@@ -4,7 +4,7 @@
 //============================================
 //constructor//destructor
 
-Channel::Channel() : password(""), name("") {}
+Channel::Channel() : password(""), name(""), invOnly(false) {}
 
 Channel::Channel(std::string Pname) : name(Pname) {}
 
@@ -21,6 +21,9 @@ std::string Channel::getName() { return (name); }
 std::set<Client *> &Channel::getUsers() { return (users); }
 std::set<Client *> &Channel::getOpUsers() { return (op); }
 
+void Channel::setInvOnly(bool inv) { invOnly = inv; }
+bool Channel::isInvOnly() { return (invOnly); }
+
 //============================================
 //methode
 
@@ -34,6 +37,16 @@ bool Channel::checkName(std::string Pname)
 	if (Pname[0] != '#' && Pname[0] != '&')
 		return (false);
 	return (true);
+}
+
+bool Channel::isOp(int client_fd)
+{
+	for (std::set<Client *>::iterator it = op.begin(); it != op.end(); it++)
+	{
+		if (client_fd == (*it)->client_fd)
+			return (true);
+	}
+	return (false);
 }
 
 //add user to the channel
