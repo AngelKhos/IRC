@@ -20,6 +20,23 @@ rpl/err
 333 RPL_TOPICWHOTIME
     "<client> <channel> <nick> <setat>"
 
+471     ERR_CHANNELISFULL
+                "<channel> :Cannot join channel (+l)"
+472     ERR_UNKNOWNMODE
+                "<char> :is unknown mode char to me"
+473     ERR_INVITEONLYCHAN
+                        "<channel> :Cannot join channel (+i)"
+475     ERR_BADCHANNELKEY
+                        "<channel> :Cannot join channel (+k)"
+482     ERR_CHANOPRIVSNEEDED
+                        "<channel> :You're not channel operator"
+464     ERR_PASSWDMISMATCH
+                        ":Password incorrect"
+
+                - Returned to indicate a failed attempt at registering
+                  a connection for which a password was required and
+                  was either not given or incorrect.
+
 
 
 

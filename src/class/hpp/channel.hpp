@@ -30,6 +30,8 @@ class Channel
 
 		void setInvOnly(bool inv);
 		bool isInvOnly();
+		void setLimitUser(int limit);
+		int getUserLimit();
 
 		bool isOp(int client_fd);
 
@@ -42,6 +44,7 @@ class Channel
 		std::set<Client *> users;
 
 		bool invOnly;
+		int userLimit;
 };
 
 //random utils

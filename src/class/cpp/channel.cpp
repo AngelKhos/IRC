@@ -4,7 +4,7 @@
 //============================================
 //constructor//destructor
 
-Channel::Channel() : password(""), name(""), invOnly(false) {}
+Channel::Channel() : password(""), name(""), invOnly(false), userLimit(0) {}
 
 Channel::Channel(std::string Pname) : name(Pname) {}
 
@@ -23,6 +23,9 @@ std::set<Client *> &Channel::getOpUsers() { return (op); }
 
 void Channel::setInvOnly(bool inv) { invOnly = inv; }
 bool Channel::isInvOnly() { return (invOnly); }
+
+void Channel::setLimitUser(int limit) { userLimit = limit; }
+int Channel::getUserLimit() { return (userLimit); }
 
 //============================================
 //methode
