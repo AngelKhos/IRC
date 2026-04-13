@@ -81,6 +81,11 @@ void Server::join(std::vector<std::string> args, int client_fd)
 			Channel *ch = getChannelByName(*it, channels);
 			if (ch != NULL)
 			{
+				if (ch->isInvOnly())
+				{
+					updateClient(client_fd, Rep.err473(*ch, clients[client_fd]->nickName));
+					return ;
+				}
 				if (!checkUserInChannel(clients[client_fd]->userName, ch->getUsers()))
 				{
 					ch->addUser(*clients[client_fd]);

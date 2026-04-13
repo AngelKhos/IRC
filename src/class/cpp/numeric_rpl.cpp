@@ -42,8 +42,9 @@ const str NumRpl::rpl353(Channel ch, str nick)
 	for (std::set<Client *>::iterator it = ch.getUsers().begin(); it != ch.getUsers().end(); it++)
 	{
 		if (ch.getOpUsers().count(*it) > 0)
-		rpl += "@";
+		    rpl += "@";
 		rpl += (*it)->nickName;
+        rpl += ", ";
 	}
 	return rpl + str("\r\n"); 
 }

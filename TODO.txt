@@ -11,7 +11,11 @@ commandes
 
 rpl/err
 
+324 RPL_CHANNELMODEIS
+    "<client> <channel> <modestring> <mode arguments>..."
 
+329 RPL_CREATIONTIME
+    "<client> <channel> <creationtime>"
 
 
 
