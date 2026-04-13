@@ -17,6 +17,9 @@ rpl/err
 329 RPL_CREATIONTIME
     "<client> <channel> <creationtime>"
 
+333 RPL_TOPICWHOTIME
+    "<client> <channel> <nick> <setat>"
+
 
 
 
