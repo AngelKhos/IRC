@@ -99,7 +99,8 @@ void Server::join(std::vector<std::string> args, int client_fd)
 			}
 			else
 			{
-				ch = new Channel(*it);
+				ch = new Channel();
+				ch->setName(*it);
 				channels.insert(ch);
 				ch->addUser(*clients[client_fd]);
 				ch->opUser(*clients[client_fd]);
