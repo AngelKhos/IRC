@@ -198,10 +198,31 @@ const str NumRpl::err462(str nick)
 	return rpl + str("\r\n");
 }
 
+const str NumRpl::err471(Channel ch, str nick)
+{
+	str rpl = SERVER_NAME + str(" 471 ") + nick + str(" ") +
+		ch.getName() + str(" :Cannot join channel (+l)");
+	return rpl + str("\r\n");
+}
+
+const str NumRpl::err472(str c, str nick)
+{
+	str rpl = SERVER_NAME + str(" 472 ") + nick + str(" ") +
+		c + str(" :is unknown mode char to me");
+	return rpl + str("\r\n");
+}
+
 const str NumRpl::err473(Channel ch, str nick)
 {
 	str rpl = SERVER_NAME + str(" 473 ") + nick + str(" ") +
 		ch.getName() + str(" :Cannot join channel (+i)");
+	return rpl + str("\r\n");
+}
+
+const str NumRpl::err475(Channel ch, str nick)
+{
+	str rpl = SERVER_NAME + str(" 475 ") + nick + str(" ") +
+		ch.getName() + str(" :Cannot join channel (+k) - bad key");
 	return rpl + str("\r\n");
 }
 

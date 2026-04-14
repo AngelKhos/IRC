@@ -31,8 +31,11 @@ class NumRpl // les numRpl retournent tous une string qui sera utilisé comme "m
 		static const str err451(str nick); //err_notregistered
 		static const str err461(str com, str nick); //err_needmoreparams
 		static const str err462(str nick); //err_alreadyregistered
+		static const str err471(Channel ch, str nick); //err_channelisfull
+		static const str err472(str c, str nick); //err_unknownmode
 		static const str err473(Channel ch, str nick); //err_inviteonlychannel
-		static const str err482(Channel ch, str nick);
+		static const str err475(Channel ch, str nick); //err_badchannelkey
+		static const str err482(Channel ch, str nick); //err_chanoprivsneeded
 		
 };
 
