@@ -27,7 +27,7 @@ rpl/err
 473     ERR_INVITEONLYCHAN
                         "<channel> :Cannot join channel (+i)"
 475     ERR_BADCHANNELKEY
-                        "<channel> :Cannot join channel (+k)"
+                        "<channel> :Cannot join channel (+k) - bad key"
 482     ERR_CHANOPRIVSNEEDED
                         "<channel> :You're not channel operator"
 464     ERR_PASSWDMISMATCH

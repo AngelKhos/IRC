@@ -27,6 +27,9 @@ bool Channel::isInvOnly() { return (invOnly); }
 void Channel::setLimitUser(int limit) { userLimit = limit; }
 int Channel::getUserLimit() { return (userLimit); }
 
+void Channel::setPw(std::string pw) { password = pw; }
+std::string Channel::getPw() { return (password); }
+
 //============================================
 //methode
 

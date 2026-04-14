@@ -48,9 +48,21 @@ void Server::mode(std::vector<std::string> args, int client_fd)
 	else if (mode == "+t")
 	{}
 	else if (mode == "-k")
-	{}
+	{
+		if (args.size() > 2)
+			return ;
+		else
+			ch->setPw("");
+	}
 	else if (mode == "+k")
-	{}
+	{
+		if (args.size() <= 2)
+		{
+			updateClient(client_fd, Rep.err461(args[0], clients[client_fd]->nickName));
+			return ;
+		}
+		ch->setPw(args[2]);
+	}
 	else if (mode == "-o")
 	{
 		if (args.size() <= 2)

@@ -32,6 +32,8 @@ class Channel
 		bool isInvOnly();
 		void setLimitUser(int limit);
 		int getUserLimit();
+		void setPw(std::string pw);
+		std::string getPw();
 
 		bool isOp(int client_fd);
 
