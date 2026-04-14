@@ -34,6 +34,8 @@ class Channel
 		int getUserLimit();
 		void setPw(std::string pw);
 		std::string getPw();
+		void setReTopic(bool re);
+		bool getReTopic();
 
 		bool isOp(int client_fd);
 

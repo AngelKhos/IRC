@@ -30,6 +30,9 @@ int Channel::getUserLimit() { return (userLimit); }
 void Channel::setPw(std::string pw) { password = pw; }
 std::string Channel::getPw() { return (password); }
 
+void Channel::setReTopic(bool re) { reTopic = re; }
+bool Channel::getReTopic() { return (reTopic); }
+
 //============================================
 //methode
 
