@@ -4,7 +4,7 @@
 //============================================
 //constructor//destructor
 
-Channel::Channel() : password(""), name(""), invOnly(false), userLimit(0), reTopic(true) {}
+Channel::Channel() : password(""), name(""), invOnly(false), userLimit(0), reTopic(true), topicAutor("") {}
 
 Channel::Channel(std::string Pname) : name(Pname) {}
 
@@ -33,6 +33,9 @@ std::string Channel::getPw() { return (password); }
 
 void Channel::setReTopic(bool re) { reTopic = re; }
 bool Channel::getReTopic() { return (reTopic); }
+
+void Channel::setTopicAutor(std::string nick) { topicAutor = nick; }
+std::string Channel::getTopicAutor() { return (topicAutor); }
 
 //============================================
 //methode

@@ -37,6 +37,8 @@ class Channel
 		std::string getPw();
 		void setReTopic(bool re);
 		bool getReTopic();
+		void setTopicAutor(std::string nick);
+		std::string getTopicAutor();
 
 		bool isOp(int client_fd);
 
@@ -51,6 +53,8 @@ class Channel
 		bool invOnly;
 		int userLimit;
 		bool reTopic;
+
+		std::string topicAutor;
 };
 
 //random utils
