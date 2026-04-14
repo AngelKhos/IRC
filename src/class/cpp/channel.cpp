@@ -4,7 +4,7 @@
 //============================================
 //constructor//destructor
 
-Channel::Channel() : password(""), name(""), invOnly(false), userLimit(0) {}
+Channel::Channel() : password(""), name(""), invOnly(false), userLimit(0), reTopic(false) {}
 
 Channel::Channel(std::string Pname) : name(Pname) {}
 

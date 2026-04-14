@@ -47,6 +47,7 @@ class Channel
 
 		bool invOnly;
 		int userLimit;
+		bool reTopic;
 };
 
 //random utils
