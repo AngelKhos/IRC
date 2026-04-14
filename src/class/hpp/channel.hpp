@@ -25,6 +25,7 @@ class Channel
 		void unopUser(Client &u);
 
 		std::string getName();
+		void setName(std::string Pname);
 		std::set<Client *> &getUsers();
 		std::set<Client *> &getOpUsers();
 

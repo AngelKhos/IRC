@@ -17,6 +17,7 @@ std::string Channel::getTopic() const { return (topic); }
 void Channel::setTopic(std::string Ptopic) { topic = Ptopic; }
 
 std::string Channel::getName() { return (name); }
+void Channel::setName(std::string Pname) { name = Pname; }
 
 std::set<Client *> &Channel::getUsers() { return (users); }
 std::set<Client *> &Channel::getOpUsers() { return (op); }
