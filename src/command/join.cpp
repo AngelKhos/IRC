@@ -89,6 +89,7 @@ void Server::join(std::vector<std::string> args, int client_fd)
 				if (!checkUserInChannel(clients[client_fd]->userName, ch->getUsers()))
 				{
 					ch->addUser(*clients[client_fd]);
+					updateClient(client_fd, Rep.rpl324(*ch, clients[client_fd]->nickName));
 					updateClient(client_fd, Rep.rpl353(*ch, clients[client_fd]->nickName));
 					updateClient(client_fd, Rep.rpl366(*ch, clients[client_fd]->nickName));
 					if (ch->getTopic() == "")
@@ -104,6 +105,7 @@ void Server::join(std::vector<std::string> args, int client_fd)
 				channels.insert(ch);
 				ch->addUser(*clients[client_fd]);
 				ch->opUser(*clients[client_fd]);
+				updateClient(client_fd, Rep.rpl324(*ch, clients[client_fd]->nickName));
 				updateClient(client_fd, Rep.rpl353(*ch, clients[client_fd]->nickName));
 				updateClient(client_fd, Rep.rpl366(*ch, clients[client_fd]->nickName));
 				if (ch->getTopic() == "")

@@ -11,15 +11,6 @@ commandes
 
 rpl/err
 
-324 RPL_CHANNELMODEIS
-    "<client> <channel> <modestring> <mode arguments>..."
-
-329 RPL_CREATIONTIME
-    "<client> <channel> <creationtime>"
-
-333 RPL_TOPICWHOTIME
-    "<client> <channel> <nick> <setat>"
-
 471     ERR_CHANNELISFULL
                 "<channel> :Cannot join channel (+l)"
 472     ERR_UNKNOWNMODE

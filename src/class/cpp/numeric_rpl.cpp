@@ -1,9 +1,12 @@
 #include "numeric_rpl.hpp"
 #include <sys/socket.h>
 #include <server.hpp>
+#include <sstream>
 
 //===============================================================
 //reply
+
+
 
 const str NumRpl::rpl001(str servName, str nick)
 {
@@ -11,7 +14,48 @@ const str NumRpl::rpl001(str servName, str nick)
 		str(" Welcome to the ") +
 		servName +  str(" Internet Relay Chat Network ") +
 		str(" ") + nick;
-return rpl + str("\r\n"); 
+	return rpl + str("\r\n");
+}
+
+const str NumRpl::rpl324(Channel ch, str nick)
+{
+	int ulimit = 0;
+	str pwd;
+
+	str rpl = SERVER_NAME + str(" 324 ") + nick + str (" ") +
+		ch.getName() + str(" +nt");
+	if (ch.isInvOnly())
+		rpl += str("i");
+	if (ch.getUserLimit() != 0)
+	{
+		ulimit = ch.getUserLimit();
+		rpl += str("l");
+	}
+	if (ch.getPw() != "")
+	{
+		pwd = ch.getPw();
+		rpl += str("k");
+	}
+	
+	if (ulimit != 0)
+	{
+		rpl += str(" ");
+		std::stringstream buff;
+		buff << ulimit;
+		rpl += buff.str();
+	}
+	
+	if (pwd != "")
+		rpl += str(" ") + pwd;
+	return rpl + str("\r\n");
+}
+const str NumRpl::rpl329(Channel ch, long ts, str nick)
+{
+	std::stringstream buff;
+	buff << ts;
+	str rpl = SERVER_NAME + str(" 329 ") + nick +
+		str(" ") + ch.getName() + str(" ") + buff.str();
+	return rpl + str("\r\n");
 }
 
 const str NumRpl::rpl331(Channel ch, str nick)
@@ -27,6 +71,15 @@ const str NumRpl::rpl332(Channel ch, str nick)
 		ch.getName() + str(" :") + ch.getTopic();
 	return rpl + str("\r\n"); 
 }
+
+const str NumRpl::rpl333(Channel ch, str author, long ts, str nick)
+{
+	std::stringstream buff;
+	buff << ts;
+	str rpl = SERVER_NAME + str(" 333 ") + nick +
+		str(" ") + ch.getName() + str(" ") + author + str("") + buff.str();
+	return rpl + str("\r\n");
+} 
 
 const str NumRpl::rpl341(Channel ch, str invNick, str nick)
 {

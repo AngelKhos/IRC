@@ -7,13 +7,15 @@
 
 typedef std::string str;
 
-
 class NumRpl // les numRpl retournent tous une string qui sera utilisé comme "message" dans updateClient()
 {				// dans les methodes des commandes (server::<command>)
 	public:
 		static const str rpl001(str servName, str nick); //rpl_welcome
+		static const str rpl324(Channel ch, str nick); //rpl_channelmodeis
+		static const str rpl329(Channel ch, long ts, str nick); //rpl_creationtime
 		static const str rpl331(Channel ch, str nick); //rpl_notopic
 		static const str rpl332(Channel ch, str nick); //rpl_topic
+		static const str rpl333(Channel ch, str author, long ts, str nick); //rpl_topicwhotime
 		static const str rpl341(Channel ch, str invNick, str nick); //rpl_inviting
 		static const str rpl353(Channel ch, str nick); //rpl_namereply
 		static const str rpl366(Channel ch, str nick); //rpl_endofnames
