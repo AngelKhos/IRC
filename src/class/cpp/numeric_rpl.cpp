@@ -112,19 +112,19 @@ const str NumRpl::rpl366(Channel ch, str nick)
 const str NumRpl::rpl372(str nick)
 {
 	str rpl
-	= SERVER_NAME + str(" 375 ") + nick + str(" :- ") + str("      .```.   _.''..\n")
-	+ SERVER_NAME + str(" 375 ") + nick + str(" :- ") + str("     ;     ```      ``'.\n")
-	+ SERVER_NAME + str(" 375 ") + nick + str(" :- ") + str("     :  d               `.\n")
-	+ SERVER_NAME + str(" 375 ") + nick + str(" :- ") + str("     / >,:                \\\n")
-	+ SERVER_NAME + str(" 375 ") + nick + str(" :- ") + str("    /.'   `'.,             :\n")
-	+ SERVER_NAME + str(" 375 ") + nick + str(" :- ") + str("   /'         ;.   .       ;\n")
-	+ SERVER_NAME + str(" 375 ") + nick + str(" :- ") + str("  /          ;  \\ ;     ; /\n")
-	+ SERVER_NAME + str(" 375 ") + nick + str(" :- ") + str("             `..;\\:     :'\n")
-	+ SERVER_NAME + str(" 375 ") + nick + str(" :- ") + str("            __||   `...,'\n")
-	+ SERVER_NAME + str(" 375 ") + nick + str(" :- ") + str("           `-,  )   ||\n")
-	+ SERVER_NAME + str(" 375 ") + nick + str(" :- ") + str("            /.^/ ___||\n")
-	+ SERVER_NAME + str(" 375 ") + nick + str(" :- ") + str("                '---,_\\\n")
-	+ SERVER_NAME + str(" 375 ") + nick + str(" :- ") + str("                   (/ `\\");
+	= SERVER_NAME + str(" 372 ") + nick + str(" :- ") + str("      .```.   _.''..\n")
+	+ SERVER_NAME + str(" 372 ") + nick + str(" :- ") + str("     ;     ```      ``'.\n")
+	+ SERVER_NAME + str(" 372 ") + nick + str(" :- ") + str("     :  d               `.\n")
+	+ SERVER_NAME + str(" 372 ") + nick + str(" :- ") + str("     / >,:                \\\n")
+	+ SERVER_NAME + str(" 372 ") + nick + str(" :- ") + str("    /.'   `'.,             :\n")
+	+ SERVER_NAME + str(" 372 ") + nick + str(" :- ") + str("   /'         ;.   .       ;\n")
+	+ SERVER_NAME + str(" 372 ") + nick + str(" :- ") + str("  /          ;  \\ ;     ; /\n")
+	+ SERVER_NAME + str(" 372 ") + nick + str(" :- ") + str("             `..;\\:     :'\n")
+	+ SERVER_NAME + str(" 372 ") + nick + str(" :- ") + str("            __||   `...,'\n")
+	+ SERVER_NAME + str(" 372 ") + nick + str(" :- ") + str("           `-,  )   ||\n")
+	+ SERVER_NAME + str(" 372 ") + nick + str(" :- ") + str("            /.^/ ___||\n")
+	+ SERVER_NAME + str(" 372 ") + nick + str(" :- ") + str("                '---,_\\\n")
+	+ SERVER_NAME + str(" 372 ") + nick + str(" :- ") + str("                   (/ `\\");
 
 	return rpl + str("\r\n");
 }
