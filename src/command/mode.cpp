@@ -16,8 +16,10 @@ Client *getUserByNick(std::string nick, std::set<Client *>Clients)
 void Server::mode(std::vector<std::string> args, int client_fd)
 {
 	if (args.size() <= 1)
-		//updateClient(client_fd, Rep.err461(args[0], clients[client_fd]->nickName));
+	{
+		updateClient(client_fd, Rep.err461(args[0], clients[client_fd]->nickName));
 		return ;
+	}
 	std::string mode = args[1];
 	std::string target = args[0];
 	unsigned long argsIndex = 2;

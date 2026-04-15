@@ -1,5 +1,7 @@
-jouter un vector de (Channel *) dans les cient pour qu'il
+ajouter un vector de (Channel *) dans les cient pour qu'il
 est une referance des channel dans les quelle il sons
+
+ajouter les rpl dans mode
 
 commandes
     privmsg
@@ -12,6 +14,8 @@ commandes
 
 rpl/err
 
+442     ERR_NOTONCHANNEL
+                        "<channel> :You're not on that channel"
 
 
                                                     _,,_..

@@ -19,6 +19,7 @@ void Server::initCommand()
 	commands["MOTD"] = &Server::motd;
 	commands["MODE"] = &Server::mode;
 	commands["QUIT"] = &Server::quit;
+	commands["TOPIC"] = &Server::topic;
 }
 
 Server::Server(unsigned short Pport, std::string Ppass) :

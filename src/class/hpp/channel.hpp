@@ -39,6 +39,8 @@ class Channel
 		bool getReTopic();
 		void setTopicAutor(std::string nick);
 		std::string getTopicAutor();
+		void setTopicUpdate(long int time);
+		long int getTopicUpdate();
 
 		bool isOp(int client_fd);
 
@@ -55,9 +57,11 @@ class Channel
 		bool reTopic;
 
 		std::string topicAutor;
+		long int topicUpdate;
 };
 
 //random utils
-Channel *getChannelByName(std::string ch, std::set<Channel *>channels);
+Channel	*getChannelByName(std::string ch, std::set<Channel *>channels);
+Client	*getUserByNick(std::string nick, std::set<Client *>Clients);
 
 #endif //CHANNEL_PP

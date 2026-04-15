@@ -37,6 +37,9 @@ bool Channel::getReTopic() { return (reTopic); }
 void Channel::setTopicAutor(std::string nick) { topicAutor = nick; }
 std::string Channel::getTopicAutor() { return (topicAutor); }
 
+void Channel::setTopicUpdate(long int time) { topicUpdate = time; }
+long int Channel::getTopicUpdate() { return (topicUpdate); }
+
 //============================================
 //methode
 
