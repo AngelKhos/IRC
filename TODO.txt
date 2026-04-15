@@ -7,7 +7,6 @@ commandes
     privmsg
     kick
     invite
-    topic
     mode
     pars
     fix quit

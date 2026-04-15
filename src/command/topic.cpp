@@ -21,7 +21,7 @@ void Server::topic(std::vector<std::string> args, int client_fd)
 	if (getUserByNick(clients[client_fd]->nickName, ch->getUsers()) == NULL)
 	{
 		//RPL A FAIRE//////////////////////////////////////////
-		//updateClient(client_fd, Rep.err42(*ch, clients[client_fd]->nickName));
+		//updateClient(client_fd, Rep.err442(*ch, clients[client_fd]->nickName));
 		return ;
 	}
 	if (args.size() == 1)
