@@ -117,5 +117,4 @@ void Server::join(std::vector<std::string> args, int client_fd)
 		else
 			updateClient(client_fd, Rep.err403(*it, clients[client_fd]->nickName));
 	}
-	(void)client_fd;
 }

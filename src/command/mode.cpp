@@ -20,6 +20,17 @@ void Server::mode(std::vector<std::string> args, int client_fd)
 		return ;
 	std::string mode = args[1];
 	std::string target = args[0];
+	unsigned long argsIndex = 2;
+
+	bool plus = false;
+	if (mode.size() == 1)
+		return ;
+	if (mode[0] == '-')
+		plus = false;
+	else if (mode[0] == '+')
+		plus = true;
+	else
+		return ;
 	Channel *ch = getChannelByName(target, channels);
 	if (!ch)
 	{
@@ -31,86 +42,170 @@ void Server::mode(std::vector<std::string> args, int client_fd)
 		updateClient(client_fd, Rep.err482(*ch, clients[client_fd]->nickName));
 		return ;
 	}
-	if (mode == "-i")
+
+	for (size_t i = 1; i < mode.size(); i++)
 	{
-		if (args.size() > 2)
-			return ;
-		ch->setInvOnly(false);
-	}
-	else if (mode == "+i")
-	{
-		if (args.size() > 2)
-			return ;
-		ch->setInvOnly(true);
-	}
-	else if (mode == "-t")
-	{}
-	else if (mode == "+t")
-	{}
-	else if (mode == "-k")
-	{
-		if (args.size() > 2)
-			return ;
-		else
-			ch->setPw("");
-	}
-	else if (mode == "+k")
-	{
-		if (args.size() <= 2)
+		char mChar = mode[i];
+		if (mChar == 'i')
 		{
-			updateClient(client_fd, Rep.err461(args[0], clients[client_fd]->nickName));
-			return ;
+			if (plus)
+			{
+				ch->setInvOnly(true);
+			}
+			else
+			{
+				ch->setInvOnly(false);
+			}
 		}
-		ch->setPw(args[2]);
-	}
-	else if (mode == "-o")
-	{
-		if (args.size() <= 2)
+		if (mChar == 'o')
 		{
-			updateClient(client_fd, Rep.err461(args[0], clients[client_fd]->nickName));
-			return ;
+			if (plus)
+			{
+				if (argsIndex > args.size())
+				{
+					updateClient(client_fd, Rep.err461(args[0], clients[client_fd]->nickName));
+					return ;
+				}
+				ch->opUser(*getUserByNick(args[argsIndex], ch->getUsers()));
+				argsIndex++;
+			}
+			else
+			{
+				if (argsIndex > args.size())
+				{
+					updateClient(client_fd, Rep.err461(args[0], clients[client_fd]->nickName));
+					return ;
+				}
+				ch->unopUser(*getUserByNick(args[argsIndex], ch->getUsers()));
+				argsIndex++;
+			}
 		}
-		Client *c = getUserByNick(args[2], ch->getUsers());
-		if (!c)
+		if (mChar == 't')
 		{
-			updateClient(client_fd, Rep.err403(args[2], clients[client_fd]->nickName));
-			return ;
+			if (plus)
+			{
+				ch->setReTopic(true);
+			}
+			else
+			{
+				ch->setReTopic(false);
+			}
 		}
-		ch->unopUser(*c);
-	}
-	else if (mode == "+o")
-	{
-		if (args.size() <= 2)
+		if (mChar == 'k')
 		{
-			updateClient(client_fd, Rep.err461(args[0], clients[client_fd]->nickName));
-			return ;
+			if (plus)
+			{
+				if (argsIndex > args.size())
+				{
+					updateClient(client_fd, Rep.err461(args[0], clients[client_fd]->nickName));
+					return ;
+				}
+				ch->setPw(args[argsIndex]);
+			}
+			else
+			{
+				ch->setPw("");
+			}
 		}
-		Client *c = getUserByNick(args[2], ch->getUsers());
-		if (!c)
+		if (mChar == 'l')
 		{
-			updateClient(client_fd, Rep.err403(args[2], clients[client_fd]->nickName));
-			return ;
+			if (plus)
+			{
+				if (argsIndex > args.size())
+				{
+					updateClient(client_fd, Rep.err461(args[0], clients[client_fd]->nickName));
+					return ;
+				}
+				ch->setLimitUser(atoi(args[argsIndex].c_str()));
+				argsIndex++;
+			}
+			else
+			{
+				ch->setLimitUser(0);
+			}
 		}
-		ch->opUser(*c);
 	}
-	else if (mode == "-l")
-	{
-		if (args.size() >= 2)
-			return ;
-		ch->setLimitUser(0);
-	}
-	else if (mode == "+l")
-	{
-		if (args.size() <= 2)
-		{
-			updateClient(client_fd, Rep.err461(args[0], clients[client_fd]->nickName));
-			return ;
-		}
-		int limit = atoi(args[2].c_str());
-		if (limit == 0)
-			return ;
-		ch->setLimitUser(limit);
-	}
-	else
-		return ;
 }
+
+// if (mode == "-i")
+// {
+// 	if (args.size() > 2)
+// 		return ;
+// 	ch->setInvOnly(false);
+// }
+// else if (mode == "+i")
+// {
+// 	if (args.size() > 2)
+// 		return ;
+// 	ch->setInvOnly(true);
+// }
+// else if (mode == "-t")
+// {}
+// else if (mode == "+t")
+// {}
+// else if (mode == "-k")
+// {
+// 	if (args.size() > 2)
+// 		return ;
+// 	else
+// 		ch->setPw("");
+// }
+// else if (mode == "+k")
+// {
+// 	if (args.size() <= 2)
+// 	{
+// 		updateClient(client_fd, Rep.err461(args[0], clients[client_fd]->nickName));
+// 		return ;
+// 	}
+// 	ch->setPw(args[2]);
+// }
+// else if (mode == "-o")
+// {
+// 	if (args.size() <= 2)
+// 	{
+// 		updateClient(client_fd, Rep.err461(args[0], clients[client_fd]->nickName));
+// 		return ;
+// 	}
+// 	Client *c = getUserByNick(args[2], ch->getUsers());
+// 	if (!c)
+// 	{
+// 		updateClient(client_fd, Rep.err403(args[2], clients[client_fd]->nickName));
+// 		return ;
+// 	}
+// 	ch->unopUser(*c);
+// }
+// else if (mode == "+o")
+// {
+// 	if (args.size() <= 2)
+// 	{
+// 		updateClient(client_fd, Rep.err461(args[0], clients[client_fd]->nickName));
+// 		return ;
+// 	}
+// 	Client *c = getUserByNick(args[2], ch->getUsers());
+// 	if (!c)
+// 	{
+// 		updateClient(client_fd, Rep.err403(args[2], clients[client_fd]->nickName));
+// 		return ;
+// 	}
+// 	ch->opUser(*c);
+// }
+// else if (mode == "-l")
+// {
+// 	if (args.size() >= 2)
+// 		return ;
+// 	ch->setLimitUser(0);
+// }
+// else if (mode == "+l")
+// {
+// 	if (args.size() <= 2)
+// 	{
+// 		updateClient(client_fd, Rep.err461(args[0], clients[client_fd]->nickName));
+// 		return ;
+// 	}
+// 	int limit = atoi(args[2].c_str());
+// 	if (limit == 0)
+// 		return ;
+// 	ch->setLimitUser(limit);
+// }
+// else
+// 	return ;

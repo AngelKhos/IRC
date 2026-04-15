@@ -1,5 +1,8 @@
 delete les channel a la fermeture du server AVANT les clients
 
+jouter un vector de (Channel *) dans les cient pour qu'il
+est une referance des channel dans les quelle il sons
+
 commandes
     privmsg
     kick
