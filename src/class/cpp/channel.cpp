@@ -8,7 +8,10 @@ Channel::Channel() : password(""), name(""), invOnly(false), userLimit(0), reTop
 
 Channel::Channel(std::string Pname) : name(Pname) {}
 
-Channel::~Channel() {}
+Channel::~Channel() {
+	op.clear();
+	users.clear();
+}
 
 //============================================
 //seter/geter

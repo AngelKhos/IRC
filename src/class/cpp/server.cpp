@@ -99,14 +99,15 @@ void Server::stopServer(int x)
 	// 	Client &c = clients[i];
 	// 	close(c.getClientFd());
 	// }
-	for (std::map<int, Client *>::iterator it = clients.begin(); it != clients.end(); it++)
-	{
-		disconnectClient(it->second->client_fd);
-	}
 	for (std::set<Channel *>::iterator it = channels.begin(); it != channels.end(); it++)
 	{
 		delete *it;
 	}
+	for (std::map<int, Client *>::iterator it = clients.begin(); it != clients.end(); it++)
+	{
+		disconnectClient(it->second->client_fd);
+	}
+	
 	//faudra boucler sur le set des channels pour les del aussi
 	if (epoll.getEpollFd() != -1)
 		close(epoll.getEpollFd());
@@ -131,7 +132,7 @@ void Server::disconnectClient(int fd)
 	epoll.ctl_del(fd);
 	clients[fd]->Disconnect();
 	delete clients[fd];
-	//clients.erase(fd); // cette ligne fesais segfault quand on quittai avec un user dans un channel
+	clients.erase(fd); // cette ligne fesais segfault quand on quittai avec un user dans un channel
 }
 
 void Server::updateClient(int fd, std::string message) //fait en sorte que si on a qqch a envoyer, ca set EPOLLOUT
@@ -223,7 +224,7 @@ void Server::loop()
 						std::cout << "ah, dommage" << std::endl; //flemme de faire le check
 					epoll.ctl_mod(epoll.getEventFd(n), EPOLLIN);
 				}
-				if (clients[epoll.getEventFd(n)]->quit)
+				else if (clients[epoll.getEventFd(n)]->quit)
 					disconnectClient(epoll.getEventFd(n));
 			}
 		}

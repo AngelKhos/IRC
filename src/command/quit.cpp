@@ -2,6 +2,8 @@
 
 void Server::quit(std::vector<std::string> args, int client_fd)
 {
+    if (!clients[client_fd]->is_registered)
+        return ;
     if (!args.empty())
     {
         std::string rpl = SERVER_NAME + std::string(" QUIT ") + args[0] + std::string(" ; User ") 
