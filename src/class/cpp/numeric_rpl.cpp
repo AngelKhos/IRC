@@ -17,6 +17,13 @@ const str NumRpl::rpl001(str servName, str nick)
 	return rpl + str("\r\n");
 }
 
+const str NumRpl::rpl301(str nick, str message)
+{
+	str rpl = SERVER_NAME + str(" 301 ") + nick +
+		str(" :") + message;
+	return rpl + str("\r\n");
+}
+
 const str NumRpl::rpl324(Channel ch, str nick)
 {
 	int ulimit = 0;
@@ -145,10 +152,45 @@ const str NumRpl::rpl376(str nick)
 //===============================================================
 //error
 
+const str NumRpl::err401(str nickname, str nick)
+{
+	str rpl = SERVER_NAME + str(" 401 ") + nick + str(" ") +
+		nickname + str(" :No such nick/channel");
+	return rpl + str("\r\n"); 
+}
+
 const str NumRpl::err403(str chName, str nick)
 {
 	str rpl = SERVER_NAME + str(" 403 ") + nick + str(" ") +
 		chName + str(" :No such channel");
+	return rpl + str("\r\n"); 
+}
+
+const str NumRpl::err404(str chName, str nick)
+{
+	str rpl = SERVER_NAME + str(" 404 ") + nick + str(" ") +
+		chName + str(" :Cannot send to channel");
+	return rpl + str("\r\n"); 
+}
+
+const str NumRpl::err407(str target, str nick)
+{
+	str rpl = SERVER_NAME + str(" 407 ") + nick + str(" ") +
+		target + str(" :Duplicate recipients. No message delivered");
+	return rpl + str("\r\n"); 
+}
+
+const str NumRpl::err411(str command, str nick)
+{
+	str rpl = SERVER_NAME + str(" 411 ") + nick + 
+		str(" :No recipient given (") + command + str(")");
+	return rpl + str("\r\n"); 
+}
+
+const str NumRpl::err412(str nick)
+{
+	str rpl = SERVER_NAME + str(" 412 ") + nick + 
+		str(" :No text to send");
 	return rpl + str("\r\n"); 
 }
 
@@ -177,6 +219,21 @@ const str NumRpl::err436(str s, str nick)
 	str rpl = SERVER_NAME + str(" 436 ") + nick + str(" ") + 
 		s + str(" :Nickname collision KILL");
 	return rpl + str("\r\n");
+}
+
+const str NumRpl::err442(str chName, str nick)
+{
+	str rpl = SERVER_NAME + str(" 442 ") + nick + str(" ") +
+		chName + str(" :You're not on that channel");
+	return rpl + str("\r\n"); 
+}
+
+const str NumRpl::err443(str user, str chName, str nick)
+{
+	str rpl = SERVER_NAME + str(" 443 ") + nick + str(" ") +
+		user + str(" ") +
+		chName + str(" :is already on channel");
+	return rpl + str("\r\n"); 
 }
 
 const str NumRpl::err451(str nick)
