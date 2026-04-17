@@ -155,28 +155,23 @@ void Server::processCommand(int fd)
 {
 	while (clients[fd]->recv_buff.find("\r\n") != std::string::npos)
 	{
-		std::string message = clients[fd]->recv_buff.substr(0, clients[fd]->recv_buff.find("\r\n") + 1);
-		std::cout << clients[fd]->recv_buff;
+		std::string message = clients[fd]->recv_buff.substr(0, clients[fd]->recv_buff.find("\r\n") + 1); //la commande
+		std::cout << clients[fd]->recv_buff; // logs
 		std::vector<std::string> args = cmd_split(message);
-		if (!args.empty() && commands.find(args[0]) != commands.end())
+		if (!args.empty() && commands.find(args[0]) != commands.end()) //trouver la bonne commande
 		{
 			std::string command = args[0];
 			args.erase(args.begin());
 			(this->*commands[command])(args, fd);
 		}
-		else
+		else //command not found
 		{
 			if (clients[fd]->is_registered)
 				updateClient(fd, Rep.err421(args[0], clients[fd]->nickName));
 		}
-		// for (std::map<int, Client *>::iterator it = clients.begin(); it != clients.end(); it++) //test broadcast
-		// {
-		// 	updateClient(it->second->client_fd, clients[epoll.getEventFd(n)]->recv_buff);
-		// }
-		// REMPLACER LE ELSE PAR LE PROCESS DES MESSAGES
-		clients[fd]->recv_buff.erase(0, clients[fd]->recv_buff.find("\r\n") + 2);
+		clients[fd]->recv_buff.erase(0, clients[fd]->recv_buff.find("\r\n") + 2); //enlever la commande qui a ete process
 	}
-	if (clients[fd]->has_nick && clients[fd]->has_pass && clients[fd]->has_user && !clients[fd]->is_registered)
+	if (clients[fd]->has_nick && clients[fd]->has_pass && clients[fd]->has_user && !clients[fd]->is_registered) // logging in (USER + PASS + NICK)
 		registerClient(fd);
 }
 
@@ -189,43 +184,41 @@ void Server::loop()
 		{
 			nb_event = epoll.wait(); // attends qu'un fd bouge son cul
 		}
-		catch(const std::exception& e)
+		catch(const std::exception& e) //si jamais ya un ctrl+c ou un soucis de wait()
 		{
 			std::cout << "Server internal error: " << e.what() << '\n';
 			return ;
 		}
-		for (int n = 0; n < nb_event; n++)
+		for (int n = 0; n < nb_event; n++) //traiter les events (IN, OUT)
 		{
 			if (epoll.getEventFd(n) == server_fd) //si c'est le server qui essaye de communiquer ca veut dire que ya un nouveau client dans listen
 				connectClient();
-			else // si c'est pas serv, ca veut dire client et la c'est full roue libre
+			else // si c'est pas serv, ca veut dire client essaye de communiquer
 			{
 				int bytes_read;
-				if (epoll.getEvent(n) & EPOLLIN) //si serveur a recu mesage de client[id = fd]
+				if (epoll.getEvent(n) & EPOLLIN) //si serveur a recu message de client[fd]
 				{
-					bytes_read = clients[epoll.getEventFd(n)]->Recv();
+					bytes_read = clients[epoll.getEventFd(n)]->Recv(); //lire ce que client a envoyer
 					if (bytes_read == 0)
-					{
 						disconnectClient(epoll.getEventFd(n));
-						continue ;
-					}
-					else if (clients[epoll.getEventFd(n)]->recv_buff.find("\r\n") != std::string::npos)
+					else if (clients[epoll.getEventFd(n)]->recv_buff.find("\r\n") != std::string::npos) //si ya un crlf faut process la command (si s'en est une)
 						processCommand(epoll.getEventFd(n));
-					else
-						continue ;
+					continue ;
 				}
 
 				if (epoll.getEvent(n) & EPOLLOUT) // send message to client that can receive it
 				{
 					int byte_sent;
 					
-					byte_sent = clients[epoll.getEventFd(n)]->Send();
+					byte_sent = clients[epoll.getEventFd(n)]->Send(); //ecrit le buffer d'envoi dans le fd
 					if (byte_sent <= 0)
-						std::cout << "ah, dommage" << std::endl; //flemme de faire le check
+						std::cout << "ah, dommage" << std::endl; //flemme de faire le check faut check errno et tout
 					epoll.ctl_mod(epoll.getEventFd(n), EPOLLIN);
 				}
-				else if (clients[epoll.getEventFd(n)]->quit)
+				if (clients[epoll.getEventFd(n)]->quit)
+				{
 					disconnectClient(epoll.getEventFd(n));
+				}
 			}
 		}
 	}
