@@ -17,6 +17,10 @@ rpl/err
 
 442     ERR_NOTONCHANNEL
                         "<channel> :You're not on that channel"
+401     ERR_NOSUCHNICK
+                        "<nickname> :No such nick/channel"
+443     ERR_USERONCHANNEL
+                        "<user> <channel> :is already on channel"
 
 
                                                     _,,_..

@@ -64,5 +64,6 @@ class Channel
 //random utils
 Channel	*getChannelByName(std::string ch, std::set<Channel *>channels);
 Client	*getUserByNick(std::string nick, std::set<Client *>Clients);
+Client *getUserByNickInMap(std::string nick, std::map<int, Client *>Clients);
 
 #endif //CHANNEL_PP
