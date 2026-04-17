@@ -15,10 +15,21 @@ commandes
 
 rpl/err
 
-442     ERR_NOTONCHANNEL
-                        "<channel> :You're not on that channel"
+301     RPL_AWAY
+
 401     ERR_NOSUCHNICK
                         "<nickname> :No such nick/channel"
+404     ERR_CANNOTSENDTOCHAN
+
+407     ERR_TOOMANYTARGETS
+
+411     ERR_NORECIPIENT
+
+412     ERR_NOTEXTTOSEND
+
+442     ERR_NOTONCHANNEL
+                        "<channel> :You're not on that channel"
+
 443     ERR_USERONCHANNEL
                         "<user> <channel> :is already on channel"
 
