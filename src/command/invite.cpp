@@ -25,13 +25,13 @@ void Server::invite(std::vector<std::string> args, int client_fd)
 	Client *c = getUserByNickInMap(target, clients);
 	if (!c)
 	{
-		//updateClient(client_fd, Rep.err401("INVITE", clients[client_fd]->nickName));
+		updateClient(client_fd, Rep.err401(target, clients[client_fd]->nickName));
 		return ;
 	}
 	Channel *ch = getChannelByName(channelName, channels);
 	if (!ch)
 	{
-		//updateClient(client_fd, Rep.err442("INVITE", clients[client_fd]->nickName));
+		updateClient(client_fd, Rep.err442(channelName, clients[client_fd]->nickName));
 		return ;
 	}
 	if (!ch->isOp(client_fd))
@@ -41,7 +41,11 @@ void Server::invite(std::vector<std::string> args, int client_fd)
 	}
 	if (getUserByNick(target, ch->getUsers()))
 	{
-		//updateClient(client_fd, Rep.err443("INVITE", clients[client_fd]->nickName));
+		updateClient(client_fd, Rep.err443(target, channelName, clients[client_fd]->nickName));
 		return ;
 	}
+
+	updateClient(client_fd, Rep.rpl341(*ch, target, clients[client_fd]->nickName));
+	updateClient(c->client_fd, Rep.rpl301(clients[client_fd]->nickName, " is inviting you on " + ch->getName()));
+	ch->getInvList().insert(clients[c->client_fd]->nickName);
 }

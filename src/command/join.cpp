@@ -83,8 +83,12 @@ void Server::join(std::vector<std::string> args, int client_fd)
 			{
 				if (ch->isInvOnly())
 				{
-					updateClient(client_fd, Rep.err473(*ch, clients[client_fd]->nickName));
-					return ;
+					if (!ch->isInv(*clients[client_fd]))
+					{
+						updateClient(client_fd, Rep.err473(*ch, clients[client_fd]->nickName));
+						return ;
+					}
+					ch->getInvList().erase(clients[client_fd]->nickName);
 				}
 				if (!checkUserInChannel(clients[client_fd]->userName, ch->getUsers()))
 				{

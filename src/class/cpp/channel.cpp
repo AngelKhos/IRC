@@ -43,6 +43,8 @@ std::string Channel::getTopicAutor() { return (topicAutor); }
 void Channel::setTopicUpdate(long int time) { topicUpdate = time; }
 long int Channel::getTopicUpdate() { return (topicUpdate); }
 
+std::set<std::string> &Channel::getInvList() { return (invList); }
+
 //============================================
 //methode
 
@@ -82,3 +84,10 @@ void Channel::opUser(Client &u)
 
 //unop a operator in the channel
 void Channel::unopUser(Client &u) { op.erase(&u); }
+
+bool Channel::isInv(Client &client)
+{
+	if (invList.find(client.nickName) != invList.end())
+		return (true);
+	return (false);
+}

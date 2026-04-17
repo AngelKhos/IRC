@@ -41,6 +41,8 @@ class Channel
 		std::string getTopicAutor();
 		void setTopicUpdate(long int time);
 		long int getTopicUpdate();
+		std::set<std::string> &getInvList();
+		bool isInv(Client &client);
 
 		bool isOp(int client_fd);
 
@@ -51,7 +53,7 @@ class Channel
 		std::string name;
 		std::set<Client *> op;
 		std::set<Client *> users;
-		std::set<int> invList;
+		std::set<std::string> invList;
 
 		bool invOnly;
 		int userLimit;
