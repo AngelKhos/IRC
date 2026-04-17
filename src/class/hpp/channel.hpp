@@ -51,6 +51,7 @@ class Channel
 		std::string name;
 		std::set<Client *> op;
 		std::set<Client *> users;
+		std::set<int> invList;
 
 		bool invOnly;
 		int userLimit;

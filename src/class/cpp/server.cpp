@@ -20,6 +20,7 @@ void Server::initCommand()
 	commands["MODE"] = &Server::mode;
 	commands["QUIT"] = &Server::quit;
 	commands["TOPIC"] = &Server::topic;
+	commands["INVITE"] = &Server::invite;
 }
 
 Server::Server(unsigned short Pport, std::string Ppass) :

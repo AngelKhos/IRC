@@ -70,6 +70,7 @@ class Server
 		void motd(std::vector<std::string> args, int client_fd);
 		void quit(std::vector<std::string> args, int client_fd);
 		void topic(std::vector<std::string> args, int client_fd);
+		void invite(std::vector<std::string> args, int client_fd);
 
 		void connectClient();
 		void disconnectClient(int fd);

@@ -18,6 +18,7 @@ SRC = \
 	src/command/motd.cpp \
 	src/command/quit.cpp \
 	src/command/topic.cpp \
+	src/command/invite.cpp \
 	\
 	src/utils.cpp
 
