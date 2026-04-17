@@ -10,7 +10,7 @@
 #include "channel.hpp"
 #include "numeric_rpl.hpp"
 
-#define SERVER_NAME "turbo.serv"
+#define SERVER_NAME ":turbo.serv"
 
 typedef struct s_config
 {

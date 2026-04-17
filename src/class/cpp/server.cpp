@@ -151,7 +151,7 @@ void Server::registerClient(int fd)
 	std::vector<std::string> null;
 
 	clients[fd]->is_registered = true;
-	updateClient(fd, Rep.rpl001(SERVER_NAME, clients[fd]->nickName));
+	updateClient(fd, Rep.rpl001("turbo.serv", clients[fd]->nickName));
 	motd(null, fd);
 }
 
