@@ -21,6 +21,7 @@ void Server::initCommand()
 	commands["QUIT"] = &Server::quit;
 	commands["TOPIC"] = &Server::topic;
 	commands["INVITE"] = &Server::invite;
+	commands["PRIVMSG"] = &Server::privmsg;
 }
 
 Server::Server(unsigned short Pport, std::string Ppass) :
@@ -161,6 +162,9 @@ void Server::processCommand(int fd)
 		std::string message = clients[fd]->recv_buff.substr(0, clients[fd]->recv_buff.find("\r\n") + 1); //la commande
 		std::cout << clients[fd]->recv_buff; // logs
 		std::vector<std::string> args = cmd_split(message);
+		if (!args.empty())
+			for (size_t i = 0; i < args[0].length(); i++)
+				args[0][i] = toupper(args[0][i]);
 		if (!args.empty() && commands.find(args[0]) != commands.end()) //trouver la bonne commande
 		{
 			std::string command = args[0];

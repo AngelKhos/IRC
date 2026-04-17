@@ -19,6 +19,7 @@ SRC = \
 	src/command/quit.cpp \
 	src/command/topic.cpp \
 	src/command/invite.cpp \
+	src/command/privmsg.cpp \
 	\
 	src/utils.cpp
 

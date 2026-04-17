@@ -71,6 +71,7 @@ class Server
 		void quit(std::vector<std::string> args, int client_fd);
 		void topic(std::vector<std::string> args, int client_fd);
 		void invite(std::vector<std::string> args, int client_fd);
+		void privmsg(std::vector<std::string> args, int client_fd);
 
 		void connectClient();
 		void disconnectClient(int fd);
