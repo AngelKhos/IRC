@@ -7,20 +7,17 @@
 std::vector<std::string> lil_split(std::string args)
 {
 	std::vector<std::string> vec;
-	for (size_t i = 0; i < args.size(); i++)
+	for (size_t i = 0; i <= args.size() + 1; i++)
 	{
-		if (args[i] != ',' && i != args.size() - 1)
+
+		if (args[i] != ',' && args[i] != '\0')
 			continue ;
 		else
 		{
-			size_t j = 1;
-			size_t j2 = 0;
-			if (args[0] == ',')
-			{
-				j--;
-				j2++;
-			}
-			vec.push_back(args.substr(j2, i + j));
+			size_t j = 0;
+			if (args[0] == ',' || args[0] == '\0')
+				j++;
+			vec.push_back(args.substr(j, i - j));
 			args.erase(0, i);
 			i = 0;
 		}
@@ -57,7 +54,7 @@ bool checkUserInChannel(std::string user, std::set<Client *>Clients)
 	}
 	return (false);
 }
-
+//TODO CHECK MOT DE PASS
 void Server::join(std::vector<std::string> args, int client_fd)
 {
 	if (!clients[client_fd]->is_registered)
