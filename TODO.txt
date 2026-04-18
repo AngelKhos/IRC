@@ -6,8 +6,6 @@ ajouter les rpl dans mode
 fix le segfault quand on qui le serve avec des user dans un channel (toujour la :/)
 
 commandes
-    privmsg
-    ping
     kick
     part
 

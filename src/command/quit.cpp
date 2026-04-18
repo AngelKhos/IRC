@@ -1,5 +1,13 @@
 #include "server.hpp"
 
+void Server::ping(std::vector<std::string> args, int client_fd)
+{
+    if (args.empty())
+        return ;
+    std::string rpl = SERVER_NAME + std::string(" PONG turbo.serv :") + args[0];
+    updateClient(client_fd, rpl + std::string("\r\n"));
+}
+
 void Server::quit(std::vector<std::string> args, int client_fd)
 {
     if (!clients[client_fd]->is_registered)

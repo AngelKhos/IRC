@@ -6,7 +6,7 @@ void Server::sendMsg(int src_fd, int dest_fd, std::string message)
 	std::string msg = std::string(":") + clients[src_fd]->nickName + std::string("!")
 		+ clients[src_fd]->userName + std::string("@") + clients[src_fd]->ip
 		+ std::string(" PRIVMSG ") + clients[dest_fd]->nickName + std::string(" ") + message;
-	updateClient(dest_fd, msg);
+	updateClient(dest_fd, msg + std::string("\r\n"));
 }
 
 void Server::sendMsginChan(int src_fd, int dest_fd, std::string chName, std::string message)
@@ -14,7 +14,7 @@ void Server::sendMsginChan(int src_fd, int dest_fd, std::string chName, std::str
 	std::string msg = std::string(":") + clients[src_fd]->nickName + std::string("!")
 		+ clients[src_fd]->userName + std::string("@") + clients[src_fd]->ip
 		+ std::string(" PRIVMSG ") + chName + std::string(" ") + message;
-	updateClient(dest_fd, msg);
+	updateClient(dest_fd, msg  + std::string("\r\n"));
 }
 
 void Server::privmsg(std::vector<std::string> args, int client_fd)

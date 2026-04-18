@@ -21,6 +21,7 @@ void Server::initCommand()
 	commands["MOTD"] = &Server::motd;
 	commands["MODE"] = &Server::mode;
 	commands["QUIT"] = &Server::quit;
+	commands["PING"] = &Server::ping;
 	commands["TOPIC"] = &Server::topic;
 	commands["INVITE"] = &Server::invite;
 	commands["PRIVMSG"] = &Server::privmsg;
