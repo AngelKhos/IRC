@@ -2,6 +2,10 @@
 #define CLIENT_HPP
 
 #include <string>
+#include <arpa/inet.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <stdio.h>
 
 typedef struct Client
 {
@@ -16,6 +20,7 @@ typedef struct Client
 
 		std::string nickName;
 		std::string userName;
+		std::string ip;
 
 		std::string recv_buff;
 		std::string send_buff;

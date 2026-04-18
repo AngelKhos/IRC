@@ -4,6 +4,8 @@
 #include <unistd.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
+#include <stdio.h>
 #include <iostream>
 #include <sys/epoll.h>
 
@@ -121,13 +123,19 @@ void Server::stopServer(int x)
 
 void Server::connectClient()
 {
-	int client_fd = accept(this->getServerFd(), NULL, NULL); // accepte les clients qui attendent dans la pool de listen
+	struct sockaddr_storage client_addr;
+	socklen_t sock_size = sizeof(client_addr);
+	int client_fd = accept(this->getServerFd(), (sockaddr *)&client_addr, &sock_size); // accepte les clients qui attendent dans la pool de listen
 	if (client_fd != -1)
 	{
 		Client  *c = new Client(client_fd);
 		clients[client_fd] = c; //init client très sommaire (TODO)
 		epoll.ctl_add(client_fd, EPOLLIN); //ajoute le client_fd a la liste de fd que epoll doit surveiller
-		std::cout << "client connected" << std::endl;
+
+		struct sockaddr_in *sock = (sockaddr_in *)&client_addr;
+		clients[client_fd]->ip = inet_ntoa(sock->sin_addr);
+
+		std::cout << "client connected with ip " << clients[client_fd]->ip << std::endl;
 	}
 }
 

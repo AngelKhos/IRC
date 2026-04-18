@@ -23,6 +23,7 @@ Client::Client(const Client &src)
 	client_fd = src.client_fd;
 	userName = src.userName;
 	nickName = src.nickName;
+	ip = src.ip;
 	has_pass = src.has_pass;
 	has_nick = src.has_nick;
 	has_user = src.has_user;

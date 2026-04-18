@@ -79,13 +79,15 @@ class Server
 		void registerClient(int fd);
 
 		void processCommand(int fd);
+		void sendMsg(int src_fd, int dest_fd, std::string message);
+		void sendMsginChan(int src_fd, int dest_fd, std::string chName, std::string message);
 
 		int server_fd;
 		t_config servConfig;
 		unsigned short port;
 		std::string password;
 		bool run;
-		sockaddr_in address; // TODO set/get for this
+		sockaddr_in address;
 		std::map<int ,Client *> clients; // --> int = client fd, Client = Class client
 		Epoll epoll;
 		NumRpl Rep;
