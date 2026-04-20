@@ -16,6 +16,7 @@ typedef struct Client
 		int Recv();
 		int Send();
 		void Disconnect();
+		const std::string prefix();
 		int client_fd;
 
 		std::string nickName;

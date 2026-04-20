@@ -80,3 +80,9 @@ int Client::Send()
 	
 	return (sent_bytes);
 }
+
+const std::string Client::prefix()
+{
+	std::string prefix = ":" + nickName + "!" + userName + "@" + ip;
+	return (prefix);
+}
