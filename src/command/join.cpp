@@ -71,7 +71,7 @@ void Server::join(std::vector<std::string> args, int client_fd)
 	std::vector<std::string> vec_pw;
 	if (args.size() > 1)
 		vec_pw= lil_split(args[1]);
-	int pwI = 0;
+	unsigned long pwI = 0;
 	for (std::vector<std::string>::iterator it = vec_ch.begin(); it < vec_ch.end(); it++)
 	{
 		if (Channel::checkName(*it))
@@ -88,9 +88,20 @@ void Server::join(std::vector<std::string> args, int client_fd)
 					}
 					ch->getInvList().erase(clients[client_fd]->nickName);
 				}
-				if (ch->getPw() == "")
+				if (ch->getPw() != "")
 				{
-					if (vec_pw[pwI] != ch->getPw())
+					if (vec_pw.size() > 0)
+					{
+						if (pwI <= vec_pw.size())
+						{
+							if (vec_pw[pwI] != ch->getPw())
+							{
+								updateClient(client_fd, Rep.err475(*ch, clients[client_fd]->nickName));
+								continue ;
+							}
+						}
+					}
+					else
 					{
 						updateClient(client_fd, Rep.err475(*ch, clients[client_fd]->nickName));
 						continue ;

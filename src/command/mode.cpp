@@ -14,11 +14,12 @@ Client *getUserByNick(std::string nick, std::set<Client *>Clients)
 	return (NULL);
 }
 
+//add notsechchannel rpl
 void Server::mode(std::vector<std::string> args, int client_fd)
 {
 	if (args.size() <= 1)
 	{
-		updateClient(client_fd, Rep.err461(args[0], clients[client_fd]->nickName));
+		updateClient(client_fd, Rep.err461("MODE", clients[client_fd]->nickName));
 		return ;
 	}
 	std::string mode = args[1];
