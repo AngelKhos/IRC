@@ -6,6 +6,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <stdio.h>
+#include <set>
 
 typedef struct Client
 {
@@ -17,6 +18,8 @@ typedef struct Client
 		int Send();
 		void Disconnect();
 		const std::string prefix();
+		std::set<std::string> regChannel;
+
 		int client_fd;
 
 		std::string nickName;

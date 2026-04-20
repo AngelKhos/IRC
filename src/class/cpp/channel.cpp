@@ -71,9 +71,17 @@ bool Channel::isOp(int client_fd)
 }
 
 //add user to the channel
-void Channel::addUser(Client &u) { users.insert(&u); }
+void Channel::addUser(Client &u)
+{
+	u.regChannel.insert(name);
+	users.insert(&u);
+}
 //delete a user from the channel
-void Channel::delUser(Client &u) { users.erase(&u); }
+void Channel::delUser(Client &u)
+{
+	u.regChannel.erase(name);
+	users.erase(&u);
+}
 
 //make an operator
 void Channel::opUser(Client &u)
