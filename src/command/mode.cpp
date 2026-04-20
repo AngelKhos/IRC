@@ -1,6 +1,7 @@
 #include "server.hpp"
 #include <vector>
 #include "channel.hpp"
+#include <iostream>
 #include <cstdlib>
 
 Client *getUserByNick(std::string nick, std::set<Client *>Clients)
@@ -132,4 +133,5 @@ void Server::mode(std::vector<std::string> args, int client_fd)
 			return ;
 		}
 	}
+	updateClient(client_fd, clients[client_fd]->prefix() + " MODE " + args[0] + " " + args[1] + "\r\n");
 }
