@@ -68,9 +68,10 @@ void Server::join(std::vector<std::string> args, int client_fd)
 		return ;
 	}
 	std::vector<std::string> vec_ch = lil_split(args[0]);
+	std::vector<std::string> vec_pw;
 	if (args.size() > 1)
-		std::vector<std::string> vec_pw = lil_split(args[1]);
-
+		vec_pw= lil_split(args[1]);
+	int pwI = 0;
 	for (std::vector<std::string>::iterator it = vec_ch.begin(); it < vec_ch.end(); it++)
 	{
 		if (Channel::checkName(*it))
@@ -83,16 +84,28 @@ void Server::join(std::vector<std::string> args, int client_fd)
 					if (!ch->isInv(*clients[client_fd]))
 					{
 						updateClient(client_fd, Rep.err473(*ch, clients[client_fd]->nickName));
-						return ;
+						continue ;
 					}
 					ch->getInvList().erase(clients[client_fd]->nickName);
+				}
+				if (ch->getPw() == "")
+				{
+					if (vec_pw[pwI] != ch->getPw())
+					{
+						updateClient(client_fd, Rep.err475(*ch, clients[client_fd]->nickName));
+						continue ;
+					}
 				}
 				if (!checkUserInChannel(clients[client_fd]->userName, ch->getUsers()))
 				{
 					ch->addUser(*clients[client_fd]);
-					updateClient(client_fd, Rep.rpl324(*ch, clients[client_fd]->nickName));
+					std::string msg = std::string(":") + clients[client_fd]->nickName + std::string("!")
+						+ clients[client_fd]->userName + std::string("@") + clients[client_fd]->ip
+						+ std::string(" JOIN ") + ch->getName();
+					updateClient(client_fd, msg + std::string("\r\n"));
 					updateClient(client_fd, Rep.rpl353(*ch, clients[client_fd]->nickName));
 					updateClient(client_fd, Rep.rpl366(*ch, clients[client_fd]->nickName));
+					updateClient(client_fd, Rep.rpl324(*ch, clients[client_fd]->nickName));
 					if (ch->getTopic() == "")
 						updateClient(client_fd, Rep.rpl331(*ch, clients[client_fd]->nickName));
 					else
@@ -106,9 +119,13 @@ void Server::join(std::vector<std::string> args, int client_fd)
 				channels.insert(ch);
 				ch->addUser(*clients[client_fd]);
 				ch->opUser(*clients[client_fd]);
-				updateClient(client_fd, Rep.rpl324(*ch, clients[client_fd]->nickName));
+				std::string msg = std::string(":") + clients[client_fd]->nickName + std::string("!")
+						+ clients[client_fd]->userName + std::string("@") + clients[client_fd]->ip
+						+ std::string(" JOIN ") + ch->getName();
+					updateClient(client_fd, msg + std::string("\r\n"));
 				updateClient(client_fd, Rep.rpl353(*ch, clients[client_fd]->nickName));
 				updateClient(client_fd, Rep.rpl366(*ch, clients[client_fd]->nickName));
+				updateClient(client_fd, Rep.rpl324(*ch, clients[client_fd]->nickName));
 				if (ch->getTopic() == "")
 					updateClient(client_fd, Rep.rpl331(*ch, clients[client_fd]->nickName));
 				else
@@ -117,5 +134,6 @@ void Server::join(std::vector<std::string> args, int client_fd)
 		}
 		else
 			updateClient(client_fd, Rep.err403(*it, clients[client_fd]->nickName));
+		pwI++;
 	}
 }
