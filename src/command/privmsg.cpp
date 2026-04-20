@@ -23,7 +23,7 @@ void Server::privmsg(std::vector<std::string> args, int client_fd)
 		updateClient(client_fd, Rep.err412(clients[client_fd]->nickName));
 	else if (args.size() == 1 && getUserByNickInMap(args[0], clients) == NULL && getChannelByName(args[0], channels) == NULL)
 		updateClient(client_fd, Rep.err411("PRIVMSG", clients[client_fd]->nickName));
-	else if (args.size() == 2)
+	else if (args.size() >= 2)
 	{
 		std::vector<std::string> recipient = lil_split(args[0]);
 
