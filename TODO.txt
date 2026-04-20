@@ -1,6 +1,3 @@
-ajouter un vector de (Channel *) dans les cient pour qu'il
-est une referance des channel dans les quelle il sons
-
 ajouter les rpl dans mode
 
 fix le segfault quand on qui le serve avec des user dans un channel (toujour la :/)
