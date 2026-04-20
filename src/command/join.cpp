@@ -54,7 +54,6 @@ bool checkUserInChannel(std::string user, std::set<Client *>Clients)
 	}
 	return (false);
 }
-//TODO CHECK MOT DE PASS
 void Server::join(std::vector<std::string> args, int client_fd)
 {
 	if (!clients[client_fd]->is_registered)
