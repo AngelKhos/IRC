@@ -25,6 +25,8 @@ void Server::initCommand()
 	commands["TOPIC"] = &Server::topic;
 	commands["INVITE"] = &Server::invite;
 	commands["PRIVMSG"] = &Server::privmsg;
+	commands["KICK"] = &Server::kick;
+	commands["PART"] = &Server::part;
 }
 
 Server::Server(unsigned short Pport, std::string Ppass) :
