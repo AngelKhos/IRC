@@ -13,11 +13,16 @@ void Server::part(std::vector<std::string> args, int client_fd)
             Channel *ch = getChannelByName(*it, channels);
             if (ch)
             {
-                if (getUserByNick(clients[client_fd]->nickName , ch->getUsers()))
+                std::set<Client *> users = ch->getUsers();
+                if (getUserByNick(clients[client_fd]->nickName , users))
                 {
+                    for (std::set<Client *>::iterator u_it = users.begin(); u_it != users.end(); u_it++)
+                    {
+                        updateClient( (*u_it)->client_fd, clients[client_fd]->prefix() + std::string(" PART ") 
+				                        + *it + std::string("\r\n"));
+                    }
                     ch->delUser(*clients[client_fd]);
-                    updateClient(client_fd, clients[client_fd]->prefix() + std::string(" PART ") 
-				                    + *it + std::string("\r\n"));
+                    
                 }
                 else
                     updateClient(client_fd, Rep.err442(*it, clients[client_fd]->nickName));
