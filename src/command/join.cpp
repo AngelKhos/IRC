@@ -55,7 +55,6 @@ bool checkUserInChannel(std::string user, std::set<Client *>Clients)
 	return (false);
 }
 
-//TODO handle +l
 void Server::join(std::vector<std::string> args, int client_fd)
 {
 	if (!clients[client_fd]->is_registered)
@@ -88,6 +87,14 @@ void Server::join(std::vector<std::string> args, int client_fd)
 						continue ;
 					}
 					ch->getInvList().erase(clients[client_fd]->nickName);
+				}
+				if (ch->getUserLimit() > 0)
+				{
+					if (ch->getUsers().size() >= (size_t)ch->getUserLimit())
+					{
+						updateClient(client_fd, Rep.err471(*ch, clients[client_fd]->nickName));
+						continue ;
+					}
 				}
 				if (ch->getPw() != "")
 				{
