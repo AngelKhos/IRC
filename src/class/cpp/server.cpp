@@ -217,7 +217,10 @@ void Server::loop()
 				{
 					bytes_read = clients[epoll.getEventFd(n)]->Recv(); //lire ce que client a envoyer
 					if (bytes_read == 0)
+					{
 						disconnectClient(epoll.getEventFd(n));
+						clients.erase(epoll.getEventFd(n));
+					}
 					else if (clients[epoll.getEventFd(n)]->recv_buff.find("\r\n") != std::string::npos) //si ya un crlf faut process la command (si s'en est une)
 						processCommand(epoll.getEventFd(n));
 					continue ;
