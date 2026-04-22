@@ -145,7 +145,6 @@ void Server::disconnectClient(int fd)
 	epoll.ctl_del(fd);
 	clients[fd]->Disconnect();
 	delete clients[fd];
-	//clients.erase(fd); // cette ligne fesais segfault quand on quittai avec un user dans un channel
 }
 
 void Server::updateClient(int fd, std::string message) //fait en sorte que si on a qqch a envoyer, ca set EPOLLOUT
@@ -234,6 +233,7 @@ void Server::loop()
 				if (clients[epoll.getEventFd(n)]->quit)
 				{
 					disconnectClient(epoll.getEventFd(n));
+					clients.erase(epoll.getEventFd(n));
 				}
 			}
 		}

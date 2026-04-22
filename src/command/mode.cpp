@@ -14,27 +14,16 @@ Client *getUserByNick(std::string nick, std::set<Client *>Clients)
 	return (NULL);
 }
 
-//add notsechchannel rpl
 void Server::mode(std::vector<std::string> args, int client_fd)
 {
-	if (args.size() <= 1)
+	if (args.size() <= 0)
 	{
 		updateClient(client_fd, Rep.err461("MODE", clients[client_fd]->nickName));
 		return ;
 	}
-	std::string mode = args[1];
 	std::string target = args[0];
 	unsigned long argsIndex = 2;
 
-	bool plus = false;
-	if (mode.size() == 1)
-		return ;
-	if (mode[0] == '-')
-		plus = false;
-	else if (mode[0] == '+')
-		plus = true;
-	else
-		return ;
 	Channel *ch = getChannelByName(target, channels);
 	if (!ch)
 	{
@@ -46,6 +35,19 @@ void Server::mode(std::vector<std::string> args, int client_fd)
 		updateClient(client_fd, Rep.err482(*ch, clients[client_fd]->nickName));
 		return ;
 	}
+	bool plus = false;
+	if (args.size() <= 1)
+	{
+		updateClient(client_fd, Rep.rpl324(*ch, clients[client_fd]->nickName));
+		return ;
+	}
+	std::string mode = args[1];
+	if (mode[0] == '-')
+		plus = false;
+	else if (mode[0] == '+')
+		plus = true;
+	else
+		return ;
 
 	for (size_t i = 1; i < mode.size(); i++)
 	{
