@@ -30,15 +30,15 @@ void Server::mode(std::vector<std::string> args, int client_fd)
 		updateClient(client_fd, Rep.err403(args[0], clients[client_fd]->nickName));
 		return ;
 	}
-	if (!ch->isOp(client_fd))
-	{
-		updateClient(client_fd, Rep.err482(*ch, clients[client_fd]->nickName));
-		return ;
-	}
 	bool plus = false;
 	if (args.size() <= 1)
 	{
 		updateClient(client_fd, Rep.rpl324(*ch, clients[client_fd]->nickName));
+		return ;
+	}
+	if (!ch->isOp(client_fd))
+	{
+		updateClient(client_fd, Rep.err482(*ch, clients[client_fd]->nickName));
 		return ;
 	}
 	std::string mode = args[1];
