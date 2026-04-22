@@ -20,6 +20,8 @@ SRC = \
 	src/command/topic.cpp \
 	src/command/invite.cpp \
 	src/command/privmsg.cpp \
+	src/command/kick.cpp \
+	src/command/part.cpp \
 	\
 	src/utils.cpp
 
