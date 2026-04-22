@@ -54,6 +54,8 @@ bool checkUserInChannel(std::string user, std::set<Client *>Clients)
 	}
 	return (false);
 }
+
+//TODO handle +l
 void Server::join(std::vector<std::string> args, int client_fd)
 {
 	if (!clients[client_fd]->is_registered)
@@ -109,10 +111,12 @@ void Server::join(std::vector<std::string> args, int client_fd)
 				if (!checkUserInChannel(clients[client_fd]->userName, ch->getUsers()))
 				{
 					ch->addUser(*clients[client_fd]);
-					std::string msg = std::string(":") + clients[client_fd]->nickName + std::string("!")
-						+ clients[client_fd]->userName + std::string("@") + clients[client_fd]->ip
-						+ std::string(" JOIN ") + ch->getName();
-					updateClient(client_fd, msg + std::string("\r\n"));
+
+					std::set<Client *> users = ch->getUsers();
+					for (std::set<Client *>::iterator u_it = users.begin(); u_it != users.end(); u_it++)
+						updateClient( (*u_it)->client_fd, clients[client_fd]->prefix() + std::string(" JOIN ") 
+										+ ch->getName() + std::string("\r\n"));
+
 					updateClient(client_fd, Rep.rpl353(*ch, clients[client_fd]->nickName));
 					updateClient(client_fd, Rep.rpl366(*ch, clients[client_fd]->nickName));
 					updateClient(client_fd, Rep.rpl324(*ch, clients[client_fd]->nickName));
@@ -129,10 +133,12 @@ void Server::join(std::vector<std::string> args, int client_fd)
 				channels.insert(ch);
 				ch->addUser(*clients[client_fd]);
 				ch->opUser(*clients[client_fd]);
-				std::string msg = std::string(":") + clients[client_fd]->nickName + std::string("!")
-						+ clients[client_fd]->userName + std::string("@") + clients[client_fd]->ip
-						+ std::string(" JOIN ") + ch->getName();
-					updateClient(client_fd, msg + std::string("\r\n"));
+
+				std::set<Client *> users = ch->getUsers();
+					for (std::set<Client *>::iterator u_it = users.begin(); u_it != users.end(); u_it++)
+						updateClient( (*u_it)->client_fd, clients[client_fd]->prefix() + std::string(" JOIN ") 
+										+ ch->getName() + std::string("\r\n"));
+
 				updateClient(client_fd, Rep.rpl353(*ch, clients[client_fd]->nickName));
 				updateClient(client_fd, Rep.rpl366(*ch, clients[client_fd]->nickName));
 				updateClient(client_fd, Rep.rpl324(*ch, clients[client_fd]->nickName));
