@@ -16,10 +16,8 @@ void Server::part(std::vector<std::string> args, int client_fd)
                 if (getUserByNick(clients[client_fd]->nickName , ch->getUsers()))
                 {
                     ch->delUser(*clients[client_fd]);
-
-                    std::string rpl = clients[client_fd]->prefix() + std::string(" PART ") 
-				                    + *it + "\r\n";
-                    updateClient(client_fd, rpl);
+                    updateClient(client_fd, clients[client_fd]->prefix() + std::string(" PART ") 
+				                    + *it + std::string("\r\n"));
                 }
                 else
                     updateClient(client_fd, Rep.err442(*it, clients[client_fd]->nickName));
