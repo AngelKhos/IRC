@@ -138,7 +138,7 @@ const str NumRpl::rpl372(str nick)
 const str NumRpl::rpl375(str nick)
 {
 	str rpl = SERVER_NAME + str(" 375 ") + nick + str(" :- ") 
-	+ str("turbo.serv Message of the day - ");
+	+ str("kiwi.serv Message of the day - ");
 	return rpl + str("\r\n");
 }
 const str NumRpl::rpl376(str nick)

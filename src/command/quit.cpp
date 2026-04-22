@@ -4,7 +4,7 @@ void Server::ping(std::vector<std::string> args, int client_fd)
 {
     if (args.empty())
         return ;
-    std::string rpl = SERVER_NAME + std::string(" PONG turbo.serv :") + args[0];
+    std::string rpl = SERVER_NAME + std::string(" PONG kiwi.serv :") + args[0];
     updateClient(client_fd, rpl + std::string("\r\n"));
 }
 
