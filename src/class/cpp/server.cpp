@@ -144,6 +144,12 @@ void Server::connectClient()
 
 void Server::disconnectClient(int fd)
 {
+	std::set<std::string> setChannelRegCpy = clients[fd]->regChannel;
+	for (std::set<std::string>::iterator it = setChannelRegCpy.begin(); it != setChannelRegCpy.end(); it++)
+	{
+		Channel *ch = getChannelByName(*it, channels);
+		ch->delUser(*clients[fd]);
+	}
 	epoll.ctl_del(fd);
 	clients[fd]->Disconnect();
 	delete clients[fd];
