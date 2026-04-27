@@ -40,6 +40,8 @@ void Server::nick(std::vector<std::string> args, int client_fd)
 	else
 	{
 		clients[client_fd]->has_nick = true;
+		updateClient(client_fd, clients[client_fd]->prefix() + std::string(" NICK :") 
+			+ args[0] + std::string("\r\n"));
 		clients[client_fd]->nickName = args[0];
 	}
 }
