@@ -40,6 +40,7 @@ void Server::kick(std::vector<std::string> args, int client_fd)
 				continue ;
 			}
 			ch->delUser(*u);
+			clients[client_fd]->regChannel.erase(ch->getName());
 			if (u->client_fd != client_fd)
 				updateClient(u->client_fd, clients[client_fd]->prefix() + " KICK " + ch->getName() + " " + u->nickName + " :" + com + "\r\n");
 			updateClient(client_fd, clients[client_fd]->prefix() + " KICK " + ch->getName() + " " + u->nickName + " :" + com + "\r\n");
