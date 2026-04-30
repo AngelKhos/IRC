@@ -122,6 +122,8 @@ void Server::mode(std::vector<std::string> args, int client_fd)
 					updateClient(client_fd, Rep.err461(args[0], clients[client_fd]->nickName));
 					return ;
 				}
+				if (atoi(args[argsIndex].c_str()) <= 0)
+					return ;
 				ch->setLimitUser(atoi(args[argsIndex].c_str()));
 				argsIndex++;
 			}
