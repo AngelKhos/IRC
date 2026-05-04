@@ -11,7 +11,10 @@ int main(int argc, char **argv)
 {
 	signal(SIGINT, sigHandler);
 	if (argc != 3)
+	{
+		std::cout << "Bag args, try : ./ircserv <port> <pass>" << std::endl;
 		return (1);
+	}
 	Server ircServer((unsigned short)atoi(argv[1]), argv[2]);	
 
 	try
