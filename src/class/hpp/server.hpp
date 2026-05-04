@@ -82,8 +82,8 @@ class Server
 		void registerClient(int fd);
 
 		void processCommand(int fd);
-		void sendMsg(int src_fd, int dest_fd, std::string message);
-		void sendMsginChan(int src_fd, int dest_fd, std::string chName, std::string message);
+		void sendMsg(int src_fd, int dest_fd, std::string message, std::string command);
+		void sendMsginChan(int src_fd, int dest_fd, std::string chName, std::string message, std::string command);
 
 		int server_fd;
 		t_config servConfig;

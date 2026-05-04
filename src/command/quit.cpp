@@ -10,19 +10,21 @@ void Server::ping(std::vector<std::string> args, int client_fd)
 
 void Server::quit(std::vector<std::string> args, int client_fd)
 {
-    if (!clients[client_fd]->is_registered)
-        return ;
-    if (!args.empty())
+    if (clients[client_fd]->is_registered)
     {
-        std::string rpl = SERVER_NAME + std::string(" QUIT ") + args[0] + std::string(" ; User ") 
-        + clients[client_fd]->userName + std::string(" has quit IRC\r\n");
-        updateClient(client_fd, rpl);
-    }
-    else
-    {
-        std::string rpl = SERVER_NAME + std::string(" QUIT ; User ") 
-        + clients[client_fd]->userName + std::string(" has quit IRC\r\n");
-        updateClient(client_fd, rpl);
+        std::string rpl;
+        if (!args.empty())
+            rpl = clients[client_fd]->prefix() + std::string(" QUIT ") + args[0] + std::string("\r\n");
+        else
+            rpl = clients[client_fd]->prefix() + std::string(" QUIT ; User ") 
+                + clients[client_fd]->userName + std::string(" has quit IRC\r\n");
+
+        for (std::set<std::string>::iterator it = clients[client_fd]->regChannel.begin(); it != clients[client_fd]->regChannel.end(); it++)
+        {
+            Channel *ch = getChannelByName(*it, channels);
+            for (std::set<Client *>::iterator iter = ch->getUsers().begin(); iter != ch->getUsers().end(); iter++)
+                updateClient((*iter)->client_fd, rpl);
+        }
     }
     clients[client_fd]->quit = true;
 }

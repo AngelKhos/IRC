@@ -1,16 +1,16 @@
 #include "server.hpp"
 #include "channel.hpp"
 
-void Server::sendMsg(int src_fd, int dest_fd, std::string message)
+void Server::sendMsg(int src_fd, int dest_fd, std::string message, std::string command)
 {
-	std::string msg = clients[src_fd]->prefix() + std::string(" PRIVMSG ") 
+	std::string msg = clients[src_fd]->prefix() + std::string(" ") + command + std::string(" ") 
 				+ clients[dest_fd]->nickName + std::string(" ") + message;
 	updateClient(dest_fd, msg + std::string("\r\n"));
 }
 
-void Server::sendMsginChan(int src_fd, int dest_fd, std::string chName, std::string message)
+void Server::sendMsginChan(int src_fd, int dest_fd, std::string chName, std::string message, std::string command)
 {
-	std::string msg = clients[src_fd]->prefix() + std::string(" PRIVMSG ") 
+	std::string msg = clients[src_fd]->prefix() + std::string(" ") + command + std::string(" ")
 				+ chName + std::string(" ") + message;
 	updateClient(dest_fd, msg  + std::string("\r\n"));
 }
@@ -32,7 +32,7 @@ void Server::privmsg(std::vector<std::string> args, int client_fd)
 			if (getUserByNickInMap(*it, clients) == NULL && getChannelByName(*it, channels) == NULL)
 				updateClient(client_fd, Rep.err401(*it, clients[client_fd]->nickName));
 			else if (getUserByNickInMap(*it, clients))
-				sendMsg(client_fd ,getUserByNickInMap(*it, clients)->client_fd, args[1]);
+				sendMsg(client_fd ,getUserByNickInMap(*it, clients)->client_fd, args[1], "PRIVMSG");
 			else if (getChannelByName(*it, channels))
 			{
 				if (getUserByNick(clients[client_fd]->nickName, getChannelByName(*it, channels)->getUsers()) == NULL)
@@ -43,7 +43,7 @@ void Server::privmsg(std::vector<std::string> args, int client_fd)
 				for (std::set<Client *>::iterator iter = Cset.begin(); iter != Cset.end(); iter++)
 				{
 					if ((*iter)->client_fd != client_fd)
-						sendMsginChan(client_fd ,(*iter)->client_fd, getChannelByName(*it, channels)->getName(), args[1]);
+						sendMsginChan(client_fd ,(*iter)->client_fd, getChannelByName(*it, channels)->getName(), args[1], "PRIVMSG");
 				}
 			}
 		}
