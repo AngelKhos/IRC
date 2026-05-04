@@ -238,8 +238,12 @@ void Server::loop()
 					
 					byte_sent = clients[epoll.getEventFd(n)]->Send(); //ecrit le buffer d'envoi dans le fd
 					if (byte_sent <= 0)
-						std::cout << "ah, dommage" << std::endl; //flemme de faire le check faut check errno et tout
-					epoll.ctl_mod(epoll.getEventFd(n), EPOLLIN);
+					{
+						disconnectClient(epoll.getEventFd(n));
+						clients.erase(epoll.getEventFd(n));
+					}
+					else
+						epoll.ctl_mod(epoll.getEventFd(n), EPOLLIN);
 				}
 				if (clients[epoll.getEventFd(n)]->quit)
 				{
