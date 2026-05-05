@@ -85,7 +85,10 @@ void Server::startServer()
 	address.sin_family = AF_INET;
 	address.sin_port = htons(this->getPort()); // normalise le port (bon endian)
 	address.sin_addr.s_addr = INADDR_ANY;
-	
+
+	int reuse = 1;
+	if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse))) // le port peut etre reutiliser immediatement
+		throw bindErrorException();
 	if (bind(this->getServerFd(), (sockaddr*)&address, sizeof(address)) == -1) //ce socket ecoute ce port la
 		throw bindErrorException();
 
@@ -97,15 +100,9 @@ void Server::startServer()
 	epoll.ctl_add(server_fd, EPOLLIN);
 	std::cout << "the server is on" << std::endl;
 }
-void Server::stopServer(int x)
+void Server::stopServer(int )
 {
 	std::cout << "server off :(((((" << std::endl;
-	(void)x;
-	// for (unsigned long int i = 0; i < clients.size(); i++)
-	// {
-	// 	Client &c = clients[i];
-	// 	close(c.getClientFd());
-	// }
 	for (std::set<Channel *>::iterator it = channels.begin(); it != channels.end(); it++)
 	{
 		delete *it;
@@ -115,9 +112,6 @@ void Server::stopServer(int x)
 		disconnectClient(it->second->client_fd);
 	}
 	clients.clear();
-
-	
-	//faudra boucler sur le set des channels pour les del aussi
 	if (epoll.getEpollFd() != -1)
 		close(epoll.getEpollFd());
 	close(server_fd);
@@ -187,7 +181,7 @@ void Server::processCommand(int fd)
 			args.erase(args.begin());
 			(this->*commands[command])(args, fd);
 		}
-		else //command not found
+		else if (args[0] != "") //command not found
 		{
 			if (clients[fd]->is_registered)
 				updateClient(fd, Rep.err421(args[0], clients[fd]->nickName));

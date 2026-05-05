@@ -30,7 +30,9 @@ const str NumRpl::rpl324(Channel ch, str nick)
 	str pwd;
 
 	str rpl = SERVER_NAME + str(" 324 ") + nick + str (" ") +
-		ch.getName() + str(" +nt");
+		ch.getName() + str(" +n");
+	if (ch.getReTopic())
+		rpl += str("t");
 	if (ch.isInvOnly())
 		rpl += str("i");
 	if (ch.getUserLimit() != 0)
@@ -115,14 +117,6 @@ const str NumRpl::rpl366(Channel ch, str nick)
 	ch.getName() + str(" :End of NAMES list");
 	return rpl + str("\r\n");
 }
-
-//
-//
-//
-//
-//
-//
-//
 
 const str NumRpl::rpl372(str nick)
 {

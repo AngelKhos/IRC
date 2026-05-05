@@ -2,8 +2,7 @@
 #include <unistd.h>
  #include <errno.h>
 
-Epoll::Epoll() : fd(-1) {
-}
+Epoll::Epoll() : fd(-1) {}
 
 int Epoll::getEpollFd() { return (fd); }
 int Epoll::getEventFd(int n) {return (event_list[n].data.fd);}

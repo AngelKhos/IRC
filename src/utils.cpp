@@ -9,7 +9,7 @@ std::vector<std::string> cmd_split(std::string args)
 	{
 		if (args[i] == ':')
 		{
-			args.erase(0, 2);
+			args.erase(0, 1);
 			vec.push_back(args);
 			return (vec);
 		}
