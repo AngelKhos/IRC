@@ -4,14 +4,14 @@
 void Server::sendMsg(int src_fd, int dest_fd, std::string message, std::string command)
 {
 	std::string msg = clients[src_fd]->prefix() + std::string(" ") + command + std::string(" ") 
-				+ clients[dest_fd]->nickName + std::string(" ") + message;
+				+ clients[dest_fd]->nickName + std::string(" :") + message;
 	updateClient(dest_fd, msg + std::string("\r\n"));
 }
 
 void Server::sendMsginChan(int src_fd, int dest_fd, std::string chName, std::string message, std::string command)
 {
 	std::string msg = clients[src_fd]->prefix() + std::string(" ") + command + std::string(" ")
-				+ chName + std::string(" ") + message;
+				+ chName + std::string(" :") + message;
 	updateClient(dest_fd, msg  + std::string("\r\n"));
 }
 
