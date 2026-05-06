@@ -102,7 +102,7 @@ void Server::startServer()
 }
 void Server::stopServer(int )
 {
-	std::cout << "server off :(((((" << std::endl;
+	std::cout << "the server is off" << std::endl;
 	for (std::set<Channel *>::iterator it = channels.begin(); it != channels.end(); it++)
 	{
 		delete *it;
