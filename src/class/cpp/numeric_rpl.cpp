@@ -196,8 +196,7 @@ const str NumRpl::err412(str nick)
 
 const str NumRpl::err421(str com, str nick)
 {
-	str rpl = SERVER_NAME + str(" 421 ") + nick + str(" ") +
-		com + str(" :Unknown command");
+	str rpl = SERVER_NAME + str(" 421 ") + nick + str(" ") + com + str(" :Unknown command");
 	return rpl + str("\r\n"); 
 }
 

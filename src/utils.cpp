@@ -9,8 +9,8 @@ std::vector<std::string> cmd_split(std::string args)
 	{
 		if (args[i] == ':')
 		{
-			args.erase(0, 1);
-			vec.push_back(args);
+			vec.push_back(args.substr(i + 1, args.size() - 2));
+			args.erase(0, args.size());
 			return (vec);
 		}
 		else
