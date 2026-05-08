@@ -7,8 +7,8 @@
 
 typedef std::string str;
 
-class NumRpl // les numRpl retournent tous une string qui sera utilisé comme "message" dans updateClient()
-{				// dans les methodes des commandes (server::<command>)
+class NumRpl // numPrl funcs returns strings that needs to be used as a "message" for updateClient()
+{
 	public:
 		static const str rpl001(str servName, str nick); //rpl_welcome
 		static const str rpl301(str nick, str message); //rpl_away

@@ -69,4 +69,4 @@ Client	*getUserByNick(std::string nick, std::set<Client *>Clients);
 Client *getUserByNickInMap(std::string nick, std::map<int, Client *>Clients);
 std::vector<std::string> lil_split(std::string args);
 
-#endif //CHANNEL_PP
+#endif //CHANNEL_HPP

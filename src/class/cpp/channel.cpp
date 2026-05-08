@@ -2,7 +2,7 @@
 #include "client.hpp"
 
 //============================================
-//constructor//destructor
+//constructor/destructor
 
 Channel::Channel() : password(""), name(""), invOnly(false), userLimit(0), reTopic(true), topicAutor("") {}
 
@@ -14,7 +14,7 @@ Channel::~Channel() {
 }
 
 //============================================
-//seter/geter
+//setter/getter
 
 std::string Channel::getTopic() const { return (topic); }
 void Channel::setTopic(std::string Ptopic) { topic = Ptopic; }
@@ -46,7 +46,7 @@ long int Channel::getTopicUpdate() { return (topicUpdate); }
 std::set<std::string> &Channel::getInvList() { return (invList); }
 
 //============================================
-//methode
+//methods
 
 //check if the name have max of 200 char, # or & at the begin and no space or ','
 bool Channel::checkName(std::string Pname)
