@@ -77,7 +77,7 @@ void Server::addChannel(std::string Pname)
 
 void Server::startServer()
 {
-	std::cout << "server starting..." << std::endl;
+	std::cout << "Server starting..." << std::endl;
 
 	//create the socket fd to communicate with distant client
 	this->setServerFd(socket(AF_INET, SOCK_STREAM, 0)); 
