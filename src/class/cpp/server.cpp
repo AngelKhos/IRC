@@ -112,16 +112,16 @@ void Server::startServer()
 }
 void Server::stopServer(int )
 {
-	for (std::set<Channel *>::iterator it = channels.begin(); it != channels.end(); it++)
-	{
-		delete *it;
-	}
-
+	
 	for (std::map<int, Client *>::iterator it = clients.begin(); it != clients.end(); it++)
 	{
 		disconnectClient(it->second->client_fd);
 	}
-
+	for (std::set<Channel *>::iterator it = channels.begin(); it != channels.end(); it++)
+	{
+		delete *it;
+	}
+	
 	clients.clear();
 	if (epoll.getEpollFd() != -1)
 		close(epoll.getEpollFd());

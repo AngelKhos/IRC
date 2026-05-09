@@ -4,27 +4,6 @@
 #include "channel.hpp"
 #include <set>
 
-std::vector<std::string> lil_split(std::string args)
-{
-	std::vector<std::string> vec;
-	for (size_t i = 0; i <= args.size() + 1; i++)
-	{
-
-		if (args[i] != ',' && args[i] != '\0')
-			continue ;
-		else
-		{
-			size_t j = 0;
-			if (args[0] == ',' || args[0] == '\0')
-				j++;
-			vec.push_back(args.substr(j, i - j));
-			args.erase(0, i);
-			i = 0;
-		}
-	}
-	return (vec);
-}
-
 bool isChannelExist(std::string ch, std::set<Channel *>channels)
 {
 	for (std::set<Channel *>::iterator it = channels.begin(); it != channels.end(); it++)

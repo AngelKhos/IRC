@@ -46,6 +46,6 @@ void Server::invite(std::vector<std::string> args, int client_fd)
 	}
 
 	updateClient(client_fd, Rep.rpl341(*ch, target, clients[client_fd]->nickName));
-	updateClient(c->client_fd, clients[client_fd]->prefix() + " " + clients[client_fd]->nickName + " is inviting you on " + ch->getName() + std::string("\r\n"));
+	updateClient(c->client_fd, clients[client_fd]->prefix() + " INVITE " + clients[c->client_fd]->nickName + " " + ch->getName() + std::string("\r\n"));
 	ch->getInvList().insert(clients[c->client_fd]->nickName);
 }

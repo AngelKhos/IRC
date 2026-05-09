@@ -8,7 +8,7 @@ void Server::topic(std::vector<std::string> args, int client_fd)
 {
 	if (args.size() == 0)
 	{
-		//updateClient(client_fd, Rep.err461(args[0], clients[client_fd]->nickName));
+		updateClient(client_fd, Rep.err461("TOPIC", clients[client_fd]->nickName));
 		return ;
 	}
 	std::string target = args[0];
@@ -16,12 +16,6 @@ void Server::topic(std::vector<std::string> args, int client_fd)
 	if (!ch)
 	{
 		updateClient(client_fd, Rep.err403(args[0], clients[client_fd]->nickName));
-		return ;
-	}
-	if (getUserByNick(clients[client_fd]->nickName, ch->getUsers()) == NULL)
-	{
-		//RPL A FAIRE//////////////////////////////////////////
-		//updateClient(client_fd, Rep.err442(*ch, clients[client_fd]->nickName));
 		return ;
 	}
 	if (args.size() == 1)
@@ -39,6 +33,7 @@ void Server::topic(std::vector<std::string> args, int client_fd)
 	}
 	else if (args.size() > 1)
 	{
+
 		if (ch->getReTopic())
 		{
 			if (!ch->isOp(client_fd))
@@ -47,6 +42,7 @@ void Server::topic(std::vector<std::string> args, int client_fd)
 				return ;
 			}
 		}
+		
 		ch->setTopic(args[1]);
 		ch->setTopicAutor(clients[client_fd]->nickName);
 		ch->setTopicUpdate(std::time(NULL));

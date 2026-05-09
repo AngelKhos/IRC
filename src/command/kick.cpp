@@ -28,7 +28,7 @@ void Server::kick(std::vector<std::string> args, int client_fd)
 		}
 		if (!ch->isOp(client_fd))
 		{
-			updateClient(client_fd, Rep.err473(*ch, clients[client_fd]->nickName));
+			updateClient(client_fd, Rep.err482(*ch, clients[client_fd]->nickName));
 			continue ;
 		}
 		for (std::vector<std::string>::iterator usIt = us.begin(); usIt != us.end(); usIt++)

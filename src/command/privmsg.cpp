@@ -35,16 +35,19 @@ void Server::privmsg(std::vector<std::string> args, int client_fd)
 				sendMsg(client_fd ,getUserByNickInMap(*it, clients)->client_fd, args[1], "PRIVMSG");
 			else if (getChannelByName(*it, channels))
 			{
+
 				if (getUserByNick(clients[client_fd]->nickName, getChannelByName(*it, channels)->getUsers()) == NULL)
 				{
 					updateClient(client_fd, Rep.err404(getChannelByName(*it, channels)->getName(), clients[client_fd]->nickName));
 				}
+
 				std::set<Client *> Cset = getChannelByName(*it, channels)->getUsers();
 				for (std::set<Client *>::iterator iter = Cset.begin(); iter != Cset.end(); iter++)
 				{
 					if ((*iter)->client_fd != client_fd)
 						sendMsginChan(client_fd ,(*iter)->client_fd, getChannelByName(*it, channels)->getName(), args[1], "PRIVMSG");
 				}
+				
 			}
 		}
 	}

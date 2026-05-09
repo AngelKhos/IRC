@@ -92,8 +92,8 @@ const str NumRpl::rpl333(Channel ch, str author, long ts, str nick)
 
 const str NumRpl::rpl341(Channel ch, str invNick, str nick)
 {
-	str rpl = SERVER_NAME + str(" 332 ") + nick + str(" ") +
-		ch.getName() + str(" ") + invNick;
+	str rpl = SERVER_NAME + str(" 341 ") + nick + str(" ") +
+		invNick + str(" ") + ch.getName();
 	return rpl + str("\r\n"); 
 }
 
