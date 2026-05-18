@@ -41,7 +41,7 @@ void Server::join(std::vector<std::string> args, int client_fd)
 		updateClient(client_fd, Rep.err451(clients[client_fd]->nickName));
 		return ;
 	}
-	if (args.empty())
+	if (args.empty() || args[0] == "")
 	{
 		updateClient(client_fd, Rep.err461("JOIN", clients[client_fd]->nickName));
 		return ;

@@ -193,7 +193,7 @@ void Server::processCommand(int fd)
 	while (clients[fd]->recv_buff.find("\r\n") != std::string::npos)
 	{
 		//the command
-		std::string message = clients[fd]->recv_buff.substr(0, clients[fd]->recv_buff.find("\r\n") + 1);
+		std::string message = clients[fd]->recv_buff.substr(0, clients[fd]->recv_buff.find("\r\n"));
 
 		// logs
 		std::cout << clients[fd]->recv_buff; 
@@ -214,7 +214,7 @@ void Server::processCommand(int fd)
 		}
 
 		//command not found
-		else if (args[0] != "") 
+		else if (!args.empty() && args[0] != "") 
 		{
 			if (clients[fd]->is_registered)
 				updateClient(fd, Rep.err421(args[0], clients[fd]->nickName));
