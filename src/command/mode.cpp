@@ -67,7 +67,7 @@ void Server::mode(std::vector<std::string> args, int client_fd)
 		{
 			if (plus)
 			{
-				if (argsIndex > args.size())
+				if (argsIndex >= args.size())
 				{
 					updateClient(client_fd, Rep.err461(args[0], clients[client_fd]->nickName));
 					return ;
@@ -77,7 +77,7 @@ void Server::mode(std::vector<std::string> args, int client_fd)
 			}
 			else
 			{
-				if (argsIndex > args.size())
+				if (argsIndex >= args.size())
 				{
 					updateClient(client_fd, Rep.err461(args[0], clients[client_fd]->nickName));
 					return ;
@@ -101,7 +101,7 @@ void Server::mode(std::vector<std::string> args, int client_fd)
 		{
 			if (plus)
 			{
-				if (argsIndex > args.size())
+				if (argsIndex >= args.size())
 				{
 					updateClient(client_fd, Rep.err461(args[0], clients[client_fd]->nickName));
 					return ;
@@ -117,7 +117,7 @@ void Server::mode(std::vector<std::string> args, int client_fd)
 		{
 			if (plus)
 			{
-				if (argsIndex > args.size())
+				if (argsIndex >= args.size())
 				{
 					updateClient(client_fd, Rep.err461(args[0], clients[client_fd]->nickName));
 					return ;
