@@ -151,7 +151,7 @@ void Server::connectClient()
 		struct sockaddr_in *sock = (sockaddr_in *)&client_addr;
 		clients[client_fd]->ip = inet_ntoa(sock->sin_addr);
 
-		std::cout << "client connected with ip " << clients[client_fd]->ip << std::endl;
+		std::cout << "Client with fd " << client_fd << " connected with ip " << clients[client_fd]->ip << std::endl;
 	}
 }
 
@@ -184,6 +184,7 @@ void Server::registerClient(int fd)
 	std::vector<std::string> null;
 
 	clients[fd]->is_registered = true;
+	std::cout << "Client with fd " << fd << " and nick " << clients[fd]->nickName << " is now registered" << std::endl;
 	updateClient(fd, Rep.rpl001("kiwi.serv", clients[fd]->nickName));
 	motd(null, fd);
 }
@@ -196,7 +197,7 @@ void Server::processCommand(int fd)
 		std::string message = clients[fd]->recv_buff.substr(0, clients[fd]->recv_buff.find("\r\n"));
 
 		// logs
-		std::cout << clients[fd]->recv_buff; 
+		std::cout << "Client " << fd << ", nick " << clients[fd]->nickName << ": '" << message << "'" << std::endl; 
 
 		std::vector<std::string> args = cmd_split(message);
 		if (!args.empty())
