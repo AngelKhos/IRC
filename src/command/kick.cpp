@@ -3,6 +3,11 @@
 
 void Server::kick(std::vector<std::string> args, int client_fd)
 {
+	if (clients[client_fd]->is_registered == false)
+	{
+		updateClient(client_fd, Rep.err451(clients[client_fd]->nickName));
+		return ;
+	}
 	if (args.size() <= 1)
 	{
 		updateClient(client_fd, Rep.err461("KICK", clients[client_fd]->nickName));
@@ -43,7 +48,9 @@ void Server::kick(std::vector<std::string> args, int client_fd)
 			clients[client_fd]->regChannel.erase(ch->getName());
 			if (u->client_fd != client_fd)
 				updateClient(u->client_fd, clients[client_fd]->prefix() + " KICK " + ch->getName() + " " + u->nickName + " :" + com + "\r\n");
-			updateClient(client_fd, clients[client_fd]->prefix() + " KICK " + ch->getName() + " " + u->nickName + " :" + com + "\r\n");
+			std::set<Client *> users = ch->getUsers();
+			for (std::set<Client *>::iterator u_it = users.begin(); u_it != users.end(); u_it++)
+				updateClient((*u_it)->client_fd, clients[client_fd]->prefix() + " KICK " + ch->getName() + " " + u->nickName + " :" + com + "\r\n");
 		}
 	}
 }

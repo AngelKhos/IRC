@@ -6,6 +6,11 @@
 
 void Server::topic(std::vector<std::string> args, int client_fd)
 {
+	if (clients[client_fd]->is_registered == false)
+	{
+		updateClient(client_fd, Rep.err451(clients[client_fd]->nickName));
+		return ;
+	}
 	if (args.size() == 0)
 	{
 		updateClient(client_fd, Rep.err461("TOPIC", clients[client_fd]->nickName));
@@ -43,8 +48,13 @@ void Server::topic(std::vector<std::string> args, int client_fd)
 			}
 		}
 		
+		std::set<Client *> users = ch->getUsers();
 		ch->setTopic(args[1]);
 		ch->setTopicAutor(clients[client_fd]->nickName);
 		ch->setTopicUpdate(std::time(NULL));
+		for (std::set<Client *>::iterator u_it = users.begin(); u_it != users.end(); u_it++)
+		{
+			updateClient((*u_it)->client_fd, clients[client_fd]->prefix() + " TOPIC " + ch->getName() + " :" + args[1] + "\r\n");
+		}
 	}
 }

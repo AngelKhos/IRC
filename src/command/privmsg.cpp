@@ -17,6 +17,11 @@ void Server::sendMsginChan(int src_fd, int dest_fd, std::string chName, std::str
 
 void Server::privmsg(std::vector<std::string> args, int client_fd)
 {
+	if (clients[client_fd]->is_registered == false)
+	{
+		updateClient(client_fd, Rep.err451(clients[client_fd]->nickName));
+		return ;
+	}
 	if (args.empty())
 		updateClient(client_fd, Rep.err411("PRIVMSG", clients[client_fd]->nickName));
 	else if (args.size() == 1 && (getUserByNickInMap(args[0], clients) || getChannelByName(args[0], channels)))

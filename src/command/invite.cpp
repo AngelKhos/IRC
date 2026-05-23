@@ -12,6 +12,11 @@ Client *getUserByNickInMap(std::string nick, std::map<int, Client *>Clients)
 
 void Server::invite(std::vector<std::string> args, int client_fd)
 {
+	if (clients[client_fd]->is_registered == false)
+	{
+		updateClient(client_fd, Rep.err451(clients[client_fd]->nickName));
+		return ;
+	}
 	if (args.size() < 2)
 	{
 		updateClient(client_fd, Rep.err461("INVITE", clients[client_fd]->nickName));
