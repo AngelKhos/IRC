@@ -23,7 +23,7 @@ int main(int argc, char **argv)
 	}
 	catch(const std::exception& e)
 	{
-		std::cerr << "Server starting error : " << e.what() << '\n';
+		std::cerr << ANSI_BOLD ANSI_RED "Server starting error" ANSI_RESET << " : " << e.what() << '\n';
 	} 
 	try
 	{
@@ -31,7 +31,7 @@ int main(int argc, char **argv)
 	}
 	catch(const std::exception& e)
 	{
-		std::cerr << "Server loop error : " << e.what() << '\n';
+		std::cerr << ANSI_BOLD ANSI_RED "Server loop error" << ANSI_RESET << " : " << e.what() << '\n';
 	}
 	
 	return (0);

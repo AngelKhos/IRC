@@ -77,7 +77,7 @@ void Server::addChannel(std::string Pname)
 
 void Server::startServer()
 {
-	std::cout << "Server starting..." << std::endl;
+	std::cout << ANSI_BLUE "Server starting..." ANSI_RESET << std::endl;
 
 	//create the socket fd to communicate with distant client
 	this->setServerFd(socket(AF_INET, SOCK_STREAM, 0)); 
@@ -108,7 +108,7 @@ void Server::startServer()
 	epoll.ctl_add(server_fd, EPOLLIN);
 
 	run = true;
-	std::cout << "Server started!" << std::endl;
+	std::cout << ANSI_GREEN "Server started!" ANSI_RESET << std::endl;
 }
 void Server::stopServer(int )
 {
@@ -129,7 +129,7 @@ void Server::stopServer(int )
 	close(server_fd);
 
 	run = false;
-	std::cout << "Server off" << std::endl;
+	std::cout << ANSI_YELLOW "Server off" ANSI_RESET << std::endl;
 }
 
 void Server::connectClient()
@@ -151,7 +151,7 @@ void Server::connectClient()
 		struct sockaddr_in *sock = (sockaddr_in *)&client_addr;
 		clients[client_fd]->ip = inet_ntoa(sock->sin_addr);
 
-		std::cout << "Client with fd " << client_fd << " connected with ip " << clients[client_fd]->ip << std::endl;
+		std::cout << "Client with fd " << ANSI_MAGENTA << client_fd << ANSI_RESET << " connected with ip " ANSI_MAGENTA << clients[client_fd]->ip << ANSI_RESET << std::endl;
 	}
 }
 
@@ -184,7 +184,7 @@ void Server::registerClient(int fd)
 	std::vector<std::string> null;
 
 	clients[fd]->is_registered = true;
-	std::cout << "Client with fd " << fd << " and nick " << clients[fd]->nickName << " is now registered" << std::endl;
+	std::cout << ANSI_GREEN "Client with fd " ANSI_MAGENTA << fd << ANSI_GREEN " and nick " ANSI_MAGENTA << clients[fd]->nickName << ANSI_GREEN " is now registered" ANSI_RESET << std::endl;
 	updateClient(fd, Rep.rpl001("kiwi.serv", clients[fd]->nickName));
 	motd(null, fd);
 }
@@ -197,7 +197,7 @@ void Server::processCommand(int fd)
 		std::string message = clients[fd]->recv_buff.substr(0, clients[fd]->recv_buff.find("\r\n"));
 
 		// logs
-		std::cout << "Client " << fd << ", nick " << clients[fd]->nickName << ": '" << message << "'" << std::endl; 
+		std::cout << "Client " ANSI_MAGENTA << fd << ANSI_RESET ", nick " ANSI_MAGENTA << clients[fd]->nickName << ANSI_RESET ": " << ANSI_BRIGHT_MAGENTA "'" << message << "'" ANSI_RESET << std::endl; 
 
 		std::vector<std::string> args = cmd_split(message);
 		if (!args.empty())
@@ -243,7 +243,7 @@ void Server::loop()
 		//if there is an interrupt (ctrl+c) or a wait error
 		catch(const std::exception& e) 
 		{
-			std::cout << "Server internal error: " << e.what() << '\n';
+			std::cout << ANSI_RED ANSI_BOLD "Server internal error" ANSI_RESET << ": " << e.what() << '\n';
 			return ;
 		}
 

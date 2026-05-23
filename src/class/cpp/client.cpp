@@ -1,4 +1,5 @@
 #include "client.hpp"
+#include "server.hpp"
 #include <iostream>
 #include <cstring>
 #include <sys/socket.h>
@@ -51,7 +52,7 @@ Client::~Client()
 
 void Client::Disconnect()
 {
-	std::cout << "client " << client_fd << " disconnected" << std::endl;
+	std::cout << ANSI_YELLOW "Client " ANSI_MAGENTA << client_fd << ANSI_YELLOW " disconnected" ANSI_RESET << std::endl;
 	close(client_fd);
 }
 
