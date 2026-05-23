@@ -162,6 +162,7 @@ void Server::disconnectClient(int fd)
 	{
 		Channel *ch = getChannelByName(*it, channels);
 		ch->delUser(*clients[fd]);
+		ch->unopUser(*clients[fd]);
 	}
 	epoll.ctl_del(fd);
 	clients[fd]->Disconnect();
