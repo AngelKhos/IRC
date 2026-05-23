@@ -23,8 +23,12 @@ void Server::quit(std::vector<std::string> args, int client_fd)
 		{
 			Channel *ch = getChannelByName(*it, channels);
 			for (std::set<Client *>::iterator iter = ch->getUsers().begin(); iter != ch->getUsers().end(); iter++)
-				updateClient((*iter)->client_fd, rpl);
+			{
+				if ((*iter)->client_fd != client_fd)
+					updateClient((*iter)->client_fd, rpl);
+			}
 		}
+		updateClient(client_fd, rpl);
 	}
 	clients[client_fd]->quit = true;
 }

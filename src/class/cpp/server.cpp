@@ -290,12 +290,15 @@ void Server::loop()
 					//we have nothing else to say so we set it back to epollin only
 					else
 						epoll.ctl_mod(epoll.getEventFd(n), EPOLLIN);
+						
+					//if client has quit
+					if (clients[epoll.getEventFd(n)]->quit)
+					{
+						disconnectClient(epoll.getEventFd(n));
+						clients.erase(epoll.getEventFd(n));
+					}
 				}
-				if (clients[epoll.getEventFd(n)]->quit)
-				{
-					disconnectClient(epoll.getEventFd(n));
-					clients.erase(epoll.getEventFd(n));
-				}
+				
 			}
 		}
 	}
