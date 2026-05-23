@@ -99,7 +99,7 @@ const str NumRpl::rpl341(Channel ch, str invNick, str nick)
 
 const str NumRpl::rpl353(Channel ch, str nick)
 {
-	str rpl = SERVER_NAME + str(" 353 ") + nick + str(" ") +
+	str rpl = SERVER_NAME + str(" 353 ") + nick + str(" = ") +
 	ch.getName() + str(" :");
 	for (std::set<Client *>::iterator it = ch.getUsers().begin(); it != ch.getUsers().end(); it++)
 	{
