@@ -34,6 +34,7 @@ class NumRpl // numPrl funcs returns strings that needs to be used as a "message
 		static const str err431(str nick); //err_nonicknamegiven
 		static const str err432(str s, str nick); //err_erroneusnickname
 		static const str err436(str s, str nick); //err_nickcollision
+		static const str err441(str chName, str nick, str kickNick); //err_usernotonchannel
 		static const str err442(str chName, str nick); //err_notonchannel
 		static const str err443(str user, str chName, str nick); //err_useronchannel
 		static const str err451(str nick); //err_notregistered
