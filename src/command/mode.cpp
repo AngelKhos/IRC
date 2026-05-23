@@ -85,7 +85,14 @@ void Server::mode(std::vector<std::string> args, int client_fd)
 					updateClient(client_fd, Rep.err461(args[0], clients[client_fd]->nickName));
 					continue ;
 				}
-				ch->opUser(*getUserByNick(args[argsIndex], ch->getUsers()));
+				Client *opU = getUserByNick(args[argsIndex], ch->getUsers());
+				if (opU)
+					ch->opUser(*opU);
+				else
+				{
+					updateClient(client_fd, Rep.err401(args[argsIndex], clients[client_fd]->nickName));
+					continue ;
+				}
 				argsIndex++;
 			}
 			else

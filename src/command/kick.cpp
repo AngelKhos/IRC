@@ -39,9 +39,9 @@ void Server::kick(std::vector<std::string> args, int client_fd)
 		for (std::vector<std::string>::iterator usIt = us.begin(); usIt != us.end(); usIt++)
 		{
 			Client *u = getUserByNick(*usIt, ch->getUsers());
-			if (!ch)
+			if (!u)
 			{
-				updateClient(client_fd, Rep.err442(ch->getName(), clients[client_fd]->nickName));
+				updateClient(client_fd, Rep.err401(*usIt, clients[client_fd]->nickName));
 				continue ;
 			}
 			ch->delUser(*u);
