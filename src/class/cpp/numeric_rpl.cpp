@@ -222,7 +222,7 @@ const str NumRpl::err436(str s, str nick)
 
 const str NumRpl::err441(str chName, str nick, str kickNick)
 {
-	str rpl = SERVER_NAME + str(" 442 ") + nick + str("") + kickNick + str(" ") +
+	str rpl = SERVER_NAME + str(" 441 ") + nick + str("") + kickNick + str(" ") +
 		chName + str(" :They aren't on that channel");
 	return rpl + str("\r\n"); 
 }
