@@ -24,8 +24,8 @@ void Server::part(std::vector<std::string> args, int client_fd)
 						updateClient( (*u_it)->client_fd, clients[client_fd]->prefix() + std::string(" PART ") 
 										+ *it + std::string("\r\n"));
 					}
-					
 					ch->delUser(*clients[client_fd]);
+					ch->unopUser(*clients[client_fd]);
 					clients[client_fd]->regChannel.erase(ch->getName());
 				}
 				else
