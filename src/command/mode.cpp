@@ -16,6 +16,11 @@ Client *getUserByNick(std::string nick, std::set<Client *>Clients)
 
 void Server::mode(std::vector<std::string> args, int client_fd)
 {
+	if (clients[client_fd]->is_registered == false)
+	{
+		updateClient(client_fd, Rep.err451(clients[client_fd]->nickName));
+		return ;
+	}
 	if (args.size() <= 0)
 	{
 		updateClient(client_fd, Rep.err461("MODE", clients[client_fd]->nickName));
@@ -23,6 +28,7 @@ void Server::mode(std::vector<std::string> args, int client_fd)
 	}
 	std::string target = args[0];
 	unsigned long argsIndex = 2;
+	std::string validargs;
 
 	Channel *ch = getChannelByName(target, channels);
 	if (!ch)
@@ -43,9 +49,15 @@ void Server::mode(std::vector<std::string> args, int client_fd)
 	}
 	std::string mode = args[1];
 	if (mode[0] == '-')
+	{
+		validargs += "-";
 		plus = false;
+	}
 	else if (mode[0] == '+')
+	{
+		validargs += "+";
 		plus = true;
+	}
 	else
 		return ;
 
@@ -62,6 +74,7 @@ void Server::mode(std::vector<std::string> args, int client_fd)
 			{
 				ch->setInvOnly(false);
 			}
+			validargs += "i";
 		}
 		else if (mChar == 'o')
 		{
@@ -70,7 +83,7 @@ void Server::mode(std::vector<std::string> args, int client_fd)
 				if (argsIndex >= args.size())
 				{
 					updateClient(client_fd, Rep.err461(args[0], clients[client_fd]->nickName));
-					return ;
+					continue ;
 				}
 				ch->opUser(*getUserByNick(args[argsIndex], ch->getUsers()));
 				argsIndex++;
@@ -80,11 +93,12 @@ void Server::mode(std::vector<std::string> args, int client_fd)
 				if (argsIndex >= args.size())
 				{
 					updateClient(client_fd, Rep.err461(args[0], clients[client_fd]->nickName));
-					return ;
+					continue ;
 				}
 				ch->unopUser(*getUserByNick(args[argsIndex], ch->getUsers()));
 				argsIndex++;
 			}
+			validargs += "o";
 		}
 		else if (mChar == 't')
 		{
@@ -96,6 +110,7 @@ void Server::mode(std::vector<std::string> args, int client_fd)
 			{
 				ch->setReTopic(false);
 			}
+			validargs += "t";
 		}
 		else if (mChar == 'k')
 		{
@@ -104,15 +119,14 @@ void Server::mode(std::vector<std::string> args, int client_fd)
 				if (argsIndex >= args.size())
 				{
 					updateClient(client_fd, Rep.err461(args[0], clients[client_fd]->nickName));
-					return ;
+					continue ;
 				}
 				ch->setPw(args[argsIndex]);
 				argsIndex++;
 			}
 			else
-			{
 				ch->setPw("");
-			}
+			validargs += "k";
 		}
 		else if (mChar == 'l')
 		{
@@ -121,7 +135,7 @@ void Server::mode(std::vector<std::string> args, int client_fd)
 				if (argsIndex >= args.size())
 				{
 					updateClient(client_fd, Rep.err461(args[0], clients[client_fd]->nickName));
-					return ;
+					continue ;
 				}
 				if (atoi(args[argsIndex].c_str()) <= 0)
 					return ;
@@ -132,12 +146,27 @@ void Server::mode(std::vector<std::string> args, int client_fd)
 			{
 				ch->setLimitUser(0);
 			}
+			validargs += "l";
 		}
 		else
 		{
 			updateClient(client_fd, Rep.err472(std::string(&mChar), clients[client_fd]->nickName));
-			return ;
+			continue ;
 		}
 	}
-	updateClient(client_fd, clients[client_fd]->prefix() + " MODE " + args[0] + " " + args[1] + "\r\n");
+	std::set<Client *> users = ch->getUsers();
+	for (std::set<Client *>::iterator u_it = users.begin(); u_it != users.end(); u_it++)
+	{
+		if (args.size() > 2)
+		{
+			updateClient((*u_it)->client_fd, clients[client_fd]->prefix() + " MODE " + args[0] + " " + validargs);
+			for (std::vector<std::string>::iterator it = args.begin() + 2; it != args.end(); it++)
+			{
+				updateClient((*u_it)->client_fd, " " + *it);
+			}
+			updateClient((*u_it)->client_fd, "\r\n");
+		}
+		else
+			updateClient((*u_it)->client_fd, clients[client_fd]->prefix() + " MODE " + args[0] + " " + validargs + "\r\n");
+	}
 }

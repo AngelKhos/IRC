@@ -62,6 +62,8 @@ bool Channel::checkName(std::string Pname)
 
 bool Channel::isOp(int client_fd)
 {
+	if (op.empty())
+		return (false);
 	for (std::set<Client *>::iterator it = op.begin(); it != op.end(); it++)
 	{
 		if (client_fd == (*it)->client_fd)
