@@ -107,6 +107,7 @@ void Server::mode(std::vector<std::string> args, int client_fd)
 					return ;
 				}
 				ch->setPw(args[argsIndex]);
+				argsIndex++;
 			}
 			else
 			{
